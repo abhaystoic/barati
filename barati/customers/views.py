@@ -1,14 +1,29 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-from django.shortcuts import render_to_response
-# Create your views here.
+from django.shortcuts import render, render_to_response
+from django.views.generic import View
+import sys
 
 #@login_required(login_url='/auth/login/')
-def dashboard(request):
+class dashboard(View):
+   try:
+      template_name = 'customers/index.html'
+      
+      #@method_decorator(login_required(login_url='/auth/login/'))
+      def get(self, request): 
+         context_dict = {}
+         return render(request, self.template_name, context_dict)
+   except Exception as e:      
+      print e
+      print sys.exc_traceback.tb_lineno
+
+#@login_required(login_url='/auth/login/')
+def venue(request, type):
    context = RequestContext(request)
    context_dict = {}
-   return render_to_response('customers/index.html', context_dict, context_instance=context)
+   return render_to_response('customers/venue.html', context_dict, context_instance=context)
+
    
 #@login_required(login_url='/auth/login/')
 def product_details(request):

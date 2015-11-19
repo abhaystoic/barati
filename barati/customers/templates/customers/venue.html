@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Barati</title>
+    <title>Venue | Barati</title>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/prettyPhoto.css' %}" rel="stylesheet">
@@ -26,16 +26,14 @@
 </head><!--/head-->
 
 <body>
-	{% include 'customers/header.html'%}
+	{% include 'customers/header_chopped.html'%}
 	
-	
+	{% include 'customers/left_sidebar.html'%}
 	<section>
 		<div class="container">
 			<div class="row">
 				
 				<div class="col-sm-9 padding-right">
-					{% include 'customers/slider.html'%}
-
 
 					{% include 'customers/featured_items.html'%}
 					

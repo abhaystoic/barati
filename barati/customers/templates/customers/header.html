@@ -1,42 +1,16 @@
 {% load staticfiles %}
 <header id="header"><!--header-->
-		<div class="header_top"><!--header_top-->
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-6">
-						<div class="contactinfo">
-							<ul class="nav nav-pills">
-								<li><a href="#"><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
-								<li><a href="#"><i class="fa fa-envelope"></i> info@domain.com</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-6">
-						<div class="social-icons pull-right">
-							<ul class="nav navbar-nav">
-								<li><a href="#"><i class="fa fa-facebook"></i></a></li>
-								<li><a href="#"><i class="fa fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-								<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-								<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div><!--/header_top-->
 		
 		<div class="header-middle"><!--header-middle-->
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-4">
-						<div class="logo pull-left">
-							<a href="/customers/dashboard"><img width = 100 height = 80 src="{% static 'images/home/logo.png' %}" alt="" /></a>
-						</div>
+						
 						<div class="btn-group pull-right">
 							<div class="btn-group">
+								<p>Date: <input type="text" id="datepicker"></p>
 								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-									USA
+									Location
 									<span class="caret"></span>
 								</button>
 								<ul class="dropdown-menu">
@@ -44,17 +18,11 @@
 									<li><a href="#">UK</a></li>
 								</ul>
 							</div>
-							
 							<div class="btn-group">
-								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-									DOLLAR
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li><a href="#">Canadian Dollar</a></li>
-									<li><a href="#">Pound</a></li>
-								</ul>
+								<input type="text" class="btn btn-default dropdown-toggle usa" style="width:120px;" />
 							</div>
+							
+							
 						</div>
 					</div>
 					<div class="col-sm-8">
@@ -62,8 +30,8 @@
 							<ul class="nav navbar-nav">
 								<li><a href="#"><i class="fa fa-user"></i> Account</a></li>
 								<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
-								<li><a href="/customers/checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-								<li><a href="/customers/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+								<li><a href="/checkout"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+								<li><a href="/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
 								<li><a href="/auth/login"><i class="fa fa-lock"></i> Login</a></li>
 							</ul>
 						</div>
@@ -77,41 +45,144 @@
 				<div class="row">
 					<div class="col-sm-9">
 						<div class="navbar-header">
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-								<span class="sr-only">Toggle navigation</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-						</div>
-						<div class="mainmenu pull-left">
-							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="/customers/dashboard" class="active">Home</a></li>
-								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</div>
+					<div class="mainmenu pull-left">
+						<ul class="nav navbar-nav collapse navbar-collapse">
+							<!--<li><a href="/dashboard" class="active">Home</a></li>-->
+								<li class="dropdown"><a href="#">Venue<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="/customers/shop">Products</a></li>
-										<li><a href="/customers/product_details">Product Details</a></li> 
-										<li><a href="/customers/checkout">Checkout</a></li> 
-										<li><a href="/customers/cart">Cart</a></li> 
+                                        <li><a href="/venue/indoor">Indoor</a></li>
+										<li><a href="/product_details">Outdoor</a></li> 
+										<li><a href="/checkout">Covered Outdoor</a></li> 
+										<li><a href="/cart">Uncovered</a></li> 
+										<li><a href="/auth/login">Banquet</a></li> 
+										<li><a href="/auth/login">Hotels</a></li> 
+										<li><a href="/auth/login">Halls</a></li>
+										<li><a href="/auth/login">Farm House</a></li> 
+										<li><a href="/auth/login">Historic Place</a></li> 
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Cards<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                    	<li><a href="/auth/login">Traditional Cards</a></li> 
+                                        <li><a href="/shop">Box Style</a></li>
+										<li><a href="/product_details">Designer</a></li> 
+										<li><a href="/checkout">Scroll</a></li> 
+										<li><a href="/auth/login">Picture Cards</a></li> 
+										<li><a href="/auth/login">Theme Based</a></li> 
+										<li><a href="/cart">Recycled Paper Invitation</a></li> 
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Beauticians<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Wedding (Bride)</a></li>
+										<li><a href="/product_details">Wedding (Groom)</a></li> 
+										<li><a href="/checkout">Engagement (Bride)</a></li> 
+										<li><a href="/cart">Engagement (Groom)</a></li> 
+										<li><a href="/auth/login">Reception (Bride)</a></li> 
+										<li><a href="/auth/login">Reception (Groom)</a></li> 
+										<li><a href="/auth/login">Sangeet (Bride)</a></li> 
+										<li><a href="/auth/login">Sangeet (Groom)</a></li> 
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Music<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Products</a></li>
+										<li><a href="/product_details">Product Details</a></li> 
+										<li><a href="/checkout">Checkout</a></li> 
+										<li><a href="/cart">Cart</a></li> 
 										<li><a href="/auth/login">Login</a></li> 
                                     </ul>
                                 </li> 
-								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
+                                <li class="dropdown"><a href="#">Gifts<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="/customers/blog">Blog List</a></li>
-										<li><a href="/customers/blog-single">Blog Single</a></li>
+                                        <li><a href="/shop">Traditional</a></li>
+										<li><a href="/product_details">Personalized</a></li> 
+										<li><a href="/checkout">For Bride</a></li> 
+										<li><a href="/cart">For Groom</a></li> 
+										<li><a href="/auth/login">For Guests</a></li> 
                                     </ul>
                                 </li> 
-								<li><a href="404.html">404</a></li>
-								<li><a href="/customers/contact_us">Contact</a></li>
+                                <li class="dropdown"><a href="#">Photos<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Traditional</a></li>
+										<li><a href="/product_details">Candid</a></li> 
+										<li><a href="/checkout">Traditional + Candid</a></li> 
+										<li><a href="/cart">Prewedding</a></li> 
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Video<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Traditional</a></li>
+										<li><a href="/product_details">Prewedding</a></li> 
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Bakery<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Products</a></li>
+										<li><a href="/product_details">Product Details</a></li> 
+										<li><a href="/checkout">Checkout</a></li> 
+										<li><a href="/cart">Cart</a></li> 
+										<li><a href="/auth/login">Login</a></li> 
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Ghodi/Bagghi<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Basic</a></li>
+										<li><a href="/product_details">Decorated</a></li> 
+                                    </ul>
+                                </li>
+                                <li class="dropdown"><a href="#">Band<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Products</a></li>
+										<li><a href="/product_details">Product Details</a></li> 
+										<li><a href="/checkout">Checkout</a></li> 
+										<li><a href="/cart">Cart</a></li> 
+										<li><a href="/auth/login">Login</a></li> 
+                                    </ul>
+                                </li>  
+                                <li class="dropdown"><a href="#">Mehendi<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Products</a></li>
+										<li><a href="/product_details">Product Details</a></li> 
+										<li><a href="/checkout">Checkout</a></li> 
+										<li><a href="/cart">Cart</a></li> 
+										<li><a href="/auth/login">Login</a></li> 
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Fireworks<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Products</a></li>
+										<li><a href="/product_details">Product Details</a></li> 
+										<li><a href="/checkout">Checkout</a></li> 
+										<li><a href="/cart">Cart</a></li> 
+										<li><a href="/auth/login">Login</a></li> 
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Tent House<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Products</a></li>
+										<li><a href="/product_details">Product Details</a></li> 
+										<li><a href="/checkout">Checkout</a></li> 
+										<li><a href="/cart">Cart</a></li> 
+										<li><a href="/auth/login">Login</a></li> 
+                                    </ul>
+                                </li> 
 							</ul>
 						</div>
 					</div>
-					<div class="col-sm-3">
+					<!--<div class="col-sm-3">
 						<div class="search_box pull-right">
 							<input type="text" placeholder="Search"/>
 						</div>
 					</div>
+					-->
 				</div>
 			</div>
 		</div><!--/header-bottom-->
