@@ -8,7 +8,6 @@
 						
 						<div class="btn-group pull-right">
 							<div class="btn-group">
-								<p>Date: <input type="text" id="datepicker"></p>
 								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
 									Location
 									<span class="caret"></span>
@@ -41,7 +40,7 @@
 		</div><!--/header-middle-->
 	
 		<div class="header-bottom"><!--header-bottom-->
-			<div class="container">
+			<div class="container" >
 				<div class="row">
 					<div class="col-sm-9">
 						<div class="navbar-header">
@@ -57,15 +56,11 @@
 							<!--<li><a href="/dashboard" class="active">Home</a></li>-->
 								<li class="dropdown"><a href="#">Venue<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                        <li><a href="/venue/indoor">Indoor</a></li>
-										<li><a href="/product_details">Outdoor</a></li> 
-										<li><a href="/checkout">Covered Outdoor</a></li> 
-										<li><a href="/cart">Uncovered</a></li> 
-										<li><a href="/auth/login">Banquet</a></li> 
-										<li><a href="/auth/login">Hotels</a></li> 
-										<li><a href="/auth/login">Halls</a></li>
-										<li><a href="/auth/login">Farm House</a></li> 
-										<li><a href="/auth/login">Historic Place</a></li> 
+                                    	{% if venue_types %}
+                                    	{% for type in venue_types %}
+                                        <li><a href="/venue/{{type.name}}">{{type.name}}</a></li>
+                                        {% endfor %}
+                                        {% endif %}
                                     </ul>
                                 </li> 
                                 <li class="dropdown"><a href="#">Cards<i class="fa fa-angle-down"></i></a>

@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'axes', # Defense mechanism against Brute Force attack
     'drealtime',
     'customers',
+    'vendors',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -111,7 +112,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = "/home/abhay/workspace_barati/barati/static/"
 
 LOGIN_URL = '/auth/login/'
-LOGIN_REDIRECT_URL = '/symportal/dashboard'
+LOGIN_REDIRECT_URL = '/dashboard'
 
 STATICFILES_FINDERS = (
 	"django.contrib.staticfiles.finders.FileSystemFinder",
