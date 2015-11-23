@@ -55,9 +55,9 @@ class Vendors(models.Model):
    address = models.ForeignKey(Address, blank=True, null=True)
    official_email = models.EmailField(max_length=100, blank=True, null=True)
    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-   contact1 = models.CharField(validators=[phone_regex], max_length=50, blank=True) # validators should be a list
-   contact2 = models.CharField(validators=[phone_regex], max_length=50, blank=True) # validators should be a list
-   contact3 = models.CharField(validators=[phone_regex], max_length=50, blank=True) # validators should be a list
+   contact1 = models.CharField(validators=[phone_regex], max_length=50, blank=True, null=True) # validators should be a list
+   contact2 = models.CharField(validators=[phone_regex], max_length=50, blank=True, null=True) # validators should be a list
+   contact3 = models.CharField(validators=[phone_regex], max_length=50, blank=True, null=True) # validators should be a list
    
    class Meta:
       managed = True
@@ -254,5 +254,23 @@ class Venues(models.Model):
    class Meta:
       managed = True
       db_table = 'venues'
+   def __unicode__(self):
+      return unicode(self.name)
+
+class Cards(models.Model):
+   id = models.AutoField(primary_key=True)
+   ref_id = models.CharField(max_length=100)
+   vendor_id = models.ForeignKey(Vendors)
+   name = models.CharField(max_length=100)
+   type = models.ForeignKey(Card_Types, blank=True, null=True)
+   short_description = models.CharField(max_length=100)
+   long_description = models.CharField(max_length=800)
+   min_numbers = models.IntegerField()
+   max_numbers = models.IntegerField()
+   price = models.IntegerField()
+   
+   class Meta:
+      managed = True
+      db_table = 'cards'
    def __unicode__(self):
       return unicode(self.name)

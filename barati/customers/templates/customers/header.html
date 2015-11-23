@@ -1,4 +1,5 @@
 {% load staticfiles %}
+
 <header id="header"><!--header-->
 		
 		<div class="header-middle"><!--header-middle-->
@@ -51,29 +52,27 @@
 							<span class="icon-bar"></span>
 						</button>
 					</div>
-					<div class="mainmenu pull-left">
+					<div class="mainmenu pull-left" >
 						<ul class="nav navbar-nav collapse navbar-collapse">
 							<!--<li><a href="/dashboard" class="active">Home</a></li>-->
 								<li class="dropdown"><a href="#">Venue<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                     	{% if venue_types %}
                                     	{% for type in venue_types %}
-                                        <li><a href="/venue/{{type.name}}">{{type.name}}</a></li>
+                                        <li><a href="/venue/{{type.id}}">{{type.name}}</a></li>
                                         {% endfor %}
                                         {% endif %}
                                     </ul>
                                 </li> 
                                 <li class="dropdown"><a href="#">Cards<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
-                                    	<li><a href="/auth/login">Traditional Cards</a></li> 
-                                        <li><a href="/shop">Box Style</a></li>
-										<li><a href="/product_details">Designer</a></li> 
-										<li><a href="/checkout">Scroll</a></li> 
-										<li><a href="/auth/login">Picture Cards</a></li> 
-										<li><a href="/auth/login">Theme Based</a></li> 
-										<li><a href="/cart">Recycled Paper Invitation</a></li> 
+                                    	{% if card_types %}
+                                    	{% for type in card_types %}
+                                        <li><a href="/card/{{type.id}}">{{type.name}}</a></li>
+                                        {% endfor %}
+                                        {% endif %}
                                     </ul>
-                                </li> 
+                                </li>
                                 <li class="dropdown"><a href="#">Beauticians<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="/shop">Wedding (Bride)</a></li>
