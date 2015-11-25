@@ -2,7 +2,7 @@
 {% for card_detail in card_details %}
 <div class="col-sm-5">
 <div class="view-product">
-	<img src="{% static '' %}images/cards/card{{card_detail.id}}.jpg" alt="" />
+	<img src="{% static '' %}{{card_detail.ref_id|get_pic_path}}" alt="" />
 	<h3>ZOOM</h3>
 </div>
 <div id="similar-product" class="carousel slide" data-ride="carousel">
@@ -37,6 +37,11 @@
 </div>
 
 </div>
+<form action="/add_to_cart/{{card_detail.ref_id}}" id="add_to_cart" method="POST"><!--Add to cart form BEGIN-->
+{% csrf_token %}
+<input type="hidden" name="product_type" value="cards" />
+<input type="hidden" name="user_id" value="1">
+<input type="hidden" name="price" value="{{card_detail.price}}" />
 <div class="product-information"><!--/product-information-->
 <h2>{{card_detail.name}}</h2>
 <p>{{card_detail.short_description}}</p>
@@ -45,8 +50,8 @@
 <span>
 	<span>{{card_detail.price}} Rs Per Card</span>
 	<label>Quantity:</label>
-	<input type="text" value="3" />
-	<button type="button" class="btn btn-fefault cart">
+	<input type="text" name = "quantity" value="1" />
+	<button type="submit" class="btn btn-fefault cart">
 		<i class="fa fa-shopping-cart"></i>
 		Add to cart
 	</button>
@@ -56,4 +61,5 @@
 <p><b>Brand:</b> E-SHOPPER</p>
 <a href=""><img src="{% static 'images/product-details/share.png' %}" class="share img-responsive"  alt="" /></a>
 </div><!--/product-information-->
+</form> <!--Add to cart form END-->
 {% endfor %}

@@ -38,9 +38,9 @@ class Users(models.Model):
    religion = models.ForeignKey(Religion, blank=True, null=True)
    email = models.EmailField(max_length=100, blank=True, null=True)
    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-   contact1 = models.CharField(validators=[phone_regex], max_length=50, blank=True) # validators should be a list
-   contact2 = models.CharField(validators=[phone_regex], max_length=50, blank=True) # validators should be a list
-   contact3 = models.CharField(validators=[phone_regex], max_length=50, blank=True) # validators should be a list
+   contact1 = models.CharField(validators=[phone_regex], max_length=50, blank=True, null=True) # validators should be a list
+   contact2 = models.CharField(validators=[phone_regex], max_length=50, blank=True, null=True) # validators should be a list
+   contact3 = models.CharField(validators=[phone_regex], max_length=50, blank=True, null=True) # validators should be a list
    address = models.ForeignKey(Address, blank=True, null=True)
    
    class Meta:
@@ -212,23 +212,10 @@ class Tent_Types(models.Model):
    def __unicode__(self):
       return unicode(self.name)
 
-class Pictures(models.Model):
-   id = models.AutoField(primary_key=True)
-   vendor_id = models.ForeignKey(Vendors, blank=True, null=True)
-   product_ref_id = models.CharField(max_length=100)
-   picture_name = models.CharField(max_length=50)
-   picture_path = models.CharField(max_length=100)
-   
-   class Meta:
-      managed = True
-      db_table = 'pictures'
-   def __unicode__(self):
-      return unicode(self.picture_name)
-
 class Videos(models.Model):
    id = models.AutoField(primary_key=True)
    vendor_id = models.ForeignKey(Vendors, blank=True, null=True)
-   product_ref_id = models.CharField(max_length=100)
+   ref_id = models.CharField(max_length=100)
    video_name = models.CharField(max_length=50)
    video_link = models.CharField(max_length=100)
    
@@ -236,7 +223,7 @@ class Videos(models.Model):
       managed = True
       db_table = 'videos'
    def __unicode__(self):
-      return unicode(self.video_name)
+      return unicode(self.ref_id)
       
 class Venues(models.Model):
    id = models.AutoField(primary_key=True)
@@ -269,8 +256,36 @@ class Cards(models.Model):
    max_numbers = models.IntegerField()
    price = models.IntegerField()
    
-   class Meta:
+   class Meta: 
       managed = True
       db_table = 'cards'
    def __unicode__(self):
-      return unicode(self.name)
+      return unicode(self.ref_id)
+      
+class Cart(models.Model):
+   id = models.AutoField(primary_key=True)
+   ref_id = models.CharField(max_length=100)
+   user = models.ForeignKey(Users)
+   product_type = models.CharField(max_length=50)
+   checked_out = models.BooleanField(default=False)
+   quantity = models.IntegerField(blank=True, null=True)
+   total_price = models.IntegerField(blank=True, null=True)
+   
+   class Meta: 
+      managed = True
+      db_table = 'cart'
+   def __unicode__(self):
+      return unicode(self.ref_id)
+
+#To store paths of the pictures on the server      
+class Product_Pictures(models.Model):
+   id = models.AutoField(primary_key=True)
+   name = models.CharField(max_length=100, blank=True, null=True)
+   ref_id = models.CharField(max_length=100, blank=True, null=True)
+   picture_path = models.CharField(max_length=200, blank=True, null=True)
+   
+   class Meta: 
+      managed = True
+      db_table = 'product_pictures'
+   def __unicode__(self):
+      return unicode(self.ref_id)

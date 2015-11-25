@@ -1,0 +1,27 @@
+{% load staticfiles %}
+<tr>
+<td class="cart_product">
+	<a href=""><img width = "100px" height = "100px" src="{% static '' %}{{product.ref_id|get_pic_path}}" alt="{% static '' %}{{ product.ref_id|get_pic_path }}"></a>
+</td>
+<td class="cart_description">
+	<h4><a href="">{{product.name}}</a></h4>
+	<p>Product Idea: {{product.ref_id}}</p>
+	<p>{{product.short_description}}</p>
+</td>
+<td class="cart_price">
+	<p>{{product.price}}</p>
+</td>
+<td class="cart_quantity">
+	<div class="cart_quantity_button">
+		<a class="cart_quantity_up" href=""> + </a>
+		<input class="cart_quantity_input" type="text" name="quantity" value="{{ product.ref_id|get_quantity }}" autocomplete="off" size="2">
+		<a class="cart_quantity_down" href=""> - </a>
+	</div>
+</td>
+<td class="cart_total">
+	<p class="cart_total_price">{{ product.ref_id|get_total_price }}</p>
+</td>
+<td class="cart_delete">
+	<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+</td>
+</tr>
