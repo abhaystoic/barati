@@ -41,14 +41,14 @@
 {% csrf_token %}
 <input type="hidden" name="product_type" value="cards" />
 <input type="hidden" name="user_id" value="1">
-<input type="hidden" name="price" value="{{card_detail.price}}" />
+<input type="hidden" name="price" value="{{card_detail.actual_price}}" />
 <div class="product-information"><!--/product-information-->
 <h2>{{card_detail.name}}</h2>
 <p>{{card_detail.short_description}}</p>
 <p>Product ID: {{card_detail.ref_id}}</p>
 <img src="images/product-details/rating.png" alt="" />
 <span>
-	<span>{{card_detail.price}} Rs Per Card</span>
+	<span>{{card_detail.actual_price}} Rs Per Card</span>
 	<label>Quantity:</label>
 	<input type="text" name = "quantity" value="1" />
 	<button type="submit" class="btn btn-fefault cart">
@@ -63,3 +63,28 @@
 </div><!--/product-information-->
 </form> <!--Add to cart form END-->
 {% endfor %}
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#add_to_cart').submit(function() { // catch the form's submit event
+        $.ajax({
+            url : this.action, 
+            type : "POST",
+            dataType: "json",
+            data: $(this).serialize(), // get the form data
+            context : this,
+            success : function(json) {
+              alert(json);
+              var current_url = location.pathname;
+              if (json == "successfully added in cart")
+              {
+              	window.location = current_url; // redirect back to the calling page
+              }
+              },
+            error : function(xhr,errmsg,err) {
+              alert(xhr.status + ": " + xhr.responseText);
+              }
+        });
+        return false;
+    });
+    });
+</script>	

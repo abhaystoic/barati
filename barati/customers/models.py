@@ -254,7 +254,9 @@ class Cards(models.Model):
    long_description = models.CharField(max_length=800)
    min_numbers = models.IntegerField()
    max_numbers = models.IntegerField()
-   price = models.IntegerField()
+   actual_price = models.IntegerField()
+   discount_rs = models.FloatField(blank=True, null=True)
+   discounted_price = models.FloatField(blank=True, null=True)
    
    class Meta: 
       managed = True
@@ -269,7 +271,7 @@ class Cart(models.Model):
    product_type = models.CharField(max_length=50)
    checked_out = models.BooleanField(default=False)
    quantity = models.IntegerField(blank=True, null=True)
-   total_price = models.IntegerField(blank=True, null=True)
+   total_price = models.FloatField(blank=True, null=True)
    
    class Meta: 
       managed = True
@@ -287,5 +289,24 @@ class Product_Pictures(models.Model):
    class Meta: 
       managed = True
       db_table = 'product_pictures'
+   def __unicode__(self):
+      return unicode(self.ref_id)
+      
+class Orders(models.Model):
+   id = models.AutoField(primary_key=True)
+   user = models.ForeignKey(Users)
+   ref_id = models.CharField(max_length=100)
+   quantity = models.IntegerField(blank=True, null=True)
+   total_price = models.FloatField(blank=True, null=True)
+   package_id = models.CharField(max_length=100)
+   vendor_acknowledgement = models.CharField(max_length=50)
+   payment_done = models.BooleanField(default = False)
+   payment_received = models.BooleanField(default = False)
+   payment_method = models.CharField(max_length=100)
+   timestamp = models.DateTimeField(auto_now_add=True)
+   
+   class Meta: 
+      managed = True
+      db_table = 'orders'
    def __unicode__(self):
       return unicode(self.ref_id)

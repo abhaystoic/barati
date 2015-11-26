@@ -8,22 +8,22 @@
 						<a style = "text-decoration:none;"href = "/card_details/{{card.id}}">
 
 						<img style="width:200px;height:170px;" src="{% static '' %}{{card.ref_id|get_pic_path}}" alt="{{card.short_description}}" title="{{card.short_description}}"/>
-						<h2 >{{card.price}} Rs Per Card</h2>
+						<h2 >{{card.actual_price}} Rs Per Card</h2>
 						<p>{{card.short_description}}</p>
 						<p>Product ID {{card.ref_id}}</p>
-						<form action="/add_to_cart/{{card.ref_id}}" id="add_to_cart{{forloop.counter}}" method="POST"><!--Add to cart form BEGIN-->
+						</a>
+						<form action="/add_to_cart/{{card.ref_id}}" class="add_to_cart" id="add_to_cart{{forloop.counter}}" method="POST"><!--Add to cart form BEGIN-->
 							{% csrf_token %}
 							<input type="hidden" name="product_type" value="cards" />
 							<input type="hidden" name="user_id" value="1">
-							<input type="hidden" name="price" value="{{card.price}}" />
+							<input type="hidden" name="price" value="{{card.actual_price}}" />
 							<div class="cart_quantity_button">
-								<a class="cart_quantity_up" style="width:15px;" href=""> + </a>
-								<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
-								<a class="cart_quantity_down" href=""> - </a>
+								<a class="cart_quantity_up" style="width:15px;" href="#" > + </a>
+								<input class="cart_quantity_input" type="text" name="quantity" value=1 autocomplete="off" size="2" id="{{card.ref_id}}">
+								<a class="cart_quantity_down"  href="#"> - </a>
 							</div>
 							<a onclick="document.getElementById('add_to_cart{{forloop.counter}}').submit();" href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 						</form> <!--Add to cart form END-->
-						</a>
 					</div>
 			</div>
 			<div class="choose">
@@ -36,4 +36,21 @@
 	</div>
 	{% endfor %}						
 	{% endif %}
-					
+<script type="text/javascript">
+   $(function () {
+    $('.cart_quantity_up').on('click',function(){
+        var $qty=$(this).closest('div').find('.cart_quantity_input');
+        var currentVal = parseInt($qty.val());
+        if (!isNaN(currentVal)) {
+            $qty.val(currentVal + 1);
+        }
+    });
+    $('.cart_quantity_down').on('click',function(){
+        var $qty=$(this).closest('div').find('.cart_quantity_input');
+        var currentVal = parseInt($qty.val());
+        if (!isNaN(currentVal) && currentVal > 0) {
+            $qty.val(currentVal - 1);
+        }
+    });
+});
+</script>

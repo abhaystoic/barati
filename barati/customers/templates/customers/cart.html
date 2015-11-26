@@ -34,6 +34,7 @@
 				<ol class="breadcrumb">
 				  <li><a href="/">Home</a></li>
 				  <li class="active">Shopping Cart</li>
+				  <li style="float:right;"><a href="#checked-options">Proceed to Check Out</a></li>
 				</ol>
 			</div>
 			<div class="table-responsive cart_info">
@@ -51,8 +52,12 @@
 					<tbody>
 						{% if card_list %}
 						{% for product in card_list %}
-							{% include 'customers/cart_products.html'%}
+							{% include 'customers/cart_products_cards.html'%}
 						{% endfor %}
+						{% else %}
+							<tr>
+							<td><img src="{% static 'images/cart/emptycart.jpg' %}" alt="empty cart" /></td>
+							</tr>
 						{% endif %}
 						
 					</tbody>
@@ -60,34 +65,45 @@
 			</div>
 		</div>
 	</section> <!--/#cart_items-->
+<section id="do_action">
+<div class="container">
+		<div class="checkout-options" id="checked-options">
+			<p>Checkout options</p>
+			<ul class="nav">
+				<li>
+					<label><input type="checkbox"> Register Account</label>
+				</li>
+				<li>
+					<label><input type="checkbox"> Guest Checkout</label>
+				</li>
+				<li>
+					<a href=""><i class="fa fa-times"></i>Cancel</a>
+				</li>
+			</ul>
+		</div><!--/checkout-options-->
 
-	<section id="do_action">
-		<div class="container">
-			<div class="heading">
-				<h3>What would you like to do next?</h3>
-				<p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
-			</div>
+		<div class="shopper-informations">
 			<div class="row">
-				<div class="col-sm-6">
-					<div class="chose_area">
-						<ul class="user_option">
-							<li>
-								<input type="checkbox">
-								<label>Use Coupon Code</label>
-							</li>
-							<li>
-								<input type="checkbox">
-								<label>Use Gift Voucher</label>
-							</li>
-							<li>
-								<input type="checkbox">
-								<label>Estimate Shipping & Taxes</label>
-							</li>
-						</ul>
-						<ul class="user_info">
-							<li class="single_field">
-								<label>Country:</label>
+				<div class="col-sm-5 clearfix" style="width:70%">
+					<div class="bill-to">
+						<p>Bill To</p>
+						<div class="form-one">
+							<form>
+								<input type="text" placeholder="Company Name">
+								<input type="text" placeholder="Email*">
+								<input type="text" placeholder="Title">
+								<input type="text" placeholder="First Name *">
+								<input type="text" placeholder="Middle Name">
+								<input type="text" placeholder="Last Name *">
+								<input type="text" placeholder="Address 1 *">
+								<input type="text" placeholder="Address 2">
+							</form>
+						</div>
+						<div class="form-two">
+							<form>
+								<input type="text" placeholder="Zip / Postal Code *">
 								<select>
+									<option>-- Country --</option>
 									<option>United States</option>
 									<option>Bangladesh</option>
 									<option>UK</option>
@@ -97,47 +113,63 @@
 									<option>Canada</option>
 									<option>Dubai</option>
 								</select>
-								
-							</li>
-							<li class="single_field">
-								<label>Region / State:</label>
 								<select>
-									<option>Select</option>
-									<option>Dhaka</option>
-									<option>London</option>
-									<option>Dillih</option>
-									<option>Lahore</option>
-									<option>Alaska</option>
+									<option>-- State / Province / Region --</option>
+									<option>United States</option>
+									<option>Bangladesh</option>
+									<option>UK</option>
+									<option>India</option>
+									<option>Pakistan</option>
+									<option>Ucrane</option>
 									<option>Canada</option>
 									<option>Dubai</option>
 								</select>
-							
-							</li>
-							<li class="single_field zip-field">
-								<label>Zip Code:</label>
-								<input type="text">
-							</li>
-						</ul>
-						<a class="btn btn-default update" href="">Get Quotes</a>
-						<a class="btn btn-default check_out" href="">Continue</a>
+								<input type="password" placeholder="Confirm password">
+								<input type="text" placeholder="Phone *">
+								<input type="text" placeholder="Mobile Phone">
+								<input type="text" placeholder="Fax">
+							</form>
+						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
-					<div class="total_area">
-						<ul>
-							<li>Cart Sub Total <span>Rs. {{cart_sub_total}}</span></li>
-							<li>Tax <span>{{tax}}</span></li>
-							<li>Shipping Cost <span>Free</span></li>
-							<li>Total <span>{{grand_total}}</span></li>
-						</ul>
-							<a class="btn btn-default update" href="">Update</a>
-							<a class="btn btn-default check_out" href="">Check Out</a>
-					</div>
-				</div>
+						<div class="col-sm-3">
+						<div class="total_area">
+							<ul>
+								<li>Cart Sub Total <span>Rs. {{cart_sub_total}}</span></li>
+								<li>Tax <span>{{tax}}</span></li>
+								<li>Shipping Cost <span>Free</span></li>
+								<li>Total <span>{{grand_total}}</span></li>
+							</ul>
+								<form id = "checkout" method="post" action="/checkout/">
+								{% csrf_token %}
+								<ul class="">
+									<li class="">
+										<label>Select Payment Method:</label>
+										<select name = "payment_method" required = "true">
+											<option value="">...........</option>
+											<option value="credit_card">Credit Card</option>
+											<option value="net_banking">Net Banking</option>
+											<option value="debit_card">Debit Card</option>
+										</select>
+										
+									</li>
+								</ul>
+								<input type="hidden" name="user_id" value="1" />
+								<a class="btn btn-default update" href="#cart_items">Review</a>
+								<a onclick="document.getElementById('checkout').submit();" class="btn btn-default check_out">Check Out</a>
+							</form>	
+						</div>
+						</div>					
 			</div>
 		</div>
-	</section><!--/#do_action-->
+	</div>	
+</section> <!--/#cart_items-->
 
+<section id="do_action">
+<div class="container">
+
+</div>
+</section>
 	{% include 'customers/footer.html'%}					
   
     <script src="{% static 'js/jquery.js' %}"></script>

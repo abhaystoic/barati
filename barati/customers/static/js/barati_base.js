@@ -1,5 +1,6 @@
 //Thanks to : https://www.fir3net.com/Web-Development/Django/how-do-i-use-ajax-along-side-django.html
 $(document).ready(function() {
+   alert('ready');
     $('#add_to_cart').submit(function() { // catch the form's submit event
         $.ajax({
             url : this.action, 
@@ -21,4 +22,3 @@ $(document).ready(function() {
         return false;
     });
     });
-
