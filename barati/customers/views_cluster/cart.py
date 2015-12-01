@@ -21,8 +21,10 @@ class Cart(Dashboard, View):
          context = super(Cart, self).get_context_data(**kwargs)
          return context
 
-      def get_queryset(self, **kwargs):
-         query_cart = "select distinct on (ref_id) id, ref_id from cart where user_id = 1"
+      def get_queryset(self, *args, **kwargs):
+         request = args[0]
+         user_id = m.Users.objects.get(username=request.user.username).id
+         query_cart = "select distinct on (ref_id) id, ref_id from cart where user_id = " + str(user_id)
 
          self.cart = m.Cart.objects.raw(query_cart)
          self.card_list = []
@@ -90,7 +92,7 @@ class Cart(Dashboard, View):
          
       #@login_required(login_url='/auth/login/')
       def get(self, request, **kwargs):
-         context_dict = self.get_queryset()
+         context_dict = self.get_queryset(request)
          context_dict.update(self.get_context_data())
          return render(request, self.template_name, context_dict)   
    

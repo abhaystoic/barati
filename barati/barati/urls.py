@@ -1,10 +1,10 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-from customers import views as customer_views
+from customers.views_cluster.dashboard import Dashboard
 from vendors import views as vendors_views
 
 urlpatterns = [
-    url(r'^$', customer_views.Dashboard.as_view(), name='dashboard'),
+    url(r'^$', Dashboard.as_view(), name='dashboard'),
     url(r'', include('customers.urls', namespace = 'customers')),
     url(r'^vendor/', include('vendors.urls', namespace = 'vendors')),
     url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
@@ -14,4 +14,6 @@ urlpatterns = [
 {'post_reset_redirect' : '/user/password/done/'}),
     url(r'^user/password/done/$', 'django.contrib.auth.views.password_reset_complete'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^logout_then_login/',  'django.contrib.auth.views.logout_then_login', {'login_url': '/auth/login/'}),
+    url('', include('social.apps.django_app.urls', namespace='social')),
 ]

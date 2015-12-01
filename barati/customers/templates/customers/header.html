@@ -1,14 +1,20 @@
 {% load staticfiles %}
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<link href="{% static 'css/barati_base.css' %}" rel="stylesheet"/>
 <header id="header"><!--header-->
 		
 		<div class="header-middle"><!--header-middle-->
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-4">
-						
+						<div class="logo pull-left">
+							<a href="/"><img src="{% static 'images/home/logo.png' %}" width = "200" height = "" alt="barati logo" /></a>
+						</div>
 						<div class="btn-group pull-right">
 							<div class="btn-group">
+								<button type="button" id="date-picker" class="btn btn-default dropdown-toggle usa">
+									Date
+								</button>
 								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
 									Location
 									<span class="caret"></span>
@@ -28,11 +34,24 @@
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-								<li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
-								<li><a href="/cart/#checked-options"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+								<li><a href="/wishlist"><i class="fa fa-star"></i> Wishlist</a></li>
+								<li><a href="/my_orders"><i class="fa fa-crosshairs"></i> My Orders</a></li>
 								<li><a href="/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-								<li><a href="/auth/login"><i class="fa fa-lock"></i> Login</a></li>
+								{% if request.user.username %}
+								<ul class="nav navbar-nav collapse navbar-collapse">
+									<li class="dropdown" style="width:150px;"><a href="#">&nbsp;&nbsp;&nbsp;Welcome {{request.user.first_name}}!<i class="fa fa-angle-down"></i></a>
+	                                    <ul role="menu" class="sub-menu" style="width:150px;">
+                                    	<li><a href="#" id="user_dropdown"><i class="fa fa-user"></i> My Account</a></li>
+                                    	<li><a href="#" id="user_dropdown"><i class="fa fa-crosshairs"></i> My Reviews</a></li>
+                                    	<li><a href="#" id="user_dropdown"><i class="fa fa-crosshairs"></i> My Budget</a></li>
+                                    	<li><a href="/auth/logout" id="user_dropdown"><i class="fa fa-crosshairs"></i> Logout</a></li>
+	                                    </ul>
+	                                </li>
+                                </ul> 
+                                {% else %}
+                                	<li><a href="/auth/login"><i class="fa fa-lock"></i> Login</a></li>
+                                {% endif %}
+
 							</ul>
 						</div>
 					</div>

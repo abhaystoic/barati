@@ -40,7 +40,6 @@
 <form action="/add_to_cart/{{card_detail.ref_id}}" id="add_to_cart" method="POST"><!--Add to cart form BEGIN-->
 {% csrf_token %}
 <input type="hidden" name="product_type" value="cards" />
-<input type="hidden" name="user_id" value="1">
 <input type="hidden" name="price" value="{{card_detail.actual_price}}" />
 <div class="product-information"><!--/product-information-->
 <h2>{{card_detail.name}}</h2>
@@ -51,7 +50,7 @@
 	<span>{{card_detail.actual_price}} Rs Per Card</span>
 	<label>Quantity:</label>
 	<input type="text" name = "quantity" value="1" />
-	<button type="submit" class="btn btn-fefault cart">
+	<button type="submit" class="btn btn-default cart">
 		<i class="fa fa-shopping-cart"></i>
 		Add to cart
 	</button>

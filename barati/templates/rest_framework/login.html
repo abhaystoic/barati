@@ -1,3 +1,4 @@
+{% load url from future %}
 {% load staticfiles %}
 {% load rest_framework %}
 <!DOCTYPE html>
@@ -7,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Login | E-Shopper</title>
+    <title>Login | Barati</title>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/prettyPhoto.css' %}" rel="stylesheet">
@@ -25,74 +26,31 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'images/ico/apple-touch-icon-72-precomposed.png' %}">
     <link rel="apple-touch-icon-precomposed" href="{% static 'images/ico/apple-touch-icon-57-precomposed.png' %}">
 </head><!--/head-->
-
+{% load staticfiles %}
+    {% block body %}
 <body>
-	<header id="header"><!--header-->
-		<div class="header_top"><!--header_top-->
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-6">
-						<div class="contactinfo">
-							<ul class="nav nav-pills">
-								<li><a href=""><i class="fa fa-phone"></i> +2 95 01 88 821</a></li>
-								<li><a href=""><i class="fa fa-envelope"></i> info@domain.com</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-sm-6">
-						<div class="social-icons pull-right">
-							<ul class="nav navbar-nav">
-								<li><a href=""><i class="fa fa-facebook"></i></a></li>
-								<li><a href=""><i class="fa fa-twitter"></i></a></li>
-								<li><a href=""><i class="fa fa-linkedin"></i></a></li>
-								<li><a href=""><i class="fa fa-dribbble"></i></a></li>
-								<li><a href=""><i class="fa fa-google-plus"></i></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div><!--/header_top-->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1710233362554820";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<header id="header"><!--header-->
 		
 		<div class="header-middle"><!--header-middle-->
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="logo pull-left">
-							<a href="/customers/dashboard"><img src="{% static 'images/home/logo.png' %}" alt="" /></a>
-						</div>
-						<div class="btn-group pull-right">
-							<div class="btn-group">
-								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-									USA
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li><a href="">Canada</a></li>
-									<li><a href="">UK</a></li>
-								</ul>
-							</div>
-							
-							<div class="btn-group">
-								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-									DOLLAR
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li><a href="">Canadian Dollar</a></li>
-									<li><a href="">Pound</a></li>
-								</ul>
-							</div>
+							<a href="/"><img src="{% static 'images/home/logo.png' %}" width = "200" height = "" alt="barati logo" /></a>
 						</div>
 					</div>
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href=""><i class="fa fa-user"></i> Account</a></li>
-								<li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
-								<li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-								<li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-								<li><a href="login.html" class="active"><i class="fa fa-lock"></i> Login</a></li>
 							</ul>
 						</div>
 					</div>
@@ -101,65 +59,73 @@
 		</div><!--/header-middle-->
 	
 		<div class="header-bottom"><!--header-bottom-->
-			<div class="container">
+			<div class="container" >
 				<div class="row">
 					<div class="col-sm-9">
 						<div class="navbar-header">
-							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-								<span class="sr-only">Toggle navigation</span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-								<span class="icon-bar"></span>
-							</button>
-						</div>
-						<div class="mainmenu pull-left">
-							<ul class="nav navbar-nav collapse navbar-collapse">
-								<li><a href="index.html">Home</a></li>
-								<li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Products</a></li>
-										<li><a href="product-details.html">Product Details</a></li> 
-										<li><a href="checkout.html">Checkout</a></li> 
-										<li><a href="cart.html">Cart</a></li> 
-										<li><a href="login.html" class="active">Login</a></li> 
-                                    </ul>
-                                </li> 
-								<li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="blog.html">Blog List</a></li>
-										<li><a href="blog-single.html">Blog Single</a></li>
-                                    </ul>
-                                </li> 
-								<li><a href="404.html">404</a></li>
-								<li><a href="contact-us.html">Contact</a></li>
-							</ul>
-						</div>
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
 					</div>
-					<div class="col-sm-3">
+					</div>
+					<!--<div class="col-sm-3">
 						<div class="search_box pull-right">
 							<input type="text" placeholder="Search"/>
 						</div>
 					</div>
+					-->
 				</div>
 			</div>
 		</div><!--/header-bottom-->
 	</header><!--/header-->
 	
-	<section id="form"><!--form-->
+	<section id="form" style="margin-top:-20px;"><!--form-->
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-4 col-sm-offset-1">
 					<div class="login-form"><!--login form-->
 						<h2>Login to your account</h2>
-						<form action="#">
-							<input type="text" placeholder="Name" />
-							<input type="email" placeholder="Email Address" />
-							<span>
+							<form action="{% url 'rest_framework:login' %}" role="form" method="post" align="center">
+							{% csrf_token %}	
+							<div class="login">
+									<label style = "color: black;font-family: 'Exo', sans-serif;font-size: 16px;font-weight: 800;">{{ status }}</label>
+									<input type="text" placeholder="username" required = "true" name="username" value="{{username}}" {% if form.username.value %}value="{{ form.username.value }}"{% endif %}/><br>
+									{% if form.username.errors %}
+					                                            <p class="text-error">
+					                                                {{ form.username.errors|striptags }}
+					                                            </p>
+					                                {% endif %}
+									<div id="div_id_password" class="clearfix control-group {% if form.password.errors %}error{% endif %}">
+									<input type="password" placeholder="password" name="password" value="" class="form-control textinput textInput" id="id_password" required/><br>
+									{% if form.password.errors %}
+					                                            <p class="text-error">
+					                                                {{ form.password.errors|striptags }}
+					                                            </p>
+					                                        {% endif %}
+					                                    </div>
+									<input type="hidden" name="next" value="{{ next }}" />
+					                                {% if form.non_field_errors %}
+					                                    {% for error in form.non_field_errors %}
+					                                        <div class="well well-small text-error" style="border: none; color : #000000">{{ error }}</div>
+					                                    {% endfor %}
+					                                {% endif %}
+					                                
+									<span>
 								<input type="checkbox" class="checkbox"> 
 								Keep me signed in
-							</span>
-							<button type="submit" class="btn btn-default">Login</button>
-						</form>
+								&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="/user/password/reset" >Forgot Password?</a>
+								</span>
+								<span>
+									<button type="submit" class="btn btn-default">Login</button> <br/>
+									<a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">
+							        	<image src="{% static 'images/social/sign_in_facebook.png' %}" />
+							        </a>
+						        </span>
+							</div>
+							</form>
 					</div><!--/login form-->
 				</div>
 				<div class="col-sm-1">
@@ -168,13 +134,19 @@
 				<div class="col-sm-4">
 					<div class="signup-form"><!--sign up form-->
 						<h2>New User Signup!</h2>
-						<form action="#">
-							<input type="text" placeholder="Name"/>
-							<input type="email" placeholder="Email Address"/>
-							<input type="password" placeholder="Password"/>
+						<form action="/sign_up/" method="post" id="sign_up" name="sign_up">
+							{% csrf_token %}
+							<input type="text" placeholder="Name" name="name" required = "true"/>
+							<input type="email" placeholder="Email Address" name="email" required = "true" />
+							<input type="password" placeholder="Password" name="password" required = "true" />
+							<input type="password" placeholder="Confirm Password" name="confirm_password" required = "true" />
+							<!--<select name = "religion">
+							<option value="">..Select Religion..</option>
+							</select>-->
 							<button type="submit" class="btn btn-default">Signup</button>
 						</form>
 					</div><!--/sign up form-->
+					<div class="fb-login-button" data-max-rows="5" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>
 				</div>
 			</div>
 		</div>
@@ -346,5 +318,34 @@
 	<script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+	$('#sign_up').submit(function() { // catch the form's submit event
+	  $.ajax({
+	      url : this.action, 
+	      type : "POST",
+	      dataType: "json", 
+	      data: $(this).serialize(), // get the form data
+	      context : this,
+	      success : function(json) {
+	        if (json == "success_sign_up")
+	        {
+	           alert('Successfully registered. Please log in and update your profile so that we can know you better.');  
+	           window.location = '/auth/login'; // redirect to the home page
+	        }
+	        else
+	        {
+	          alert(json);
+	        }
+	        },
+	      error : function(xhr,errmsg,err) {
+	        alert(xhr.status + ": " + xhr.responseText);
+	        }
+	  });
+	  return false;
+	});
+	});
+    </script>
 </body>
+ {% endblock %}
 </html>

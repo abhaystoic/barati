@@ -13,6 +13,7 @@ class Card(Dashboard, View):
    try:
       def __init__(self):
          self.template_name = 'customers/card.html'
+         self.wishlist_list = []
 
       def get_context_data(self, **kwargs):
          context = super(Card, self).get_context_data(**kwargs)
@@ -23,6 +24,16 @@ class Card(Dashboard, View):
          query = "select id, name from card_types"
          self.card_subcategories = m.Card_Types.objects.raw(query)
          return self.card_subcategories
+      
+      def prepare_wishlist_data(self, *args, **kwargs):
+         request = args[0]
+         if request.user.username:
+            user_id = m.Users.objects.get(username= request.user.username).id
+            query = "select id, ref_id from wishlist where user_id=" + str(user_id)
+            wishlist = m.Wishlist.objects.raw(query)
+            for wish in wishlist:
+               self.wishlist_list.append(str(wish.ref_id))
+         return self.wishlist_list   
          
       def get_cards(self, **kwargs):
          type = self.kwargs['type']
@@ -34,7 +45,8 @@ class Card(Dashboard, View):
       def get(self, request, **kwargs):
          subcategories = self.get_context_data()['card_types']
          cards = self.get_cards()
-         context_dict = {'subcategories' : subcategories, 'cards' : cards, 'category' : 'card'}
+         wishlist_list = self.prepare_wishlist_data(request)
+         context_dict = {'subcategories' : subcategories, 'cards' : cards, 'category' : 'card', 'wishlist_list' : wishlist_list}
          context_dict.update(self.get_context_data())
          return render(request, self.template_name, context_dict)   
 

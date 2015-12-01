@@ -34,11 +34,16 @@
 				<ol class="breadcrumb">
 				  <li><a href="/">Home</a></li>
 				  <li class="active">Shopping Cart</li>
-				  <li style="float:right;"><a href="#checked-options">Proceed to Check Out</a></li>
+				  {% if card_list %}
+				  	<li style="float:right;"><a href="#checked-options">Proceed to Check Out</a></li>
+				  {% else %}	
+				  	<li style="float:right;"><a href="/">Continue Shopping...</a></li>
+				  {% endif %}
 				</ol>
 			</div>
 			<div class="table-responsive cart_info">
 				<table class="table table-condensed">
+					{% if card_list %}
 					<thead>
 						<tr class="cart_menu">
 							<td class="image">Item</td>
@@ -48,6 +53,11 @@
 							<td class="total">Total</td>
 							<td></td>
 						</tr>
+					{% else %}	
+						<tr class="cart_menu">
+						<td></td>
+						</tr>
+					{% endif %}	
 					</thead>
 					<tbody>
 						{% if card_list %}
@@ -67,8 +77,10 @@
 	</section> <!--/#cart_items-->
 <section id="do_action">
 <div class="container">
+		{% if card_list %} <!--Don't show cart if there is nothing in it -->
 		<div class="checkout-options" id="checked-options">
-			<p>Checkout options</p>
+			<p>Check Out, Relax and Enjoy the Wedding!</p>
+			<!--<p>Checkout options</p>
 			<ul class="nav">
 				<li>
 					<label><input type="checkbox"> Register Account</label>
@@ -79,56 +91,38 @@
 				<li>
 					<a href=""><i class="fa fa-times"></i>Cancel</a>
 				</li>
-			</ul>
+			</ul>-->
 		</div><!--/checkout-options-->
-
+		<form id = "checkout" method="post" action="/checkout/">
 		<div class="shopper-informations">
 			<div class="row">
 				<div class="col-sm-5 clearfix" style="width:70%">
 					<div class="bill-to">
-						<p>Bill To</p>
+						<p>Please fill in your delivery details</p>
 						<div class="form-one">
-							<form>
-								<input type="text" placeholder="Company Name">
-								<input type="text" placeholder="Email*">
-								<input type="text" placeholder="Title">
-								<input type="text" placeholder="First Name *">
-								<input type="text" placeholder="Middle Name">
-								<input type="text" placeholder="Last Name *">
-								<input type="text" placeholder="Address 1 *">
-								<input type="text" placeholder="Address 2">
-							</form>
+								<input type="text" placeholder="First Name *" name="first_name" required="true">
+								<input type="text" placeholder="Middle Name" name="middle_name">
+								<input type="text" placeholder="Last Name *" name="last_name" required="true">
+								<input type="text" placeholder="Building Number" name="building_number">
+								<input type="text" placeholder="Street" name="street">
+								<input type="text" placeholder="Locality" name="locality">
+								<input type="text" placeholder="Nearest Landmark" name="landmark">
 						</div>
 						<div class="form-two">
-							<form>
-								<input type="text" placeholder="Zip / Postal Code *">
+								<textarea rows="3" placeholder="Address *" name="address" required="true"></textarea>
+								<br/><br/>
+								<input type="text" placeholder="City *" required="true">
+								<select>
+									<option>-- State --</option>
+									<option>Delhi</option>
+									<option>Uttar Pradesh</option>
+								</select>
 								<select>
 									<option>-- Country --</option>
-									<option>United States</option>
-									<option>Bangladesh</option>
-									<option>UK</option>
 									<option>India</option>
-									<option>Pakistan</option>
-									<option>Ucrane</option>
-									<option>Canada</option>
-									<option>Dubai</option>
 								</select>
-								<select>
-									<option>-- State / Province / Region --</option>
-									<option>United States</option>
-									<option>Bangladesh</option>
-									<option>UK</option>
-									<option>India</option>
-									<option>Pakistan</option>
-									<option>Ucrane</option>
-									<option>Canada</option>
-									<option>Dubai</option>
-								</select>
-								<input type="password" placeholder="Confirm password">
-								<input type="text" placeholder="Phone *">
-								<input type="text" placeholder="Mobile Phone">
-								<input type="text" placeholder="Fax">
-							</form>
+								<input type="text" placeholder="Zip / Postal Code *" required="true">
+								<input type="text" placeholder="Phone *" required="true">
 						</div>
 					</div>
 				</div>
@@ -140,7 +134,7 @@
 								<li>Shipping Cost <span>Free</span></li>
 								<li>Total <span>{{grand_total}}</span></li>
 							</ul>
-								<form id = "checkout" method="post" action="/checkout/">
+								
 								{% csrf_token %}
 								<ul class="">
 									<li class="">
@@ -154,14 +148,15 @@
 										
 									</li>
 								</ul>
-								<input type="hidden" name="user_id" value="1" />
 								<a class="btn btn-default update" href="#cart_items">Review</a>
 								<a onclick="document.getElementById('checkout').submit();" class="btn btn-default check_out">Check Out</a>
-							</form>	
+							
 						</div>
 						</div>					
 			</div>
 		</div>
+		</form>
+		{% endif %} <!--Don't show cart if there is nothing in it. End of if -->
 	</div>	
 </section> <!--/#cart_items-->
 

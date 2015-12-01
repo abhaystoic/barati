@@ -26,7 +26,7 @@ class Address(models.Model):
       managed = True
       db_table = 'address'
    def __unicode__(self):
-      return unicode(self.id)
+      return unicode(self.locality)
      
 
 class Users(models.Model):
@@ -302,7 +302,8 @@ class Orders(models.Model):
    vendor_acknowledgement = models.CharField(max_length=50)
    payment_done = models.BooleanField(default = False)
    payment_received = models.BooleanField(default = False)
-   payment_method = models.CharField(max_length=100)
+   payment_method = models.CharField(max_length=100, blank=True, null=True)
+   product_type = models.CharField(max_length=100, blank=True, null=True)
    timestamp = models.DateTimeField(auto_now_add=True)
    
    class Meta: 
@@ -310,3 +311,29 @@ class Orders(models.Model):
       db_table = 'orders'
    def __unicode__(self):
       return unicode(self.ref_id)
+
+class Wishlist(models.Model):
+   id = models.AutoField(primary_key=True)
+   user = models.ForeignKey(Users, blank=True, null=True)
+   ref_id = models.CharField(max_length=100, blank=True, null=True)
+   timestamp = models.DateTimeField(auto_now_add=True)
+   
+   class Meta: 
+      managed = True
+      db_table = 'wishlist'
+   def __unicode__(self):
+      return unicode(self.ref_id)
+
+class Delivery_Status(models.Model):
+   id = models.AutoField(primary_key=True)
+   ref_id = models.CharField(max_length=100, blank=True, null=True)
+   name = models.CharField(max_length=100, blank=True, null=True)
+   status = models.CharField(max_length=100, blank=True, null=True)
+   link = models.CharField(max_length=200, blank=True, null=True)
+   timestamp = models.DateTimeField(auto_now_add=True)
+   
+   class Meta: 
+      managed = True
+      db_table = 'delivery_status'
+   def __unicode__(self):
+      return unicode(self.ref_id)      

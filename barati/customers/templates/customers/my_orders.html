@@ -1,0 +1,130 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>My Orders | Barati</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/prettyPhoto.css' %}" rel="stylesheet">
+    <link href="{% static 'css/price-range.css' %}" rel="stylesheet">
+    <link href="{% static 'css/animate.css' %}" rel="stylesheet">
+	<link href="{% static 'css/main.css' %}" rel="stylesheet">
+	<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="{% static 'js/html5shiv.js' %}"></script>
+    <script src="{% static 'js/respond.min.js' %}"></script>
+    <![endif]-->       
+    <link rel="shortcut icon" href="{% static 'images/ico/favicon.ico' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'images/ico/apple-touch-icon-144-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'images/ico/apple-touch-icon-114-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'images/ico/apple-touch-icon-72-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" href="{% static 'images/ico/apple-touch-icon-57-precomposed.png' %}">
+</head><!--/head-->
+
+<body>
+	{% include 'customers/header.html'%}
+	<table>
+	<section id="cart_items">
+		<div class="container">
+			<div class="breadcrumbs">
+				<ol class="breadcrumb">
+				  <li><a href="/">Home</a></li>
+				  <li class="active">Wishlist</li>
+				  <li style="float:right;"><a href="/">Continue Shopping...</a></li>
+				</ol>
+			</div>
+			<div class="table-responsive cart_info">
+				<table class="table table-condensed" style="margin-left:100px;width:80%">
+					{% if my_orders %}
+					<thead>
+						<tr class="cart_menu">
+							<td></td>
+							<td class="image" style="width:100px;">Item</td>
+							<td></td>
+							<td class="price">Price</td>
+							<td></td>
+							<td style="border-bottom:1px solid #DDD;">Vendor Confirmation</td>
+							<td></td>
+							<td style="border-bottom:1px solid #DDD;width:200px;" >Delivery Status</td>
+						</tr>
+					{% else %}	
+						<tr class="cart_menu">
+						<td></td>
+						</tr>
+					{% endif %}	
+					</thead>
+					<tbody>
+						{% if my_orders %}
+						{% for product in my_orders %}
+							
+							<tr>
+							<td class="cart_product" style="margin-top:-1px;">
+								<a href="/card_details/{{product.id}}"><img width = "100px" height = "100px" src="{% static '' %}{{product.ref_id|get_pic_path}}" alt="{% static '' %}{{ product.ref_id|get_pic_path }}"></a>
+							</td>
+							<td></td>
+							<td class="cart_description">
+								<h4><a href="/card_details/{{product.id}}">{{product.name}}</a></h4>
+								<p>Product Idea: {{product.ref_id}}</p>
+								<p>{{product.short_description}}</p>
+							</td>
+							<td class="cart_price">
+								<label>{{product.actual_price}} Rs</label>
+							</td>
+							<td></td>
+							{% if order_details %}
+							<td class="" style="border-top:0px;">
+								{% for order in order_details%}
+								{% if order.ref_id == product.ref_id %}
+									{{order.vendor_acknowledgement}}
+								{% endif %}
+								{% endfor %}
+							</td>
+							<td></td>
+							{% endif %}
+							{% if delivery_details %}
+
+							<td style="width:300px;">
+								{% for delivery in delivery_details %}
+								{% if delivery.ref_id == product.ref_id %}	
+									<table>
+									<tr><td style="font-weight:bold;"> Status </td><td style="font-size:10px">{{delivery.status}}</td></tr>
+									<tr><td style="font-weight:bold;">Delivery Partner </td><td style="font-size:10px"> 	{{delivery.name}} &nbsp;</td></tr>
+									<tr><td style="font-weight:bold;">Track your order </td><td style="font-size:10px"> 
+									<a target="_blank" href="{{delivery.link}}">Track</a>
+									</td></tr>
+									<tr><td style="font-weight:bold;">Last updated </td><td style="font-size:10px"> {{delivery.timestamp}}</td></tr>
+									</table>
+								{% endif %}	
+								{% endfor %}	
+							</td>		
+							{% endif %}
+							</tr>
+						{% endfor %}
+						{% else %}
+							<tr>
+							<td><img src="{% static 'images/home/wish_list_empty.gif' %}" alt="empty cart" /></td>
+							</tr>
+							<tr></tr>
+						{% endif %}
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section> <!--/#cart_items-->
+	</table>
+	{% include 'customers/footer.html'%}					
+  
+    <script src="{% static 'js/jquery.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
+	<script src="{% static 'js/price-range.js' %}"></script>
+    <script src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/barati_main.js' %}"></script>
+</body>
+</html>

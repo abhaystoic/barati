@@ -1,6 +1,5 @@
 #Ignore pylint whitespace warning
 # pylint: disable=W0311
-
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
@@ -80,6 +79,16 @@ def get_total_price(key):
 def multiply(first, second):
    try:
       value = first * second
+      return value
+   except Exception as general_exception:
+      print str(general_exception)
+      print "Line number : " + str(sys.exc_traceback.tb_lineno)
+      return "not_found"
+
+@register.filter(name = 'decrement') 
+def decrement(value):
+   try:
+      value = value - 1
       return value
    except Exception as general_exception:
       print str(general_exception)

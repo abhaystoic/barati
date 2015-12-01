@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url, handler404
+from django.contrib.auth.decorators import login_required
 from customers import views
 import os
 #Importing all the clustered views
@@ -16,7 +17,13 @@ urlpatterns = patterns('',
    url(r'^blog/$', Blog, name = 'blog'),
    url(r'^cart/$', Cart.as_view(), name = 'cart'),
    url(r'^checkout/$', Checkout.as_view(), name = 'checkout'),
+   url(r'^add_to_wishlist/$', login_required(Add_To_Wishlist.as_view()), name = 'add_to_wishlist'),
+   url(r'^remove_from_wishlist/(?P<ref_id>[-\w]+)$', login_required(Remove_From_Wishlist.as_view()), name = 'remove_from_wishlist'),
+   url(r'^remove_from_cart/(?P<ref_id>[-\w]+)$', login_required(Remove_From_Cart.as_view()), name = 'remove_from_cart'),
+   url(r'^my_orders/$', login_required(My_Orders.as_view()), name = 'my_orders'),
+   url(r'^wishlist/$', login_required(Wishlist.as_view()), name = 'wishlist'),
    url(r'^contact_us/$', Contact_Us, name = 'contact_us'),
+   url(r'^sign_up/$', Sign_Up.as_view(), name = 'sign_up'),
    url(r'^product_details/$', Product_Details, name = 'product_details'),
    url(r'^venue/(?P<type>[-\w]+)$', Venue.as_view(), name = 'venue'),
    url(r'^card/(?P<type>[-\w]+)$', Card.as_view(), name = 'card'),
