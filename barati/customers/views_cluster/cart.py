@@ -79,7 +79,7 @@ class Cart(Dashboard, View):
             if str(product.product_type) == "fireworks":
                self.fireworks_list.append(m.Fireworks.objects.get(ref_id = str(product.ref_id)))
          
-         self.cart_sub_total = m.Cart.objects.filter(user_id = 1).aggregate(cart_sub_total = Sum('total_price'))
+         self.cart_sub_total = m.Cart.objects.filter(user_id = user_id).aggregate(cart_sub_total = Sum('total_price'))
          if self.cart_sub_total['cart_sub_total'] is not None:
             self.tax = self.cart_sub_total['cart_sub_total'] * 0.10
             self.grand_total = float(self.tax) + float(self.cart_sub_total['cart_sub_total'])

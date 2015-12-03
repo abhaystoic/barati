@@ -25,7 +25,16 @@
 								<input class="cart_quantity_input" type="text" name="quantity" value=1 autocomplete="off" size="2" id="{{card.ref_id}}">
 								<a class="cart_quantity_down"  href="#"> - </a>
 							</div>
-							<a onclick="document.getElementById('add_to_cart{{forloop.counter}}').submit();" href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+							{% if request.user.username %}
+								<a href="#" onclick="add_to_cart({{forloop.counter}})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i><button type="submit" style="border:none;background:transparent;" >  Add to cart</button></a>
+							{% else %}
+								<a style = "" href = "#login"  class="btn btn-default add-to-cart">
+								<button type="button" style="border:none;background:transparent;">
+									<i class="fa fa-shopping-cart"></i>
+									Add to cart
+								</button>
+								</a>
+							{% endif %}
 						</form> <!--Add to cart form END-->
 					</div>
 			</div>
@@ -34,11 +43,15 @@
 					{% csrf_token %}
 					<input type="hidden" name="ref_id" value="{{card.ref_id}}" />
 					<ul class="nav nav-pills nav-justified">
-						{% if card.ref_id in wishlist_list %}
-							<li><a href="/wishlist"><i class="fa fa-plus-square"></i>In Wishlist</a></li>
-						{% else %}
-							<li><a href="#" onclick="document.getElementById('add_to_wishlist{{forloop.counter}}').submit();"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-						{% endif %}
+						{% if request.user.username %}
+								{% if card.ref_id in wishlist_list %}
+									<li><a href="/wishlist"><i class="fa fa-plus-square"></i>In Wishlist</a></li>
+								{% else %}
+									<li><a href="#" onclick="add_to_wishlist({{forloop.counter}})"><i class="fa fa-plus-square"></i><button type="submit" style="border:none;background:transparent;" > Add to wishlist</button></a></li>
+								{% endif %}
+							{% else %}
+								<li><a href="#login" onclick=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+							{% endif %}
 						<li><a href="#"><i class="fa fa-plus-square"></i>Get it's FEEL</a></li>
 					</ul>
 				</form>
@@ -47,6 +60,8 @@
 	</div>
 	{% endfor %}						
 	{% endif %}
+{% include 'customers/login_popup.html' %}
+
 <script type="text/javascript">
    $(function () {
     $('.cart_quantity_up').on('click',function(){
@@ -64,4 +79,57 @@
         }
     });
 });
+</script>
+<script type="text/javascript">
+	function add_to_cart(card_seq_number)
+   	{
+          var add_to_cart_form_id = '#add_to_cart'+ String(card_seq_number);
+          $(add_to_cart_form_id).submit(function() { // catch the form's submit event
+              $.ajax({
+                  url : this.action, 
+                  type : "POST",
+                  dataType: "json",
+                  data: $(this).serialize(), // get the form data
+                  context : this,
+                  success : function(json) {
+                    alert(json);
+                    if (json == "success_add_to_cart")
+                    {
+                      window.location = location.pathname; // redirect back to the calling page
+                    }
+                    },
+                  error : function(xhr,errmsg,err) {
+                    remove_spinner(); 
+                    alert(xhr.status + ": " + xhr.responseText);
+                    }
+              });
+              return false;
+          });
+    }
+
+    function add_to_wishlist(card_seq_number)
+   	{
+          var add_to_wishlist_form_id = '#add_to_wishlist'+ String(card_seq_number);
+          $(add_to_cart_form_id).submit(function() { // catch the form's submit event
+              $.ajax({
+                  url : this.action, 
+                  type : "POST",
+                  dataType: "json",
+                  data: $(this).serialize(), // get the form data
+                  context : this,
+                  success : function(json) {
+                    alert(json);
+                    if (json == "success_add_to_wish_list")
+                    {
+                      window.location = location.pathname; // redirect back to the calling page
+                    }
+                    },
+                  error : function(xhr,errmsg,err) {
+                    remove_spinner(); 
+                    alert(xhr.status + ": " + xhr.responseText);
+                    }
+              });
+              return false;
+          });
+    }	
 </script>

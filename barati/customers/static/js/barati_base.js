@@ -24,7 +24,6 @@
 */
 $(document).ready(function() {
     $('form').submit(function() { // catch the form's submit event
-        alert('ss'); 
         $.ajax({
             url : this.action, 
             type : "POST",
@@ -32,7 +31,6 @@ $(document).ready(function() {
             data: $(this).serialize(), // get the form data
             context : this,
             success : function(json) {
-              alert(json);
               if (json == "success_add_to_cart")
               {
                   alert(json);       //code for badging cart icon

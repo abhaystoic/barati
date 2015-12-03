@@ -78,7 +78,7 @@
 							{% if order_details %}
 							<td class="" style="border-top:0px;">
 								{% for order in order_details%}
-								{% if order.ref_id == product.ref_id %}
+								{% if order.id == product.ref_id %}
 									{{order.vendor_acknowledgement}}
 								{% endif %}
 								{% endfor %}
@@ -89,7 +89,7 @@
 
 							<td style="width:300px;">
 								{% for delivery in delivery_details %}
-								{% if delivery.ref_id == product.ref_id %}	
+								{% if delivery.order.id == order_details.id %}	
 									<table>
 									<tr><td style="font-weight:bold;"> Status </td><td style="font-size:10px">{{delivery.status}}</td></tr>
 									<tr><td style="font-weight:bold;">Delivery Partner </td><td style="font-size:10px"> 	{{delivery.name}} &nbsp;</td></tr>

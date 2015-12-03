@@ -1,0 +1,55 @@
+{% load staticfiles %}
+<a href="#x" class="overlay" id="login"></a>
+     <div class="popup">
+     <p><center><span id ="message_pop4"> Please login</center></span></p>
+     	<section id="form" style="margin-top:-20px;width:700px;height:200px;"><!--form-->
+		<div class="container" style="width:700px;height:200px;">
+			<div class="row">
+				<div class="col-sm-4 col-sm-offset-1" style="height:100px;">
+					<div class="login-form"><!--login form-->
+						<h2>Login to your account</h2>
+							<form action="{% url 'rest_framework:login' %}" role="form" method="post" align="center">
+							{% csrf_token %}	
+							<div class="login">
+									<input type="text" placeholder="username" required = "true" name="username" value="{{username}}" {% if form.username.value %}value="{{ form.username.value }}"{% endif %}/><br>
+									<input type="password" placeholder="password" name="password" value="" class="form-control textinput textInput" id="id_password" required/><br>
+									<span>
+								<input type="checkbox" class="checkbox"> 
+								Keep me signed in
+								&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a href="/user/password/reset" >Forgot Password?</a>
+								</span>
+								<span>
+									<button type="submit" class="btn btn-default">Login</button> <br/>
+									<a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">
+							        	<image src="{% static 'images/social/sign_in_facebook.png' %}" />
+							        </a>
+						        </span>
+							</div>
+							</form>
+					</div><!--/login form-->
+				</div>
+				<div class="col-sm-1">
+					<h2 class="or">OR</h2>
+				</div>
+				<div class="col-sm-4">
+					<div class="signup-form"><!--sign up form-->
+						<h2>New User Signup!</h2>
+						<form action="/sign_up/" method="post" id="sign_up" name="sign_up">
+							{% csrf_token %}
+							<input type="text" placeholder="Name" name="name" required = "true"/>
+							<input type="email" placeholder="Email Address" name="email" required = "true" />
+							<input type="password" placeholder="Password" name="password" required = "true" />
+							<input type="password" placeholder="Confirm Password" name="confirm_password" required = "true" />
+							<!--<select name = "religion">
+							<option value="">..Select Religion..</option>
+							</select>-->
+							<button type="submit" class="btn btn-default">Signup</button>
+						</form>
+					</div><!--/sign up form-->
+					<div class="fb-login-button" data-max-rows="5" data-size="large" data-show-faces="true" data-auto-logout-link="false"></div>
+				</div>
+			</div>
+		</div>
+	</section><!--/form-->
+		<a class="close" href="#close"></a>
+	   </div>

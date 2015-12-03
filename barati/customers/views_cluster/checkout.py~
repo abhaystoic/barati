@@ -28,9 +28,22 @@ class Checkout(Dashboard, View):
             query = "SELECT * FROM cart where user_id = {0}".format(user_id)
             products_from_cart = m.Cart.objects.raw(query)
             for product in products_from_cart:
-               query = "INSERT INTO orders(ref_id, quantity, total_price, package_id, vendor_acknowledgement, payment_done, payment_received, payment_method, user_id, timestamp, product_type) VALUES('{}', {}, {}, '{}', '{}', '{}', '{}', '{}', {}, {})"
+               query = "INSERT INTO orders(ref_id, quantity, total_price, package_id, vendor_acknowledgement, payment_done, payment_received, payment_method, user_id, timestamp, product_type) VALUES('{}', {}, {}, '{}', '{}', '{}', '{}', '{}', {}, {}, '{}')"
                query = query.format(str(product.ref_id), product.quantity, product.total_price, self.create_package_id(product.ref_id, product.product_type), 'pending', 'false', 'false', str(payment_method), user_id, 'now()', 'card')
-               products_to_orders = self.cursor.execute(query)  
+               self.cursor.execute(query)
+               print self.cursor.lastrowid
+               
+            first_name = request.POST.get('first_name')
+            middlle_name = request.POST.get('middle_name')
+            last_name = request.POST.get('last_name')
+            building_number = request.POST.get('building_number')
+            street = request.POST.get('street')
+            locality = request.POST.get('locality')
+            landmark = request.POST.get('landmark')
+            address = request.POST.get('address')
+            city = request.POST.get('city')
+            zipcode = request.POST.get('zipcode')
+            phone = request.POST.get('phone')
             
             #Delete everything from cart corresponding to this user_id
             for product in products_from_cart:
@@ -46,7 +59,7 @@ class Checkout(Dashboard, View):
          context_dict = super(Checkout, self).get_context_data(**kwargs)
          return context_dict
          
-      def get(self, **kwargs):   
+      def get(self, **kwargs):
          context = RequestContext(request)
          context_dict = self.get_context_data(request)
          if context_dict == "error":
@@ -59,6 +72,7 @@ class Checkout(Dashboard, View):
          if context_dict == "error":
             return render(request, self.error_template_name, context_dict)   
          return render(request, self.template_name, context_dict)
+
    except Exception as general_exception:
       transaction.rollback()
       print general_exception

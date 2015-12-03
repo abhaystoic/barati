@@ -14,6 +14,7 @@
     <link href="{% static 'css/animate.css' %}" rel="stylesheet">
 	<link href="{% static 'css/main.css' %}" rel="stylesheet">
 	<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+	<!--<link href="{% static 'css/barati_popup.css' %}" rel="stylesheet">-->
     <!--[if lt IE 9]>
     <script src="{% static 'js/html5shiv.js' %}"></script>
     <script src="{% static 'js/respond.min.js' %}"></script>
@@ -30,7 +31,7 @@
 	<section>
 		{% include 'customers/left_sidebar.html'%}
 				
-				<div class="col-sm-9 padding-right">
+				<div class="col-sm-9 padding-right"  style="background:#fff;">
 					<div class="product-details"><!--product-details-->
 						{% include 'customers/product_details.html'%}	
 					</div><!--/product-details-->
@@ -93,5 +94,7 @@
 	<script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/barati_base.js' %}"></script>
+    <!--<script src="{% static 'js/barati_popup.js' %}"></script>-->
 </body>
 </html>

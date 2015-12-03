@@ -294,17 +294,18 @@ class Product_Pictures(models.Model):
       
 class Orders(models.Model):
    id = models.AutoField(primary_key=True)
-   user = models.ForeignKey(Users)
+   user = models.ForeignKey(Users, blank=True, null=True)
    ref_id = models.CharField(max_length=100)
    quantity = models.IntegerField(blank=True, null=True)
    total_price = models.FloatField(blank=True, null=True)
    package_id = models.CharField(max_length=100)
-   vendor_acknowledgement = models.CharField(max_length=50)
+   vendor_acknowledgement = models.CharField(max_length=51)
    payment_done = models.BooleanField(default = False)
    payment_received = models.BooleanField(default = False)
    payment_method = models.CharField(max_length=100, blank=True, null=True)
    product_type = models.CharField(max_length=100, blank=True, null=True)
    timestamp = models.DateTimeField(auto_now_add=True)
+   address = models.ForeignKey(Address, blank=True, null=True)
    
    class Meta: 
       managed = True
@@ -331,9 +332,10 @@ class Delivery_Status(models.Model):
    status = models.CharField(max_length=100, blank=True, null=True)
    link = models.CharField(max_length=200, blank=True, null=True)
    timestamp = models.DateTimeField(auto_now_add=True)
+   order = models.ForeignKey(Orders, blank=True, null=True)
    
    class Meta: 
       managed = True
       db_table = 'delivery_status'
    def __unicode__(self):
-      return unicode(self.ref_id)      
+      return unicode(self.ref_id)

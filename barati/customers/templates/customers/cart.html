@@ -80,18 +80,12 @@
 		{% if card_list %} <!--Don't show cart if there is nothing in it -->
 		<div class="checkout-options" id="checked-options">
 			<p>Check Out, Relax and Enjoy the Wedding!</p>
-			<!--<p>Checkout options</p>
+			<p>Checkout options</p>
 			<ul class="nav">
 				<li>
-					<label><input type="checkbox"> Register Account</label>
+					<label><input type="checkbox"> Use my address </label>
 				</li>
-				<li>
-					<label><input type="checkbox"> Guest Checkout</label>
-				</li>
-				<li>
-					<a href=""><i class="fa fa-times"></i>Cancel</a>
-				</li>
-			</ul>-->
+			</ul>
 		</div><!--/checkout-options-->
 		<form id = "checkout" method="post" action="/checkout/">
 		<div class="shopper-informations">
@@ -112,17 +106,17 @@
 								<textarea rows="3" placeholder="Address *" name="address" required="true"></textarea>
 								<br/><br/>
 								<input type="text" placeholder="City *" required="true">
-								<select>
+								<select name="state">
 									<option>-- State --</option>
 									<option>Delhi</option>
 									<option>Uttar Pradesh</option>
 								</select>
-								<select>
+								<select name="country">
 									<option>-- Country --</option>
 									<option>India</option>
 								</select>
-								<input type="text" placeholder="Zip / Postal Code *" required="true">
-								<input type="text" placeholder="Phone *" required="true">
+								<input type="text" placeholder="Zip / Postal Code *" required="true" name="zipcode">
+								<input type="text" placeholder="Phone *" required="true" name="phone">
 						</div>
 					</div>
 				</div>

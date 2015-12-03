@@ -45,15 +45,25 @@
 <h2>{{card_detail.name}}</h2>
 <p>{{card_detail.short_description}}</p>
 <p>Product ID: {{card_detail.ref_id}}</p>
-<img src="images/product-details/rating.png" alt="" />
+<img src="{% static 'images/product-details/rating.png' %}" alt="" />
 <span>
 	<span>{{card_detail.actual_price}} Rs Per Card</span>
 	<label>Quantity:</label>
 	<input type="text" name = "quantity" value="1" />
+	{% if request.user.username %}
 	<button type="submit" class="btn btn-default cart">
 		<i class="fa fa-shopping-cart"></i>
 		Add to cart
 	</button>
+	{% else %}
+	<a style = "" href = "#login" >
+	<button type="button" class="btn btn-default cart">
+		<i class="fa fa-shopping-cart"></i>
+		Add to cart
+	</button>
+	</a>
+	<!--<button class="fancy-btn open" type="button">Can I haz Modal?</button>-->
+	{% endif %}
 </span>
 <p><b>Availability:</b> In Stock</p>
 <p><b>Condition:</b> New</p>
@@ -61,6 +71,8 @@
 <a href=""><img src="{% static 'images/product-details/share.png' %}" class="share img-responsive"  alt="" /></a>
 </div><!--/product-information-->
 </form> <!--Add to cart form END-->
+
+{% include 'customers/login_popup.html' %}
 {% endfor %}
 <script type="text/javascript">
 $(document).ready(function() {

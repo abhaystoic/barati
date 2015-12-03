@@ -26,8 +26,9 @@ def Add_To_Cart(request, ref_id):
       cursor.execute(query)
       transaction.commit()
       message = "success_add_to_cart"
+      return HttpResponse(json.dumps(message))   
    except Exception as general_exception:
       message = str(general_exception)
       print general_exception
       print sys.exc_traceback.tb_lineno
-   return HttpResponse(json.dumps(message))
+      return HttpResponse(json.dumps(message))
