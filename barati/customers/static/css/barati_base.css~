@@ -52,7 +52,7 @@ a#pop:hover, a#update_cert:hover {
 }
 .popup, .popup2 {
     background-color: #fff;
-    background-image : url('../images/logo.png');
+    background-image : url('../images/home/logo.png');
     background-size: 20%;
     background-repeat:no-repeat;
     background-position: 6px 6px;
@@ -124,4 +124,60 @@ a#pop:hover, a#update_cert:hover {
 }
 .popup p, .popup div, .popup2 p, .popup2 div {
     margin-bottom: 10px;
+}
+
+.main_filters{
+   float:center;
+   line-height:2em;
+   border: 0px none;
+   border-radius: 0px;
+}
+.date_picker{
+   width:110px;
+   background: url('../images/home/datepicker.png');
+   background-size: 16%;
+   background-repeat: no-repeat;
+   background-position: left center;
+   padding-left: 22px;
+   border: 1px solid;
+   border-color:#696763;
+   
+}
+.location{
+   background: url('../images/home/location.png');
+   background-size: 7%;
+   background-repeat: no-repeat;
+   background-position: left center;
+   padding-left: 20px;
+   border: 1px solid;
+   border-color:#696763;
+   
+}
+.sublocation{
+   background: url('../images/home/sublocation.png');
+   background-size: 9%;
+   background-repeat: no-repeat;
+   background-position: left center;
+   padding-left: 20px;
+   border: 1px solid;
+   border-color:#696763;
+   
+}
+.search{
+   background: url('../images/home/search.png');
+   background-size: 10%;
+   background-repeat: no-repeat;
+   background-position: left center;
+   padding-left: 20px;
+   border: 1px solid;
+   border-color:#696763;
+   
+}
+
+
+.header-middle{
+   /*Need to give a theme color*/
+}
+.recommendation_select_box{
+   width:20%;
 }

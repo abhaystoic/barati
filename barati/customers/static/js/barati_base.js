@@ -22,6 +22,7 @@
     });
     });
 */
+/*
 $(document).ready(function() {
     $('form').submit(function() { // catch the form's submit event
         $.ajax({
@@ -54,6 +55,7 @@ $(document).ready(function() {
         return false;
     });
     });
+    */
 /*
 $(document).ready(function() {
 $('form').submit(function() { // catch the form's submit event

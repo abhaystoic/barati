@@ -257,13 +257,44 @@ class Cards(models.Model):
    actual_price = models.IntegerField()
    discount_rs = models.FloatField(blank=True, null=True)
    discounted_price = models.FloatField(blank=True, null=True)
+   length = models.FloatField(blank=True, null=True)
+   width = models.FloatField(blank=True, null=True)
+   weight = models.FloatField(blank=True, null=True)
    
    class Meta: 
       managed = True
       db_table = 'cards'
    def __unicode__(self):
       return unicode(self.ref_id)
+
+class Card_Colors(models.Model):
+   id = models.AutoField(primary_key=True)
+   card = models.ForeignKey(Cards, blank=True, null=True)
+   ref_id = models.CharField(max_length=100,blank=True, null=True)
+   color = models.CharField(max_length=20, blank=True, null=True)
+   hexcode = models.CharField(max_length=7, blank=True, null=True)
+
+   class Meta: 
+      managed = True
+      db_table = 'card_colors'
+   def __unicode__(self):
+      return unicode(self.card)
       
+class Card_Deities(models.Model):
+   id = models.AutoField(primary_key=True)
+   card = models.ForeignKey(Cards, blank=True, null=True)
+   ref_id = models.CharField(max_length=100, blank=True, null=True)
+   top_deity_image_path = models.CharField(max_length=200, blank=True, null=True)
+   top_deity_name = models.CharField(max_length=30, blank=True, null=True)
+   inner_deity_image_path = models.CharField(max_length=200, blank=True, null=True)
+   inner_deity_name = models.CharField(max_length=30, blank=True, null=True)
+   
+   class Meta: 
+      managed = True
+      db_table = 'card_deities'
+   def __unicode__(self):
+      return unicode(self.card)
+
 class Cart(models.Model):
    id = models.AutoField(primary_key=True)
    ref_id = models.CharField(max_length=100)
@@ -293,12 +324,12 @@ class Product_Pictures(models.Model):
       return unicode(self.ref_id)
       
 class Orders(models.Model):
-   id = models.AutoField(primary_key=True)
+   order_id = models.AutoField(primary_key=True)
    user = models.ForeignKey(Users, blank=True, null=True)
    ref_id = models.CharField(max_length=100)
    quantity = models.IntegerField(blank=True, null=True)
    total_price = models.FloatField(blank=True, null=True)
-   package_id = models.CharField(max_length=100)
+   package_id = models.CharField(max_length=100, unique=True)
    vendor_acknowledgement = models.CharField(max_length=51)
    payment_done = models.BooleanField(default = False)
    payment_received = models.BooleanField(default = False)
@@ -310,18 +341,6 @@ class Orders(models.Model):
    class Meta: 
       managed = True
       db_table = 'orders'
-   def __unicode__(self):
-      return unicode(self.ref_id)
-
-class Wishlist(models.Model):
-   id = models.AutoField(primary_key=True)
-   user = models.ForeignKey(Users, blank=True, null=True)
-   ref_id = models.CharField(max_length=100, blank=True, null=True)
-   timestamp = models.DateTimeField(auto_now_add=True)
-   
-   class Meta: 
-      managed = True
-      db_table = 'wishlist'
    def __unicode__(self):
       return unicode(self.ref_id)
 
@@ -337,5 +356,32 @@ class Delivery_Status(models.Model):
    class Meta: 
       managed = True
       db_table = 'delivery_status'
+   def __unicode__(self):
+      return unicode(self.ref_id)
+
+class Wishlist(models.Model):
+   id = models.AutoField(primary_key=True)
+   user = models.ForeignKey(Users, blank=True, null=True)
+   ref_id = models.CharField(max_length=100, blank=True, null=True)
+   timestamp = models.DateTimeField(auto_now_add=True)
+   
+   class Meta: 
+      managed = True
+      db_table = 'wishlist'
+   def __unicode__(self):
+      return unicode(self.ref_id)
+
+class Reviews(models.Model):
+   id = models.AutoField(primary_key=True)
+   user = models.ForeignKey(Users, blank=True, null=True)
+   ref_id = models.CharField(max_length=100, blank=True, null=True)
+   timestamp = models.DateTimeField(auto_now_add=True)
+   title = models.CharField(max_length=200, blank=True, null=True)
+   detailed_review = models.CharField(max_length=1000, blank=True, null=True)
+   recommended = models.CharField(max_length=10, blank=True, null=True)
+   
+   class Meta: 
+      managed = True
+      db_table = 'reviews'
    def __unicode__(self):
       return unicode(self.ref_id)

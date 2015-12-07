@@ -25,16 +25,17 @@
     <link rel="apple-touch-icon-precomposed" href="{% static 'images/ico/apple-touch-icon-57-precomposed.png' %}">
 </head><!--/head-->
 
-<body>
+<body onload="doOnLoad();">
+
 	{% include 'customers/header.html'%}
-	
-	
+	{% include 'customers/slider.html'%}
+		{% include 'customers/index_left_sidebar.html'%}
+
 	<section>
 		<div class="container">
 			<div class="row">
 				
 				<div class="col-sm-9 padding-right">
-					{% include 'customers/slider.html'%}
 					{% include 'customers/featured_items_index.html'%}
 					{% include 'customers/recommended_items.html'%}					
 					

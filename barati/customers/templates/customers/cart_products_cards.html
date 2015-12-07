@@ -22,7 +22,9 @@
 <form action="/remove_from_cart/{{product.ref_id}}" id="remove_from_cart{{forloop.counter}}" method="post">	
 {% csrf_token %}
 <td class="cart_delete">
-	<a class="cart_quantity_delete" href="#" onclick="document.forms[{{forloop.counter|decrement}}].submit();"><i class="fa fa-times"></i>Remove</a>
+	<a class="cart_quantity_delete" href="#" onclick="remove_from_cart({{forloop.counter}})"><i class="fa fa-times"></i>
+		<button type="submit" style="border:none;background:transparent;" > Remove</button>
+	</a>
 </td>
 </form>
 </tr>

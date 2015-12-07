@@ -1,0 +1,206 @@
+{% load staticfiles %}
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<link href="{% static 'css/barati_base.css' %}" rel="stylesheet"/>
+<header id="header"><!--header-->
+		
+		<div class="header-middle"><!--header-middle-->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="logo pull-left">
+							<a href="/"><img src="{% static 'images/home/logo.png' %}" width = "200" height = "" alt="barati logo" /></a>
+						</div>
+						<div class="btn-group pull-right">
+							<div class="btn-group">
+								<button type="button" id="date-picker" class="btn btn-default dropdown-toggle usa">
+								Got a budget? Perfect!
+								</button>
+								<button type="button" id="date-picker" class="btn btn-default dropdown-toggle usa">
+									Date
+								</button>
+								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
+									Location
+									<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a href="#">Canada</a></li>
+									<li><a href="#">UK</a></li>
+								</ul>
+							</div>
+							<div class="btn-group">
+								<input type="text" class="btn btn-default dropdown-toggle usa" style="width:120px;" />
+							</div>
+							
+							
+						</div>
+					</div>
+					<div class="col-sm-8">
+						<div class="shop-menu pull-right">
+							<ul class="nav navbar-nav">
+								<li><a href="" style="font-weight:bold;">Call Us Now for HELP! &nbsp;&nbsp;&nbsp;&nbsp;+011 123 45 67</a></li>
+								<li><a href="/wishlist"><i class="fa fa-star"></i> Wishlist</a></li>
+								<li><a href="/my_orders"><i class="fa fa-crosshairs"></i> My Orders</a></li>
+								<li><a href="/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+								{% if request.user.username %}
+								<ul class="nav navbar-nav collapse navbar-collapse">
+									<li class="dropdown" style="width:150px;"><a href="#">&nbsp;&nbsp;&nbsp;Welcome {{request.user.first_name}}!<i class="fa fa-angle-down"></i></a>
+	                                    <ul role="menu" class="sub-menu" style="width:150px;">
+                                    	<li><a href="#" id="user_dropdown"><i class="fa fa-user"></i> My Account</a></li>
+                                    	<li><a href="#" id="user_dropdown"><i class="fa fa-crosshairs"></i> My Reviews</a></li>
+                                    	<li><a href="#" id="user_dropdown"><i class="fa fa-crosshairs"></i> My Budget</a></li>
+                                    	<li><a href="/auth/logout" id="user_dropdown"><i class="fa fa-crosshairs"></i> Logout</a></li>
+	                                    </ul>
+	                                </li>
+                                </ul> 
+                                {% else %}
+                                	<li><a href="/auth/login"><i class="fa fa-lock"></i> Login</a></li>
+                                {% endif %}
+
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!--/header-middle-->
+	
+		<div class="header-bottom"><!--header-bottom-->
+			<div class="container" >
+				<div class="row">
+					<div class="col-sm-9">
+						<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+					</div>
+					<div class="mainmenu pull-left" >
+						<ul class="nav navbar-nav collapse navbar-collapse">
+							<!--<li><a href="/dashboard" class="active">Home</a></li>-->
+								<li class="dropdown"><a href="#">Venue<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                    	{% if venue_types %}
+                                    	{% for type in venue_types %}
+                                        <li><a href="/venue/{{type.id}}">{{type.name}}</a></li>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Cards<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                    	{% if card_types %}
+                                    	{% for type in card_types %}
+                                        <li><a href="/card/{{type.id}}">{{type.name}}</a></li>
+                                        {% endfor %}
+                                        {% endif %}
+                                    </ul>
+                                </li>
+                                <li class="dropdown"><a href="#">Beauticians<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Wedding (Bride)</a></li>
+										<li><a href="/product_details">Wedding (Groom)</a></li> 
+										<li><a href="/checkout">Engagement (Bride)</a></li> 
+										<li><a href="/cart">Engagement (Groom)</a></li> 
+										<li><a href="/auth/login">Reception (Bride)</a></li> 
+										<li><a href="/auth/login">Reception (Groom)</a></li> 
+										<li><a href="/auth/login">Sangeet (Bride)</a></li> 
+										<li><a href="/auth/login">Sangeet (Groom)</a></li> 
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Music<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Products</a></li>
+										<li><a href="/product_details">Product Details</a></li> 
+										<li><a href="/checkout">Checkout</a></li> 
+										<li><a href="/cart">Cart</a></li> 
+										<li><a href="/auth/login">Login</a></li> 
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Gifts<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Traditional</a></li>
+										<li><a href="/product_details">Personalized</a></li> 
+										<li><a href="/checkout">For Bride</a></li> 
+										<li><a href="/cart">For Groom</a></li> 
+										<li><a href="/auth/login">For Guests</a></li> 
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Photos<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Traditional</a></li>
+										<li><a href="/product_details">Candid</a></li> 
+										<li><a href="/checkout">Traditional + Candid</a></li> 
+										<li><a href="/cart">Prewedding</a></li> 
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Video<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Traditional</a></li>
+										<li><a href="/product_details">Prewedding</a></li> 
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Bakery<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Products</a></li>
+										<li><a href="/product_details">Product Details</a></li> 
+										<li><a href="/checkout">Checkout</a></li> 
+										<li><a href="/cart">Cart</a></li> 
+										<li><a href="/auth/login">Login</a></li> 
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Ghodi/Bagghi<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Basic</a></li>
+										<li><a href="/product_details">Decorated</a></li> 
+                                    </ul>
+                                </li>
+                                <li class="dropdown"><a href="#">Band<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Products</a></li>
+										<li><a href="/product_details">Product Details</a></li> 
+										<li><a href="/checkout">Checkout</a></li> 
+										<li><a href="/cart">Cart</a></li> 
+										<li><a href="/auth/login">Login</a></li> 
+                                    </ul>
+                                </li>  
+                                <li class="dropdown"><a href="#">Mehendi<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Products</a></li>
+										<li><a href="/product_details">Product Details</a></li> 
+										<li><a href="/checkout">Checkout</a></li> 
+										<li><a href="/cart">Cart</a></li> 
+										<li><a href="/auth/login">Login</a></li> 
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Fireworks<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Products</a></li>
+										<li><a href="/product_details">Product Details</a></li> 
+										<li><a href="/checkout">Checkout</a></li> 
+										<li><a href="/cart">Cart</a></li> 
+										<li><a href="/auth/login">Login</a></li> 
+                                    </ul>
+                                </li> 
+                                <li class="dropdown"><a href="#">Tent House<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/shop">Products</a></li>
+										<li><a href="/product_details">Product Details</a></li> 
+										<li><a href="/checkout">Checkout</a></li> 
+										<li><a href="/cart">Cart</a></li> 
+										<li><a href="/auth/login">Login</a></li> 
+                                    </ul>
+                                </li> 
+							</ul>
+						</div>
+					</div>
+					<!--<div class="col-sm-3">
+						<div class="search_box pull-right">
+							<input type="text" placeholder="Search"/>
+						</div>
+					</div>
+					-->
+				</div>
+			</div>
+		</div><!--/header-bottom-->
+	</header><!--/header-->

@@ -1,6 +1,32 @@
 {% load staticfiles %}
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<link href="{% static 'css/drop_down_menu_default.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/drop_down_menu_component.css' %}" rel="stylesheet"/>
 <link href="{% static 'css/barati_base.css' %}" rel="stylesheet"/>
+<script src="{% static 'js/modernizr.custom.js' %}"></script>
+<link rel="stylesheet" type="text/css" media="all" href="{% static 'css/jsDatePick_ltr.min.css' %}" />
+<script type="text/javascript" src="{% static 'js/jsDatePick.min.1.3.js' %}"></script>
+<script type="text/javascript">
+	window.onload = function(){
+		new JsDatePick({
+			useMode:2,
+			target:"inputField",
+			dateFormat:"%d-%M-%Y",
+			cellColorScheme:"orange"
+			/*selectedDate:{				This is an example of what the full configuration offers.
+				day:5,						For full documentation about these settings please see the full version of the code.
+				month:9,
+				year:2006
+			},
+			yearsRange:[1978,2020],
+			limitToToday:false,
+			cellColorScheme:"beige",
+			dateFormat:"%m-%d-%Y",
+			imgPath:"img/",
+			weekStartDay:1*/
+		});
+	};
+</script>
 <header id="header"><!--header-->
 		
 		<div class="header-middle"><!--header-middle-->
@@ -10,29 +36,7 @@
 						<div class="logo pull-left">
 							<a href="/"><img src="{% static 'images/home/logo.png' %}" width = "200" height = "" alt="barati logo" /></a>
 						</div>
-						<div class="btn-group pull-right">
-							<div class="btn-group">
-								<button type="button" id="date-picker" class="btn btn-default dropdown-toggle usa">
-								Got a budget? Perfect!
-								</button>
-								<button type="button" id="date-picker" class="btn btn-default dropdown-toggle usa">
-									Date
-								</button>
-								<button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-									Location
-									<span class="caret"></span>
-								</button>
-								<ul class="dropdown-menu">
-									<li><a href="#">Canada</a></li>
-									<li><a href="#">UK</a></li>
-								</ul>
-							</div>
-							<div class="btn-group">
-								<input type="text" class="btn btn-default dropdown-toggle usa" style="width:120px;" />
-							</div>
-							
-							
-						</div>
+						
 					</div>
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
@@ -59,148 +63,175 @@
 							</ul>
 						</div>
 					</div>
+					<div class="main_filters">
+								<br/><br/>
+								<form>
+									<input type="text" class="date_picker" id="inputField" placeholder="Date" />
+									<input type="text" class="location" placeholder="Location"/>
+									<input type="text" class="sublocation" placeholder="Sub Location"/>
+									<input type="text" class="search" placeholder="Search"/> 
+									<button type="button" style="margin-top:-2px;" class=" btn btn-default get">GO</button>
+								</form>
+
+					</div>
 				</div>
 			</div>
 		</div><!--/header-middle-->
-	
-		<div class="header-bottom"><!--header-bottom-->
-			<div class="container" >
-				<div class="row">
-					<div class="col-sm-9">
-						<div class="navbar-header">
-						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-							<span class="sr-only">Toggle navigation</span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-							<span class="icon-bar"></span>
-						</button>
-					</div>
-					<div class="mainmenu pull-left" >
-						<ul class="nav navbar-nav collapse navbar-collapse">
-							<!--<li><a href="/dashboard" class="active">Home</a></li>-->
-								<li class="dropdown"><a href="#">Venue<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
+		
+
+		<div class="container_drop_menu">
+			<div class="main">
+				<nav class="" id="cbp-hsmenu-wrapper">
+					<div class="cbp-hsinner">
+						<ul class="cbp-hsmenu">
+							<li>
+								<a href="#">Venues</a>
+								<ul class="cbp-hssubmenu">
                                     	{% if venue_types %}
                                     	{% for type in venue_types %}
-                                        <li><a href="/venue/{{type.id}}">{{type.name}}</a></li>
+                                        <li><a href="/venue/{{type.id}}"><img src="images/1.png" alt="img01"/><span>{{type.name}}</span></a></li>
                                         {% endfor %}
                                         {% endif %}
-                                    </ul>
-                                </li> 
-                                <li class="dropdown"><a href="#">Cards<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                    	{% if card_types %}
-                                    	{% for type in card_types %}
-                                        <li><a href="/card/{{type.id}}">{{type.name}}</a></li>
-                                        {% endfor %}
-                                        {% endif %}
-                                    </ul>
-                                </li>
-                                <li class="dropdown"><a href="#">Beauticians<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="/shop">Wedding (Bride)</a></li>
-										<li><a href="/product_details">Wedding (Groom)</a></li> 
-										<li><a href="/checkout">Engagement (Bride)</a></li> 
-										<li><a href="/cart">Engagement (Groom)</a></li> 
-										<li><a href="/auth/login">Reception (Bride)</a></li> 
-										<li><a href="/auth/login">Reception (Groom)</a></li> 
-										<li><a href="/auth/login">Sangeet (Bride)</a></li> 
-										<li><a href="/auth/login">Sangeet (Groom)</a></li> 
-                                    </ul>
-                                </li> 
-                                <li class="dropdown"><a href="#">Music<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="/shop">Products</a></li>
-										<li><a href="/product_details">Product Details</a></li> 
-										<li><a href="/checkout">Checkout</a></li> 
-										<li><a href="/cart">Cart</a></li> 
-										<li><a href="/auth/login">Login</a></li> 
-                                    </ul>
-                                </li> 
-                                <li class="dropdown"><a href="#">Gifts<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="/shop">Traditional</a></li>
-										<li><a href="/product_details">Personalized</a></li> 
-										<li><a href="/checkout">For Bride</a></li> 
-										<li><a href="/cart">For Groom</a></li> 
-										<li><a href="/auth/login">For Guests</a></li> 
-                                    </ul>
-                                </li> 
-                                <li class="dropdown"><a href="#">Photos<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="/shop">Traditional</a></li>
-										<li><a href="/product_details">Candid</a></li> 
-										<li><a href="/checkout">Traditional + Candid</a></li> 
-										<li><a href="/cart">Prewedding</a></li> 
-                                    </ul>
-                                </li> 
-                                <li class="dropdown"><a href="#">Video<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="/shop">Traditional</a></li>
-										<li><a href="/product_details">Prewedding</a></li> 
-                                    </ul>
-                                </li> 
-                                <li class="dropdown"><a href="#">Bakery<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="/shop">Products</a></li>
-										<li><a href="/product_details">Product Details</a></li> 
-										<li><a href="/checkout">Checkout</a></li> 
-										<li><a href="/cart">Cart</a></li> 
-										<li><a href="/auth/login">Login</a></li> 
-                                    </ul>
-                                </li> 
-                                <li class="dropdown"><a href="#">Ghodi/Bagghi<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="/shop">Basic</a></li>
-										<li><a href="/product_details">Decorated</a></li> 
-                                    </ul>
-                                </li>
-                                <li class="dropdown"><a href="#">Band<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="/shop">Products</a></li>
-										<li><a href="/product_details">Product Details</a></li> 
-										<li><a href="/checkout">Checkout</a></li> 
-										<li><a href="/cart">Cart</a></li> 
-										<li><a href="/auth/login">Login</a></li> 
-                                    </ul>
-                                </li>  
-                                <li class="dropdown"><a href="#">Mehendi<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="/shop">Products</a></li>
-										<li><a href="/product_details">Product Details</a></li> 
-										<li><a href="/checkout">Checkout</a></li> 
-										<li><a href="/cart">Cart</a></li> 
-										<li><a href="/auth/login">Login</a></li> 
-                                    </ul>
-                                </li> 
-                                <li class="dropdown"><a href="#">Fireworks<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="/shop">Products</a></li>
-										<li><a href="/product_details">Product Details</a></li> 
-										<li><a href="/checkout">Checkout</a></li> 
-										<li><a href="/cart">Cart</a></li> 
-										<li><a href="/auth/login">Login</a></li> 
-                                    </ul>
-                                </li> 
-                                <li class="dropdown"><a href="#">Tent House<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="/shop">Products</a></li>
-										<li><a href="/product_details">Product Details</a></li> 
-										<li><a href="/checkout">Checkout</a></li> 
-										<li><a href="/cart">Cart</a></li> 
-										<li><a href="/auth/login">Login</a></li> 
-                                    </ul>
-                                </li> 
-							</ul>
-						</div>
+								</ul>
+							</li>
+							<li>
+								<a href="#">Cards</a>
+								<ul class="cbp-hssubmenu">
+									{% if card_types %}
+                                	{% for type in card_types %}
+                                	<li><a href="/card/{{type.id}}"><img src="images/6.png" alt="img06"/><span>{{type.name}}</span></a></li>
+                                    {% endfor %}
+                                    {% endif %}
+								</ul>
+							</li>
+
+							<li>
+								<a href="#">Beauticians</a>
+								<ul class="cbp-hssubmenu">
+									<li><a href="/product_details"><img src="{% static 'images/beauticians/beauticians_dropdown_menu.jpg' %}" alt="img01"/><span>Wedding (Groom)</span></a></li> 
+									<li><a href="/checkout"><img src="{% static 'images/beauticians/beauticians_dropdown_menu.jpg' %}" alt="img01"/><span>Engagement (Bride)</span></a></li> 
+									<li><a href="/cart"><img src="{% static 'images/beauticians/beauticians_dropdown_menu.jpg' %}" alt="img01"/><span>Engagement (Groom)</span></a></li> 
+									<li><a href="/auth/login"><img src="{% static 'images/beauticians/beauticians_dropdown_menu.jpg' %}" alt="img01"/><span>Reception (Bride)</span></a></li> 
+									<li><a href="/auth/login"><img src="{% static 'images/beauticians/beauticians_dropdown_menu.jpg' %}" alt="img01"/><span>Reception (Groom)</span></a></li> 
+									<li><a href="/auth/login"><img src="{% static 'images/beauticians/beauticians_dropdown_menu.jpg' %}" alt="img01"/><span>Sangeet (Bride)</span></a></li> 
+									<li><a href="/auth/login"><img src="{% static 'images/beauticians/beauticians_dropdown_menu.jpg' %}" alt="img01"/><span>Sangeet (Groom)</span></a></li> 
+									<li><a href="/auth/login"><img src="{% static 'images/beauticians/beauticians_dropdown_menu.jpg' %}" alt="img01"/><span>Packages for HER</span></a></li> 
+									<li><a href="/auth/login"><img src="{% static 'images/beauticians/beauticians_dropdown_menu.jpg' %}" alt="img01"/><span>Packages for HIM</span></a></li> 
+								</ul>
+							</li>
+							<li>
+								<a href="#">Music</a>
+								<ul class="cbp-hssubmenu">
+									<li><a href="#"><img src="images/1.png" alt="img01"/><span>Delicate Wine</span></a></li>
+									<li><a href="#"><img src="images/2.png" alt="img02"/><span>Fine Spirit</span></a></li>
+									<li><a href="#"><img src="images/3.png" alt="img03"/><span>Heavenly Ale</span></a></li>
+									<li><a href="#"><img src="images/4.png" alt="img04"/><span>Juicy Lemonade</span></a></li>
+									<li><a href="#"><img src="images/5.png" alt="img05"/><span>Wise Whiskey</span></a></li>
+									<li><a href="#"><img src="images/6.png" alt="img06"/><span>Sweet Rum</span></a></li>
+								</ul>
+							</li>
+							<li>
+								<a href="#">Gifts</a>
+								<ul class="cbp-hssubmenu">
+									<li><a href="/shop"><a href="#"><img src="images/1.png" alt="img01"/><span>Traditional</span></a></li>
+									<li><a href="/product_details"><a href="#"><img src="images/1.png" alt="img01"/><span>Personalized</span></a></li> 
+									<li><a href="/checkout"><a href="#"><img src="images/1.png" alt="img01"/><span>For Bride</span></a></li> 
+									<li><a href="/cart"><a href="#"><img src="images/1.png" alt="img01"/><span>For Groom</span></a></li> 
+									<li><a href="/auth/login"><a href="#"><img src="images/1.png" alt="img01"/><span>For Guests</span></a></li> 
+								</ul>
+							</li>
+							<li>
+								<a href="#"><image src="{% static 'images/home/datepicker.png' %}" width="35px" height="35px" />&nbsp;Photos/Videos</a>
+								<ul class="cbp-hssubmenu">
+									<li><a href="#"><img src="{% static 'images/photos_videos/candid_dropdown_menu.jpg' %}" alt="img01"/><span>Candid</span></a></li>
+									<li><a href="/shop"><img src="{% static 'images/photos_videos/taditional_dropdown_menu.jpg' %}" alt="img01"/><span>Traditional</span></a></li>
+									<li><a href="/checkout"><img src="{% static 'images/photos_videos/taditional_dropdown_menu.jpg' %}" alt="img01"/><span>Traditional + Candid</span></a></li> 
+									<li><a href="#"><img src="{% static 'images/photos_videos/prewedding_dropdown_menu.jpg' %}"/><span>Pre Wedding Photography</span></a></li>
+									<li><a href="#"><img src="{% static 'images/photos_videos/prewedding_dropdown_menu.jpg' %}"/><span>Pre Wedding Videography</span></a></li>
+									<li><a href="#"><img src="{% static 'images/photos_videos/prewedding_dropdown_menu.jpg' %}"/><span>I need everything</span></a></li>
+								</ul>
+							</li>
+							<li>
+								<a href="#"><image src="{% static 'images/home/datepicker.png' %}" width="35px" height="35px" />Bakery</a>
+								<ul class="cbp-hssubmenu">
+									<li><a href="#"><img src="images/1.png" alt="img01"/><span>Delicate Wine</span></a></li>
+									<li><a href="#"><img src="images/2.png" alt="img02"/><span>Fine Spirit</span></a></li>
+									<li><a href="#"><img src="images/3.png" alt="img03"/><span>Heavenly Ale</span></a></li>
+									<li><a href="#"><img src="images/4.png" alt="img04"/><span>Juicy Lemonade</span></a></li>
+									<li><a href="#"><img src="images/5.png" alt="img05"/><span>Wise Whiskey</span></a></li>
+									<li><a href="#"><img src="images/6.png" alt="img06"/><span>Sweet Rum</span></a></li>
+								</ul>
+							</li>
+							<li>
+								<a href="#">Ghodi/Bagghhi</a>
+								<ul class="cbp-hssubmenu cbp-hssub-rows">
+									<li><a href="#"><img src="images/7.png" alt="img07"/><span>Lovely Slurp</span></a></li>
+									<li><a href="#"><img src="images/8.png" alt="img08"/><span>Lemony Grappa</span></a></li>
+									<li><a href="#"><img src="images/9.png" alt="img09"/><span>Eggy Liquor</span></a></li>
+									<li><a href="#"><img src="images/10.png" alt="img10"/><span>Fresh Juice</span></a></li>
+									<li><a href="#"><img src="images/1.png" alt="img01"/><span>Delicate Wine</span></a></li>
+									<li><a href="#"><img src="images/2.png" alt="img02"/><span>Fine Spirit</span></a></li>
+									<li><a href="#"><img src="images/3.png" alt="img03"/><span>Heavenly Ale</span></a></li>
+									<li><a href="#"><img src="images/4.png" alt="img04"/><span>Juicy Lemonade</span></a></li>
+									<li><a href="#"><img src="images/5.png" alt="img05"/><span>Wise Whiskey</span></a></li>
+									<li><a href="#"><img src="images/6.png" alt="img06"/><span>Sweet Rum</span></a></li>
+									<li><a href="#"><img src="images/1.png" alt="img01"/><span>Delicate Wine</span></a></li>
+									<li><a href="#"><img src="images/2.png" alt="img02"/><span>Fine Spirit</span></a></li>
+								</ul>
+							</li>
+							<li>
+								<a href="#">Bands</a>
+								<ul class="cbp-hssubmenu">
+									<li><a href="#"><img src="images/1.png" alt="img01"/><span>Delicate Wine</span></a></li>
+									<li><a href="#"><img src="images/2.png" alt="img02"/><span>Fine Spirit</span></a></li>
+									<li><a href="#"><img src="images/3.png" alt="img03"/><span>Heavenly Ale</span></a></li>
+									<li><a href="#"><img src="images/4.png" alt="img04"/><span>Juicy Lemonade</span></a></li>
+									<li><a href="#"><img src="images/5.png" alt="img05"/><span>Wise Whiskey</span></a></li>
+									<li><a href="#"><img src="images/6.png" alt="img06"/><span>Sweet Rum</span></a></li>
+								</ul>
+							</li>
+
+							<li>
+								<a href="#">Mehendi</a>
+								<ul class="cbp-hssubmenu">
+									<li><a href="#"><img src="images/10.png" alt="img10"/><span>Fresh Juice</span></a></li>
+									<li><a href="#"><img src="images/6.png" alt="img06"/><span>Sweet Rum</span></a></li>
+									<li><a href="#"><img src="images/9.png" alt="img09"/><span>Eggy Liquor</span></a></li>
+								</ul>
+							</li>
+
+							<li>
+								<a href="#">Fireworks</a>
+								<ul class="cbp-hssubmenu">
+									<li><a href="#"><img src="images/1.png" alt="img01"/><span>Delicate Wine</span></a></li>
+									<li><a href="#"><img src="images/2.png" alt="img02"/><span>Fine Spirit</span></a></li>
+									<li><a href="#"><img src="images/3.png" alt="img03"/><span>Heavenly Ale</span></a></li>
+									<li><a href="#"><img src="images/4.png" alt="img04"/><span>Juicy Lemonade</span></a></li>
+									<li><a href="#"><img src="images/5.png" alt="img05"/><span>Wise Whiskey</span></a></li>
+									<li><a href="#"><img src="images/6.png" alt="img06"/><span>Sweet Rum</span></a></li>
+								</ul>
+							</li>
+							<li>
+								<a href="#">Tent Houses</a>
+								<ul class="cbp-hssubmenu">
+									<li><a href="#"><img src="images/1.png" alt="img01"/><span>Delicate Wine</span></a></li>
+									<li><a href="#"><img src="images/2.png" alt="img02"/><span>Fine Spirit</span></a></li>
+									<li><a href="#"><img src="images/3.png" alt="img03"/><span>Heavenly Ale</span></a></li>
+									<li><a href="#"><img src="images/4.png" alt="img04"/><span>Juicy Lemonade</span></a></li>
+									<li><a href="#"><img src="images/5.png" alt="img05"/><span>Wise Whiskey</span></a></li>
+									<li><a href="#"><img src="images/6.png" alt="img06"/><span>Sweet Rum</span></a></li>
+								</ul>
+							</li>
+							
+						</ul>
 					</div>
-					<!--<div class="col-sm-3">
-						<div class="search_box pull-right">
-							<input type="text" placeholder="Search"/>
-						</div>
-					</div>
-					-->
-				</div>
+					
+				</nav>
 			</div>
-		</div><!--/header-bottom-->
+		</div>
+
 	</header><!--/header-->
+	<script src="{% static 'js/cbpHorizontalSlideOutMenu.min.js' %}"></script>
+		<script>
+			var menu = new cbpHorizontalSlideOutMenu( document.getElementById( 'cbp-hsmenu-wrapper' ) );
+		</script>

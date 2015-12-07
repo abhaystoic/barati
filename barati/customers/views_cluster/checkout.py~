@@ -31,7 +31,24 @@ class Checkout(Dashboard, View):
                query = "INSERT INTO orders(ref_id, quantity, total_price, package_id, vendor_acknowledgement, payment_done, payment_received, payment_method, user_id, timestamp, product_type) VALUES('{}', {}, {}, '{}', '{}', '{}', '{}', '{}', {}, {}, '{}')"
                query = query.format(str(product.ref_id), product.quantity, product.total_price, self.create_package_id(product.ref_id, product.product_type), 'pending', 'false', 'false', str(payment_method), user_id, 'now()', 'card')
                self.cursor.execute(query)
-               print self.cursor.lastrowid
+               new_order = m.Orders(ref_id=str(product.ref_id),\
+               quantity=product.quantity,\
+               total_price=product.total_price,\
+               package_id=self.create_package_id(product.ref_id, product.product_type),\
+               vendor_acknowledgement='pending',\
+               payment_done='false',\
+               payment_received='false',\
+               payment_method=str(payment_method),
+               user_id=user_id,\
+               timestamp='now()',\
+               product_type='cards')
+               new_order.save()
+               
+               #Insert into the delivery_status table
+               #RAW SQL to keep it fast
+               query = "INSERT INTO delivery_status(ref_id, name, status, link, timestamp, order_id) VALUES( '%s', '%s', '%s', '%s', '%s', %d)"\
+               %(str(product.ref_id), 'Delhivery', 'Not yet handed over', 'http://google.com', 'now()', int(new_order.order_id))
+               self.cursor.execute(query)
                
             first_name = request.POST.get('first_name')
             middlle_name = request.POST.get('middle_name')

@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'drealtime',
     'customers',
     'vendors',
+    'star_ratings' #Rating system #https://github.com/wildfish/django-star-ratings
 )
 
 MIDDLEWARE_CLASSES = (
@@ -54,6 +55,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'social.apps.django_app.middleware.SocialAuthExceptionMiddleware',  #http://psa.matiasaguirre.net/docs/configuration/django.html
 )
 
 ROOT_URLCONF = 'barati.urls'
@@ -129,11 +131,18 @@ REST_FRAMEWORK = {
 	)
 }
 
+#Social Auth plugin: http://psa.matiasaguirre.net/docs/configuration/django.html
 AUTHENTICATION_BACKENDS = (
    'social.backends.facebook.FacebookOAuth2',
    'social.backends.google.GoogleOAuth2',
    'social.backends.twitter.TwitterOAuth',
    'django.contrib.auth.backends.ModelBackend',
 )
+#SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 SOCIAL_AUTH_FACEBOOK_KEY = 1710233362554820
 SOCIAL_AUTH_FACEBOOK_SECRET = '131c039e7bdc74edaf8b823ce2f2dc3d'
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/dashboard'
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/dashboard'
+SOCIAL_AUTH_SANITIZE_REDIRECTS = True
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = False
+SOCIAL_AUTH_URLOPEN_TIMEOUT = 30 #seconds

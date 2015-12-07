@@ -8,6 +8,7 @@ from django.views.generic import View
 from django.http import HttpResponse
 from django.db import connection, transaction
 from django.db.models import Sum
+from django.contrib.auth.models import User
 from django.template.defaulttags import register
 from customers import models as m
 import sys, json, os
@@ -30,6 +31,29 @@ for files in file_list:
 #A Filter for enabling the usage of a dictionary in the templates
 @register.filter(name = 'get_item') 
 def get_item(dictionary, key):
+   try:
+      value = dictionary.get(key) #Using '.get' To suppress key error (just in case)
+      return value
+   except Exception as general_exception:
+      print str(general_exception)
+      print "Line number : " + str(sys.exc_traceback.tb_lineno)
+      return "not_found"      
+
+#A Filter for enabling the usage of a dictionary in the templates
+@register.filter(name = 'get_user')
+def get_user(username):
+   try:
+      user = User.objects.get(username=username)
+      name = user.first_name + " " + user.last_name
+      return name
+   except Exception as general_exception:
+      print str(general_exception)
+      print "Line number : " + str(sys.exc_traceback.tb_lineno)
+      return "not_found"
+
+#Special filter for My Orders page
+@register.filter(name = 'get_item_for_my_orders') 
+def get_item_for_my_orders(dictionary, key):
    try:
       value = dictionary.get(key) #Using '.get' To suppress key error (just in case)
       return value
@@ -74,7 +98,8 @@ def get_total_price(key):
       print "Line number : " + str(sys.exc_traceback.tb_lineno)
       return 0
 
-#A Filter for mulitplication
+
+#A Filter for multiplication
 @register.filter(name = 'multiply')
 def multiply(first, second):
    try:

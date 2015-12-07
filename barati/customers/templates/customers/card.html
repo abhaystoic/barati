@@ -57,3 +57,56 @@
     <script src="{% static 'js/barati_base.js' %}"></script>
 </body>
 </html>
+<script type="text/javascript">
+	function add_to_cart(card_seq_number)
+   	{
+          var add_to_cart_form_id = '#add_to_cart'+ String(card_seq_number);
+          $(add_to_cart_form_id).submit(function() { // catch the form's submit event
+              $.ajax({
+                  url : this.action, 
+                  type : "POST",
+                  dataType: "json",
+                  data: $(this).serialize(), // get the form data
+                  context : this,
+                  success : function(json) {
+                    alert(json);
+                    if (json == "success_add_to_cart")
+                    {
+                      window.location = location.pathname; // redirect back to the calling page
+                    }
+                    },
+                  error : function(xhr,errmsg,err) {
+                    remove_spinner(); 
+                    alert(xhr.status + ": " + xhr.responseText);
+                    }
+              });
+              return false;
+          });
+    }
+
+    function add_to_wishlist(card_seq_number)
+   	{
+          var add_to_wishlist_form_id = '#add_to_wishlist'+ String(card_seq_number);
+          $(add_to_cart_form_id).submit(function() { // catch the form's submit event
+              $.ajax({
+                  url : this.action, 
+                  type : "POST",
+                  dataType: "json",
+                  data: $(this).serialize(), // get the form data
+                  context : this,
+                  success : function(json) {
+                    alert(json);
+                    if (json == "success_add_to_wish_list")
+                    {
+                      window.location = location.pathname; // redirect back to the calling page
+                    }
+                    },
+                  error : function(xhr,errmsg,err) {
+                    remove_spinner(); 
+                    alert(xhr.status + ": " + xhr.responseText);
+                    }
+              });
+              return false;
+          });
+    }	
+</script>

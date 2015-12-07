@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^logout_then_login/',  'django.contrib.auth.views.logout_then_login', {'login_url': '/auth/login/'}),
     url('', include('social.apps.django_app.urls', namespace='social')),
+    url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
 ]

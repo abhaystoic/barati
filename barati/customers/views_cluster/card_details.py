@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.shortcuts import render, render_to_response
 from django.views.generic import View
 from django.http import HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 from customers import models as m
 import sys, json
 from dashboard import Dashboard
@@ -27,14 +28,42 @@ class Card_Details(Dashboard, View):
          query = "select id, name from cards where id = " + str(self.kwargs['card_id'])
          self.card_details = m.Cards.objects.raw(query)
          return self.card_details
-
+      
+      def get_card_colors(self, **kwargs):
+         card_colors = m.Card_Colors.objects.filter(card_id=self.kwargs['card_id'])
+         return card_colors
+      
+      def get_user_review(self, *args, **kwargs):
+         try:
+            review=None
+            request = args[0]
+            if request.user.username:
+               user_id = m.Users.objects.get(username=request.user.username).id
+               ref_id = m.Cards.objects.get(id=self.kwargs['card_id']).ref_id
+               review = m.Reviews.objects.get(ref_id=ref_id, user_id=user_id)
+               if not review:
+                  review = None
+         except ObjectDoesNotExist as not_reviewed_ever_exception:
+            review = None   
+         return review
+      
+      def get_all_reviews(self, **kwargs):
+         reviews = None
+         ref_id = m.Cards.objects.get(id=self.kwargs['card_id']).ref_id
+         all_reviews = m.Reviews.objects.filter(ref_id=ref_id)
+         if not all_reviews:
+            all_reviews = None   
+         return all_reviews
+      
       #@login_required(login_url='/auth/login/')
       def get(self, request, **kwargs):
          subcategories = self.get_context_data()['card_types']
          card_details = self.get_card_details()
          context_dict = {'subcategories' : subcategories, 'card_details' : card_details}
+         context_dict.update({'user_review' : self.get_user_review(request)})
+         context_dict.update({'all_reviews' : self.get_all_reviews()})
+         context_dict.update({'card_colors' : self.get_card_colors()})
          context_dict.update(self.get_context_data())
-         
          return render(request, self.template_name, context_dict)   
 
    except Exception as e:      

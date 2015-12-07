@@ -58,38 +58,40 @@
 					{% endif %}	
 					</thead>
 					<tbody>
-						{% if my_orders %}
-						{% for product in my_orders %}
-							
-							<tr>
-							<td class="cart_product" style="margin-top:-1px;">
-								<a href="/card_details/{{product.id}}"><img width = "100px" height = "100px" src="{% static '' %}{{product.ref_id|get_pic_path}}" alt="{% static '' %}{{ product.ref_id|get_pic_path }}"></a>
-							</td>
-							<td></td>
-							<td class="cart_description">
-								<h4><a href="/card_details/{{product.id}}">{{product.name}}</a></h4>
-								<p>Product Idea: {{product.ref_id}}</p>
-								<p>{{product.short_description}}</p>
-							</td>
-							<td class="cart_price">
-								<label>{{product.actual_price}} Rs</label>
-							</td>
-							<td></td>
-							{% if order_details %}
-							<td class="" style="border-top:0px;">
-								{% for order in order_details%}
-								{% if order.id == product.ref_id %}
-									{{order.vendor_acknowledgement}}
-								{% endif %}
-								{% endfor %}
-							</td>
-							<td></td>
-							{% endif %}
-							{% if delivery_details %}
+						{% if order_details %}
+						{% for order in order_details %}
 
+							<!--PRODUCT DETAIL-->
+							{% if all_product_details_dict %}
+							{% with "product_details_"|add:order.ref_id as key %}
+							{% with all_product_details_dict|get_item_for_my_orders:key as product %}
+								<tr>
+								<td class="cart_product" style="margin-top:-1px;">
+									<a href="/card_details/{{product.id}}"><img width = "100px" height = "100px" src="{% static '' %}{{product.ref_id|get_pic_path}}" alt="{% static '' %}{{ product.ref_id|get_pic_path }}"></a>
+								</td>
+								<td></td>
+								<td class="cart_description">
+									<h4><a href="/card_details/{{product.id}}">{{product.name}}</a></h4>
+									<p>Product Idea: {{product.ref_id}}</p>
+									<p>{{product.short_description}}</p>
+								</td>
+								<td class="cart_price">
+									<label>{{product.actual_price}} Rs</label>
+								</td>
+								<td></td>
+								<td class="" style="border-top:0px;">
+										{{product.vendor_acknowledgement}}
+								</td>
+								<td></td>
+							{% endwith %}
+							{% endwith %}
+							{% endif %}
+
+							<!--DELIVERY DETAIL-->	
+							{% if all_delivery_statuses_dict %}
 							<td style="width:300px;">
-								{% for delivery in delivery_details %}
-								{% if delivery.order.id == order_details.id %}	
+								{% with "delivery_status_"|add:order.ref_id as key %}
+								{% with all_delivery_statuses_dict|get_item_for_my_orders:key as delivery %}
 									<table>
 									<tr><td style="font-weight:bold;"> Status </td><td style="font-size:10px">{{delivery.status}}</td></tr>
 									<tr><td style="font-weight:bold;">Delivery Partner </td><td style="font-size:10px"> 	{{delivery.name}} &nbsp;</td></tr>
@@ -98,8 +100,8 @@
 									</td></tr>
 									<tr><td style="font-weight:bold;">Last updated </td><td style="font-size:10px"> {{delivery.timestamp}}</td></tr>
 									</table>
-								{% endif %}	
-								{% endfor %}	
+								{% endwith %}
+								{% endwith %}
 							</td>		
 							{% endif %}
 							</tr>

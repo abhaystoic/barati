@@ -33,8 +33,8 @@ class Sign_Up(Dashboard, View):
          user = User.objects.create_user(email, email, password)
          user.first_name = name.split(' ')[0]
          user.save()
-         new_usr = m.Users(username=email, first_name=name, email=email)
-         new_usr.save()
+         #new_usr = m.Users(username=email, first_name=name, email=email)
+         #new_usr.save()
          message = "success_sign_up"
          return message
 

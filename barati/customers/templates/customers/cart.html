@@ -78,45 +78,45 @@
 <section id="do_action">
 <div class="container">
 		{% if card_list %} <!--Don't show cart if there is nothing in it -->
+		<form id = "checkout" method="post" action="/checkout/">
 		<div class="checkout-options" id="checked-options">
 			<p>Check Out, Relax and Enjoy the Wedding!</p>
 			<p>Checkout options</p>
 			<ul class="nav">
 				<li>
-					<label><input type="checkbox"> Use my address </label>
+					<label><input type="checkbox" /> Use my address </label>
 				</li>
 			</ul>
 		</div><!--/checkout-options-->
-		<form id = "checkout" method="post" action="/checkout/">
 		<div class="shopper-informations">
 			<div class="row">
 				<div class="col-sm-5 clearfix" style="width:70%">
 					<div class="bill-to">
 						<p>Please fill in your delivery details</p>
 						<div class="form-one">
-								<input type="text" placeholder="First Name *" name="first_name" required="true">
-								<input type="text" placeholder="Middle Name" name="middle_name">
-								<input type="text" placeholder="Last Name *" name="last_name" required="true">
-								<input type="text" placeholder="Building Number" name="building_number">
-								<input type="text" placeholder="Street" name="street">
-								<input type="text" placeholder="Locality" name="locality">
-								<input type="text" placeholder="Nearest Landmark" name="landmark">
+								<input type="text" placeholder="First Name *" name="first_name" required="true" />
+								<input type="text" placeholder="Middle Name" name="middle_name" />
+								<input type="text" placeholder="Last Name *" name="last_name" required="true" />
+								<input type="text" placeholder="Building Number" name="building_number" />
+								<input type="text" placeholder="Street" name="street" / >
+								<input type="text" placeholder="Locality" name="locality" />
+								<input type="text" placeholder="Nearest Landmark" name="landmark" />
 						</div>
 						<div class="form-two">
 								<textarea rows="3" placeholder="Address *" name="address" required="true"></textarea>
 								<br/><br/>
-								<input type="text" placeholder="City *" required="true">
-								<select name="state">
-									<option>-- State --</option>
-									<option>Delhi</option>
-									<option>Uttar Pradesh</option>
+								<input type="text" placeholder="City *" required="true" />
+								<select name="state" required="true">
+									<option value="">-- State --</option>
+									<option value="delhi">Delhi</option>
+									<option value="uttar pradesh">Uttar Pradesh</option>
 								</select>
-								<select name="country">
-									<option>-- Country --</option>
-									<option>India</option>
+								<select name="country" required="true">
+									<option value="">-- Country --</option>
+									<option value="india">India</option>
 								</select>
-								<input type="text" placeholder="Zip / Postal Code *" required="true" name="zipcode">
-								<input type="text" placeholder="Phone *" required="true" name="phone">
+								<input type="text" placeholder="Zip / Postal Code *" required="true" name="zipcode" />
+								<input type="text" placeholder="Phone *" required="true" name="phone" />
 						</div>
 					</div>
 				</div>
@@ -148,8 +148,8 @@
 						</div>
 						</div>					
 			</div>
+			</form>
 		</div>
-		</form>
 		{% endif %} <!--Don't show cart if there is nothing in it. End of if -->
 	</div>	
 </section> <!--/#cart_items-->
@@ -169,3 +169,31 @@
     <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
+<script type="text/javascript">
+	function remove_from_cart(product_ref_id)
+   	{
+          var remove_from_cart_form_id = '#remove_from_cart'+ String(product_ref_id);
+          $(remove_from_cart_form_id).submit(function() {// catch the form's submit event
+              $.ajax({
+                  url : this.action, 
+                  type : "POST",
+                  dataType: "json",
+                  data: $(this).serialize(), // get the form data
+                  context : this,
+                  success : function(json) {
+                    alert(json);
+                    if (json == "success_remove_from_cart")
+                    {
+                      window.location = location.pathname; // redirect back to the calling page
+                    }
+                    },
+                  error : function(xhr,errmsg,err) {
+                    remove_spinner(); 
+                    alert(xhr.status + ": " + xhr.responseText);
+                    }
+              });
+              return false;
+          });
+    }
+
+</script>

@@ -1,0 +1,240 @@
+{% load staticfiles %}
+
+<link rel="stylesheet" href="{% static 'css/star-ratings.css' %}">
+<script type="text/javascript" src="{% static 'js/star-ratings.js' %}"></script>
+{% for card_detail in card_details %}
+<div class="col-sm-5">
+<div class="view-product">
+	<img src="{% static '' %}{{card_detail.ref_id|get_pic_path}}" alt="" />
+	<h3>ZOOM</h3>
+</div>
+<div id="similar-product" class="carousel slide" data-ride="carousel">
+	
+	  <!-- Wrapper for slides -->
+	    <div class="carousel-inner">
+			<div class="item active">
+			  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
+			  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
+			  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
+			</div>
+			<div class="item">
+			  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
+			  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
+			  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
+			</div>
+			<div class="item">
+			  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
+			  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
+			  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
+			</div>
+			
+		</div>
+
+	  <!-- Controls -->
+	  <a class="left item-control" href="#similar-product" data-slide="prev">
+		<i class="fa fa-angle-left"></i>
+	  </a>
+	  <a class="right item-control" href="#similar-product" data-slide="next">
+		<i class="fa fa-angle-right"></i>
+	  </a>
+</div>	
+<br>
+<div>
+	{% if card_colors %}
+		<p><b>Also available in</b></p>
+		{% for color in card_colors %}
+			<span><image style="height:40px;width:40px;" src="{%static 'images/cards/colors/' %}{{color.color}}.png" /></span>
+		{% endfor %}
+	{% endif %}
+
+</div>
+</div>
+<form action="/add_to_cart/{{card_detail.ref_id}}" id="add_to_cart" method="POST"><!--Add to cart form BEGIN-->
+{% csrf_token %}
+<input type="hidden" name="product_type" value="cards" />
+<input type="hidden" name="price" value="{{card_detail.actual_price}}" />
+<div class="product-information"><!--/product-information-->
+<h2>{{card_detail.name}}</h2>
+<p>{{card_detail.short_description}}</p>
+<p>Product ID: {{card_detail.ref_id}}</p>
+{% load ratings %}
+{% ratings card_detail %}
+<span>
+	<span>{{card_detail.actual_price}} Rs Per Card</span>
+	<label>Quantity:</label>
+	<input type="text" name = "quantity" value="1" />
+	{% if request.user.username %}
+	<button type="submit" class="btn btn-default cart">
+		<i class="fa fa-shopping-cart"></i>
+		Add to cart
+	</button>
+	{% else %}
+	<a style = "" href = "#login" >
+	<button type="button" class="btn btn-default cart">
+		<i class="fa fa-shopping-cart"></i>
+		Add to cart
+	</button>
+	</a>
+	<!--<button class="fancy-btn open" type="button">Can I haz Modal?</button>-->
+	{% endif %}
+</span>
+<p><b>Availability:</b> In Stock</p>
+<p><b>Condition:</b> New</p>
+<p><b>Shopkeeper:</b> XYZ</p>
+<a href=""><img src="{% static 'images/product-details/share.png' %}" class="share img-responsive"  alt="" /></a>
+</div><!--/product-information-->
+</form> <!--Add to cart form END-->
+
+
+<div class="category-tab shop-details-tab"><!--category-tab-->
+	<div class="col-sm-12">
+		<ul class="nav nav-tabs">
+			<li><a href="#details" data-toggle="tab">Details</a></li>
+			<li><a href="#companyprofile" data-toggle="tab">Company Profile</a></li>
+			<li class="active"><a href="#reviews" data-toggle="tab">Reviews (5)</a></li>
+		</ul>
+	</div>
+	<div class="tab-content">
+		<div class="tab-pane fade" id="details" >
+			<p>{{card_detail.long_description}}</p>
+		</div>
+		
+		<div class="tab-pane fade" id="companyprofile" >
+			<p>Profile</p>
+		</div>
+		
+		<div class="tab-pane fade active in" id="reviews" >
+			<div class="col-sm-12">
+				{% if request.user.username %}
+					{% if user_review %}
+						{% if user_review.user.username == request.user.username %}
+							<p><b>You Reviewed this item on {{user_review.timestamp}}</b></p>
+							<form action="/update_review/" name="update_review" id="update_review" method="post">
+								{% csrf_token %}
+								<span>
+									<input type="text" name="update_title_review" placeholder="Review title" value="{{user_review.title}}" />
+								</span>
+								<br>
+								<textarea name="update_detailed_review" placeholder="Your opinion about this product" >{{user_review.detailed_review}}</textarea>
+								<br>
+								<select name="update_recommendation" class="recommendation_select_box">
+									<option value="">Will you recommend this product?</option>
+									<option {% if user_review.recommended == 'yes' %}selected{% endif %}>Yes</option>
+									<option {% if user_review.recommended == 'no' %}selected{% endif %}>No</option>
+									<option {% if user_review.recommended == 'maybe' %}selected{% endif %}>Maybe</option>
+								</select>
+								<br><br>
+								<button type="submit" class="btn btn-default">
+										Update
+								</button>
+							</form>
+							<br><br>
+						{% endif %}	
+					{% else %}
+						<p><b>Write Your Review</b></p>
+						<form action="/submit_review/" name="submit_review" id="submit_review" method="post">
+							{% csrf_token %}
+							<input type="hidden" name="reviewed_ref_id" value="{{card_detail.ref_id}}">
+							<span>
+								<input type="text" name="title_review" placeholder="Review title" required="true"/>
+							</span>
+							<textarea name="detailed_review" placeholder="Your opinion about this product"></textarea>
+							<br>
+							<select name="recommendation" class="recommendation_select_box">
+								<option selected="true" value="">Will you recommend this product?</option>
+								<option value="yes">Yes</option>
+								<option value="no">No</option>
+								<option value="maybe">Maybe</option>
+							</select>
+							<br><br>
+
+							<button type="submit" class="btn btn-default">
+								Submit
+							</button>
+							<br><br>
+							{% load ratings %}
+							{% ratings card_detail %}
+						</form>
+						{% endif %}
+				{% else %}	
+					<p><b>Please login to review.</b></p>
+					<br>
+				{% endif %}
+				<p><h4>Customer Reviews</h4></p>
+				{% if all_reviews %}
+				{% for review in all_reviews %}
+					{% if review.user.username != request.user.username %}
+						<div style="background-color:#F0F0E9">
+							<ul style="background-color:#40403E;">
+								<li><a href="#"><i class="fa fa-user"></i>{{review.user | get_user}}</a></li>
+								<li><a href="#"><i class="fa fa-calendar-o"></i>{{review.timestamp}}</a></li>
+							</ul>
+							<p><b>{{review.title}}</b></p>
+							<p>{{review.detailed_review}}</p>
+						</div>
+					{% endif %}
+				{% endfor %}
+				{% else %}
+					<div style="background-color:#F0F0E9">
+					<p><b>No customer reviews found.</b></p>
+				</div
+				{% endif %}
+			</div>
+		</div>
+		
+	</div>
+</div><!--/category-tab-->
+
+
+
+{% include 'customers/login_popup.html' %}
+{% endfor %} <!--card_detail object-->
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#add_to_cart').submit(function() { // catch the form's submit event
+        $.ajax({
+            url : this.action, 
+            type : "POST",
+            dataType: "json",
+            data: $(this).serialize(), // get the form data
+            context : this,
+            success : function(json) {
+              alert(json);
+              var current_url = location.pathname;
+              if (json == "success_add_to_cart")
+              {
+              	window.location = current_url; // redirect back to the calling page
+              }
+              },
+            error : function(xhr,errmsg,err) {
+              alert(xhr.status + ": " + xhr.responseText);
+              }
+        });
+        return false;
+    });
+
+      $('#submit_review').submit(function() { // catch the form's submit event
+        $.ajax({
+            url : this.action, 
+            type : "POST",
+            dataType: "json",
+            data: $(this).serialize(), // get the form data
+            context : this,
+            success : function(json) {
+              alert(json);
+              var current_url = location.pathname;
+              if (json == "success_submit_review")
+              {
+              	window.location = current_url; // redirect back to the calling page
+              }
+              },
+            error : function(xhr,errmsg,err) {
+              alert(xhr.status + ": " + xhr.responseText);
+              }
+        });
+        return false;
+    });
+
+    });
+</script>	
