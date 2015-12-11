@@ -3,6 +3,13 @@
 <link rel="stylesheet" href="{% static 'css/star-ratings.css' %}">
 <script type="text/javascript" src="{% static 'js/star-ratings.js' %}"></script>
 {% for card_detail in card_details %}
+<head>
+<meta property="og:url"           content="http://127.0.0.1:8000/card_details/{{card_detail.id}}" />
+<meta property="og:type"          content="website" />
+<meta property="og:title"         content="Barati" />
+<meta property="og:description"   content="Ab shadi easy hai" />
+<meta property="og:image"         content="{% static '' %}{{card_detail.ref_id|get_pic_path}}" />
+</head>
 <div class="col-sm-5">
 <div class="view-product">
 	<img src="{% static '' %}{{card_detail.ref_id|get_pic_path}}" alt="" />
@@ -81,7 +88,22 @@
 <p><b>Availability:</b> In Stock</p>
 <p><b>Condition:</b> New</p>
 <p><b>Shopkeeper:</b> XYZ</p>
-<a href=""><img src="{% static 'images/product-details/share.png' %}" class="share img-responsive"  alt="" /></a>
+<p><a href="#card_content">Add content before ordering</a></p>
+	{% include 'customers/card_content_popup.html' %}
+
+<!-- FB Share-->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1710233362554820";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- share button code -->
+<div class="fb-share-button" data-href="http://127.0.0.1:8000/card_details/{{card_detail.id}}" data-layout="button_count"></div>
+<!-- FB Share-->
 </div><!--/product-information-->
 </form> <!--Add to cart form END-->
 
@@ -91,7 +113,7 @@
 		<ul class="nav nav-tabs">
 			<li><a href="#details" data-toggle="tab">Details</a></li>
 			<li><a href="#companyprofile" data-toggle="tab">Company Profile</a></li>
-			<li class="active"><a href="#reviews" data-toggle="tab">Reviews (5)</a></li>
+			<li class="active"><a href="#reviews" data-toggle="tab">Reviews ({{all_reviews.count}})</a></li>
 		</ul>
 	</div>
 	<div class="tab-content">
@@ -184,7 +206,6 @@
 		
 	</div>
 </div><!--/category-tab-->
-
 
 
 {% include 'customers/login_popup.html' %}

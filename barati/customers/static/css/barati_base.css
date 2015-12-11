@@ -53,7 +53,7 @@ a#pop:hover, a#update_cert:hover {
 .popup, .popup2 {
     background-color: #fff;
     background-image : url('../images/home/logo.png');
-    background-size: 20%;
+    background-size: 10%;
     background-repeat:no-repeat;
     background-position: 6px 6px;
     border: 3px solid #fff;
@@ -67,6 +67,9 @@ a#pop:hover, a#update_cert:hover {
     visibility: hidden;
     z-index: 10;
     color:#000 !important;
+    width:90%;
+    height:70%;
+    overflow-y:auto;
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
@@ -90,6 +93,23 @@ a#pop:hover, a#update_cert:hover {
     -ms-transition: opacity .5s, top .5s;
     -o-transition: opacity .5s, top .5s;
     transition: opacity .5s, top .5s;
+}
+.popup2 textarea{
+   background:transparent;
+   color: #000;
+   width:60%;
+   border:2px solid #e5e5e5;
+}
+.popup input, select{
+   border:1px solid #e5e5e5;
+}
+.popup_line{
+   float:center;
+   font-size:12px;
+}
+
+#message_pop4{
+   font-size:15px;
 }
 .overlay:target+.popup, .overlay2:target+.popup2 {
     top: 50%;
@@ -134,8 +154,8 @@ a#pop:hover, a#update_cert:hover {
 }
 .date_picker{
    width:110px;
-   background: url('../images/home/datepicker.png');
-   background-size: 16%;
+   background: url('../images/home/datepick.png');
+   background-size: 21%;
    background-repeat: no-repeat;
    background-position: left center;
    padding-left: 22px;
@@ -144,8 +164,8 @@ a#pop:hover, a#update_cert:hover {
    
 }
 .location{
-   background: url('../images/home/location.png');
-   background-size: 7%;
+   background: url('../images/home/loc.png');
+   background-size: 10%;
    background-repeat: no-repeat;
    background-position: left center;
    padding-left: 20px;

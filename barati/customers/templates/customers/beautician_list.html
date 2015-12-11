@@ -1,29 +1,31 @@
 {% load staticfiles %}
-	{% if cards %}
-	{% for card in cards%}
+	{% if beauticians %}
+	{% for beautician in beauticians%}
 	<div class="col-sm-4">
 		<div class="product-image-wrapper">
 			<div class="single-products">
 					<div class="productinfo text-center">
-						<a style = "text-decoration:none;"href = "/card_details/{{card.id}}">
+						<a style = "text-decoration:none;"href = "/beautician_details/{{beautician.id}}">
 
-						<img style="width:200px;height:170px;" src="{% static '' %}{{card.ref_id|get_pic_path}}" alt="{{card.short_description}}" title="{{card.short_description}}"/>
-						<h2 >{{card.actual_price}} Rs Per Card</h2>
-						<p>{{card.short_description}}</p>
-						<p>Product ID {{card.ref_id}}</p>
+						<img style="width:200px;height:170px;" src="{% static '' %}{{beautician.ref_id|get_pic_path}}" alt="{{beautician.short_description}}" title="{{beautician.short_description}}"/>
+						<h2 >Rs {{beautician.actual_price}}</h2>
+						<p>{{beautician.short_description}}</p>
+						<p>Product ID {{beautician.ref_id}}</p>
 						<!--<button type="button" class="btn btn-default cart">
 							Get the feel
 						</button>-->
 						</a>
-						<form action="/add_to_cart/{{card.ref_id}}" class="add_to_cart" id="add_to_cart{{forloop.counter}}" method="POST"><!--Add to cart form BEGIN-->
+						<form action="/add_to_cart/{{beautician.ref_id}}" class="add_to_cart" id="add_to_cart{{forloop.counter}}" method="POST"><!--Add to cart form BEGIN-->
 							{% csrf_token %}
-							<input type="hidden" name="product_type" value="cards" />
-							<input type="hidden" name="price" value="{{card.actual_price}}" />
+							<input type="hidden" name="product_type" value="beautician" />
+							<input type="hidden" name="price" value="{{beautician.actual_price}}" />
+							<!--
 							<div class="cart_quantity_button">
 								<a class="cart_quantity_up" style="width:15px;" href="#" > + </a>
-								<input class="cart_quantity_input" type="text" name="quantity" value=1 autocomplete="off" size="2" id="{{card.ref_id}}">
+								<input class="cart_quantity_input" type="text" name="quantity" value=1 autocomplete="off" size="2" id="{{beautician.ref_id}}">
 								<a class="cart_quantity_down"  href="#"> - </a>
 							</div>
+							-->
 							{% if request.user.username %}
 								<a href="#" onclick="add_to_cart({{forloop.counter}})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i><button type="submit" style="border:none;background:transparent;" >  Add to cart</button></a>
 							{% else %}
@@ -40,10 +42,10 @@
 			<div class="choose">
 				<form id="add_to_wishlist{{forloop.counter}}" class="add_to_wishlist" name="add_to_wishlist{{forloop.counter}}" method="post" action="/add_to_wishlist/">
 					{% csrf_token %}
-					<input type="hidden" name="ref_id" value="{{card.ref_id}}" />
+					<input type="hidden" name="ref_id" value="{{beautician.ref_id}}" />
 					<ul class="nav nav-pills nav-justified">
 						{% if request.user.username %}
-								{% if card.ref_id in wishlist_list %}
+								{% if beautician.ref_id in wishlist_list %}
 									<li><a href="/wishlist"><i class="fa fa-plus-square"></i>In Wishlist</a></li>
 								{% else %}
 									<li><a href="#" onclick="add_to_wishlist({{forloop.counter}})"><i class="fa fa-plus-square"></i><button type="submit" style="border:none;background:transparent;" > Add to wishlist</button></a></li>
@@ -51,7 +53,6 @@
 							{% else %}
 								<li><a href="#login" onclick=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
 							{% endif %}
-						<li><a href="#"><i class="fa fa-plus-square"></i>Get it's FEEL</a></li>
 					</ul>
 				</form>
 			</div>

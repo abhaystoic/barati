@@ -13,7 +13,24 @@
 							{% endfor %}
 							{% endif %}
 						</div><!--/category-products-->
-					
+						
+						<!--Gender Selector for beauticians | START-->
+						{% if category == 'beauticians' %}
+							<div class="panel-group category-products" id="accordian">
+							<h2>Gender</h2>
+							<div class="panel panel-default">
+								<div class="panel-heading" >
+								<h4 class="panel-title">
+								<a><input type="checkbox" name="gender_filter_male" id="gender_filter_male" value="male">&nbsp;&nbsp;MALE</input></a>
+								<a><input type="checkbox" name="gender_filter_female" id="gender_filter_female" value="female">&nbsp;&nbsp;FEMALE</input></a>
+								</h4>
+								</div>
+							</div>
+							</div>
+						
+						{% endif %}
+						<!--Gender Selector for beauticians | END-->
+
 						<div class="brands_products"><!--brands_products-->
 							<h2>Brands</h2>
 							<div class="brands-name">
@@ -43,3 +60,11 @@
 					
 					</div>
 					</div>
+<script type="text/javascript">
+	$('#gender_filter_male').change(function(){
+    	alert('gender_filter_male');
+	});
+	$('#gender_filter_female').change(function(){
+    	alert('gender_filter_female');
+	});
+</script>

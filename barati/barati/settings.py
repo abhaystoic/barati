@@ -35,12 +35,11 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.messages',
+    'django.contrib.messages',   
     'django.contrib.staticfiles',
     'social.apps.django_app.default',
     'rest_framework',
     'axes', # Defense mechanism against Brute Force attack
-    'drealtime',
     'customers',
     'vendors',
     'star_ratings' #Rating system #https://github.com/wildfish/django-star-ratings
@@ -145,4 +144,5 @@ SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/dashboard'
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/dashboard'
 SOCIAL_AUTH_SANITIZE_REDIRECTS = True
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = False
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/dashboard'
 SOCIAL_AUTH_URLOPEN_TIMEOUT = 30 #seconds

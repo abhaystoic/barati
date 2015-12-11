@@ -267,6 +267,35 @@ class Cards(models.Model):
    def __unicode__(self):
       return unicode(self.ref_id)
 
+class Beauticians(models.Model):
+   id = models.AutoField(primary_key=True)
+   ref_id = models.CharField(max_length=100)
+   vendor_id = models.ForeignKey(Vendors)
+   name = models.CharField(max_length=100)
+   type = models.ForeignKey(Beautician_Types, blank=True, null=True)
+   GENDER_CHOICES = (
+      ('male', 'male'),
+      ('female', 'female'),
+      ('neutral', 'neutral'),
+   )
+   gender = models.CharField(choices=GENDER_CHOICES, max_length=10)
+   short_description = models.CharField(max_length=100, blank=True, null=True)
+   long_description = models.CharField(max_length=800, blank=True, null=True)
+   services = models.CharField(max_length=800, blank=True, null=True)
+   actual_price = models.IntegerField()
+   discount_rs = models.FloatField(blank=True, null=True)
+   discounted_price = models.FloatField(blank=True, null=True)
+   unisex = models.NullBooleanField(blank=True)
+   female_person_available = models.NullBooleanField(blank=True)
+   home_visit_charge = models.IntegerField(blank=True, null=True)
+   
+   class Meta: 
+      managed = True
+      db_table = 'beauticians'
+   def __unicode__(self):
+      return unicode(self.ref_id)
+
+
 class Card_Colors(models.Model):
    id = models.AutoField(primary_key=True)
    card = models.ForeignKey(Cards, blank=True, null=True)

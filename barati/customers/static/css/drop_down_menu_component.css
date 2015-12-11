@@ -49,18 +49,20 @@
 /* Main menu link style */
 .cbp-hsmenu > li > a {
 	color: #fff;/*color of the text in the dropdown menu*/
-	font-size: 1.1em;
+	font-size: 0.8em;
 	line-height: 2.5em;
 	display: inline-block;
 	position: relative;
 	z-index: 10000;
 	outline: none;
+	font-weight:bold;
 }
 
 .no-touch .cbp-hsmenu > li > a:hover,
 .no-touch .cbp-hsmenu > li > a:focus,
 .cbp-hsmenu > li.cbp-hsitem-open > a {
 	color: #FE980F;
+	/*background-color:#f5fffa;*/ /*Color of the backgroud when hovered over*/
 }
 
 /* Add an arrow to the main menu link if it has a submenu (not the only child) */
