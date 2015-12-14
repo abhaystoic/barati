@@ -18,7 +18,8 @@ class Remove_From_Wishlist(Wishlist, View):
          
       def post(self, request, **kwargs):
          ref_id = kwargs['ref_id']
-         wishlist_prod_to_delete = m.Wishlist.objects.get(ref_id=ref_id)
+         user_id = m.Users.objects.get(username= request.user.username).id
+         wishlist_prod_to_delete = m.Wishlist.objects.get(ref_id=ref_id, user_id=user_id)
          wishlist_prod_to_delete.delete()
          message = "success_remove_from_wishlist"
          return HttpResponse(json.dumps(message))

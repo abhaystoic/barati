@@ -15,7 +15,7 @@ class Add_To_Wishlist(View):
          ref_id = request.POST.get('ref_id')
          message = ref_id
          wishlist = m.Wishlist(ref_id=ref_id, user_id=user.id)
-         wiahlist.save()
+         wishlist.save()
          message = "success_add_to_wish_list"
          return HttpResponse(json.dumps(message))
 

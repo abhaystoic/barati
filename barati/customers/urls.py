@@ -30,6 +30,7 @@ urlpatterns = patterns('',
    url(r'^card/(?P<type>[-\w]+)$', Card.as_view(), name = 'card'),
    url(r'^beauticians/(?P<type>[-\w]+)$', Beautician.as_view(), name = 'beautician'),
    url(r'^card_details/(?P<card_id>[-\w]+)$', Card_Details.as_view(), name = 'card_details'),
+   url(r'^beautician_details/(?P<beautician_id>[-\w]+)$', Beautician_Details.as_view(), name = 'beautician_details'),
    url(r'^add_to_cart/(?P<ref_id>[-\w]+)$', Add_To_Cart, name = 'add_to_cart'),
    url(r'^shop/$', Shop, name = 'shop'),
    )

@@ -6,8 +6,8 @@
 
 .panel {
     background-color: #444;
-    height: 34px;
-    padding: 10px;
+    height: 22px;/*34px;*/
+    padding: 0px; /*10px;*/
 }
 .panel a#pop, .panel a#update_cert {
     border: 2px solid #aaa;
@@ -200,4 +200,9 @@ a#pop:hover, a#update_cert:hover {
 }
 .recommendation_select_box{
    width:30%;
+}
+
+.left-sidebar{
+   width:80%;
+   margin-top:6px;
 }

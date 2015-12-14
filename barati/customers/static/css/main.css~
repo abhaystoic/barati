@@ -11,6 +11,13 @@ body {
   background:;
   position: relative;
   font-weight:400px;
+  	/*For making content unselectable*/	
+	 -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+     user-select: none
 }
 
 ul li {
@@ -1219,7 +1226,7 @@ h2.title {
   overflow: hidden;
   padding-bottom: 60px;
   padding-left: 60px;
-  padding-top: 60px;
+  padding-top: 5px;/*60px;*/
   position: relative;
 }
 

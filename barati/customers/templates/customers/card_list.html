@@ -8,21 +8,24 @@
 						<a style = "text-decoration:none;"href = "/card_details/{{card.id}}">
 
 						<img style="width:200px;height:170px;" src="{% static '' %}{{card.ref_id|get_pic_path}}" alt="{{card.short_description}}" title="{{card.short_description}}"/>
-						<h2 >{{card.actual_price}} Rs Per Card</h2>
-						<p>{{card.short_description}}</p>
-						<p>Product ID {{card.ref_id}}</p>
+						<h2>{{card.short_description}}</h2>
+						<p>{{card.actual_price}} Rs (Per Card) </p>
+						<!--<p>Product ID {{card.ref_id}}</p>-->
+						<p><b>Printing Price: </b> Rs {{card.printing_price}} (Per Card)</p>
 						<!--<button type="button" class="btn btn-default cart">
 							Get the feel
 						</button>-->
 						</a>
 						<form action="/add_to_cart/{{card.ref_id}}" class="add_to_cart" id="add_to_cart{{forloop.counter}}" method="POST"><!--Add to cart form BEGIN-->
 							{% csrf_token %}
-							<input type="hidden" name="product_type" value="cards" />
+							<input type="hidden" name="product_type" value="card" />
 							<input type="hidden" name="price" value="{{card.actual_price}}" />
+							<input type="hidden" value="{{card.printing_price}}" name="card_printing_price_per_card"/>
 							<div class="cart_quantity_button">
 								<a class="cart_quantity_up" style="width:15px;" href="#" > + </a>
 								<input class="cart_quantity_input" type="text" name="quantity" value=1 autocomplete="off" size="2" id="{{card.ref_id}}">
 								<a class="cart_quantity_down"  href="#"> - </a>
+								<p><input type="checkbox" name="avail_printing_checkbox" id="avail_printing_checkbox{{forloop.counter}}" value="avail_printing"><span style="color:red;">&nbsp;Avail Printing</span></input></p>
 							</div>
 							{% if request.user.username %}
 								<a href="#" onclick="add_to_cart({{forloop.counter}})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i><button type="submit" style="border:none;background:transparent;" >  Add to cart</button></a>

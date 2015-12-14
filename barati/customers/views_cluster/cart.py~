@@ -41,13 +41,21 @@ class Cart(Dashboard, View):
          self.tent_house_list = []
          self.tax = None
          self.grand_total = None
+         avail_printing = None
+         printing_preference_dict = {}
          
          for product in self.cart:
             #Get the details
             query_prod = "select * from " + str(product.product_type) + " where ref_id = '" + str(product.ref_id) + "'"
             
-            if str(product.product_type) == "cards":
+            if str(product.product_type) == "card":
                self.card_list.append(m.Cards.objects.get(ref_id = str(product.ref_id)))
+               existing_preference_check = m.Cards_Preferences.objects.filter(ref_id=product.ref_id, user_id=user_id).exists()
+               print existing_preference_check, user_id
+               #If card preference exists then update else create new
+               if existing_preference_check:
+                  avail_printing = m.Cards_Preferences.objects.get(ref_id=product.ref_id, user_id=user_id).avail_printing
+                  printing_preference_dict.update({product.ref_id : avail_printing})
 
             if str(product.product_type) == "venues":
                self.venue_list.append(m.Venues.objects.get(ref_id = str(product.ref_id)))
@@ -79,11 +87,11 @@ class Cart(Dashboard, View):
             if str(product.product_type) == "fireworks":
                self.fireworks_list.append(m.Fireworks.objects.get(ref_id = str(product.ref_id)))
          
-         self.cart_sub_total = m.Cart.objects.filter(user_id = 1).aggregate(cart_sub_total = Sum('total_price'))
+         self.cart_sub_total = m.Cart.objects.filter(user_id = user_id).aggregate(cart_sub_total = Sum('total_price'))
          if self.cart_sub_total['cart_sub_total'] is not None:
             self.tax = self.cart_sub_total['cart_sub_total'] * 0.10
             self.grand_total = float(self.tax) + float(self.cart_sub_total['cart_sub_total'])
-         self.prod_dict = {'card_list' : self.card_list, 'venue_list' : self.venue_list, 'beautician_list' : self.beautician_list, \
+         self.prod_dict = {'card_list' : self.card_list, 'printing_preference_dict' : printing_preference_dict, 'venue_list' : self.venue_list, 'beautician_list' : self.beautician_list, \
             'music_list' : self.music_list, 'gift_list' : self.gift_list, 'photo_video_list' : self.photo_video_list, \
             'bakery_list' : self.bakery_list, 'ghodi_bagghi_list' : self.ghodi_bagghi_list, 'band_list' : self.band_list, \
             'mehendi_list' : self.mehendi_list, 'fireworks_list' : self.fireworks_list, \

@@ -74,14 +74,29 @@ def get_pic_path(key):
       return "not_found"
 
 #Filter for cart
-@register.filter(name = 'get_quantity') 
-def get_quantity(key):
+@register.filter(name = 'get_quantity')
+def get_quantity(key, request):
    try:
       total_quantity = 0
-      quantities = m.Cart.objects.filter(ref_id = key)
+      user_id = m.Users.objects.get(username=request.user.username).id
+      quantities = m.Cart.objects.filter(ref_id = key, user_id=user_id)
       for quantity in quantities:
-         total_quantity = total_quantity + quantity.quantity
+         if quantity.quantity is not None:
+            total_quantity = total_quantity + quantity.quantity
       return total_quantity
+   except Exception as general_exception:
+      print str(general_exception)
+      print "Line number : " + str(sys.exc_traceback.tb_lineno)
+      return 0
+
+@register.filter(name = 'get_beautician')
+def get_beautician(ref_id):
+   try:
+      vendor_id = m.Beauticians.objects.get(ref_id=ref_id).vendor_id_id
+      beautician = m.Vendors.objects.get(id=vendor_id)
+      beautician_name = beautician.name
+      locality = m.Address.objects.get(id=beautician.address_id).locality
+      return (beautician_name, locality)
    except Exception as general_exception:
       print str(general_exception)
       print "Line number : " + str(sys.exc_traceback.tb_lineno)
@@ -89,9 +104,10 @@ def get_quantity(key):
 
 #Filter for cart
 @register.filter(name = 'get_total_price')
-def get_total_price(key):
+def get_total_price(key, request):
    try:
-      cart = m.Cart.objects.filter(ref_id = key).aggregate(sum_total = Sum('total_price'))
+      user_id = m.Users.objects.get(username=request.user.username).id
+      cart = m.Cart.objects.filter(ref_id = key, user_id=user_id).aggregate(sum_total = Sum('total_price'))
       return cart['sum_total']
    except Exception as general_exception:
       print str(general_exception)

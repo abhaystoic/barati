@@ -192,7 +192,6 @@
 		},
 
 		mousedown: function(ev) {
-
 			// Touch: Get the original event:
 			if (this.touchCapable && ev.type === 'touchstart') {
 				ev = ev.originalEvent;
@@ -296,8 +295,31 @@
 				})
 				.data('value', val)
 				.prop('value', val);
+			
+			//Make an ajax call to return the results of this range
+			this.filter_results(val[0], val[1]);	
 			return false;
 		},
+		
+		filter_results: function(min_value, max_value){
+		   $('#filter_range').submit();
+         $('form').submit(function() {// catch the form's submit event
+              $.ajax({
+                  url : this.action + '?min=' + min_value + '?max=' + max_value, 
+                  type : "POST",
+                  dataType: "json",
+                  data: $(this).serialize(), // get the form data
+                  context : this,
+                  success : function(json) {
+                    },
+                  error : function(xhr,errmsg,err) {
+                    alert(xhr.status + ": " + xhr.responseText);
+                    }
+              });
+              return false;
+          });
+      },
+      
 
 		calculateValue: function() {
 			var val;
@@ -313,7 +335,7 @@
 			}
 			return val;
 		},
-
+      
 		getPercentage: function(ev) {
 			if (this.touchCapable) {
 				ev = ev.touches[0];

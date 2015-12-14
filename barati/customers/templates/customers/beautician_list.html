@@ -8,16 +8,19 @@
 						<a style = "text-decoration:none;"href = "/beautician_details/{{beautician.id}}">
 
 						<img style="width:200px;height:170px;" src="{% static '' %}{{beautician.ref_id|get_pic_path}}" alt="{{beautician.short_description}}" title="{{beautician.short_description}}"/>
-						<h2 >Rs {{beautician.actual_price}}</h2>
+						{% with beautician.ref_id|get_beautician as beautician%}
+							<h2>{{beautician.0}} ({{beautician.1}})</h2>
+						{% endwith %}
 						<p>{{beautician.short_description}}</p>
-						<p>Product ID {{beautician.ref_id}}</p>
+						<p>Rs {{beautician.actual_price}}</p>
+						<!--<p>Product ID {{beautician.ref_id}}</p>-->
 						<!--<button type="button" class="btn btn-default cart">
 							Get the feel
 						</button>-->
 						</a>
 						<form action="/add_to_cart/{{beautician.ref_id}}" class="add_to_cart" id="add_to_cart{{forloop.counter}}" method="POST"><!--Add to cart form BEGIN-->
 							{% csrf_token %}
-							<input type="hidden" name="product_type" value="beautician" />
+							<input type="hidden" name="product_type" value="beauticians" />
 							<input type="hidden" name="price" value="{{beautician.actual_price}}" />
 							<!--
 							<div class="cart_quantity_button">
@@ -45,7 +48,7 @@
 					<input type="hidden" name="ref_id" value="{{beautician.ref_id}}" />
 					<ul class="nav nav-pills nav-justified">
 						{% if request.user.username %}
-								{% if beautician.ref_id in wishlist_list %}
+								{% if beautician.ref_id in wishlist_list %} <!--This wishlist is user specific-->
 									<li><a href="/wishlist"><i class="fa fa-plus-square"></i>In Wishlist</a></li>
 								{% else %}
 									<li><a href="#" onclick="add_to_wishlist({{forloop.counter}})"><i class="fa fa-plus-square"></i><button type="submit" style="border:none;background:transparent;" > Add to wishlist</button></a></li>

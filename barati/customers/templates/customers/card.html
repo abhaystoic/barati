@@ -61,6 +61,14 @@
 	function add_to_cart(card_seq_number)
    	{
           var add_to_cart_form_id = '#add_to_cart'+ String(card_seq_number);
+          var avail_printing_checkbox_id = 'avail_printing_checkbox' + String(card_seq_number);
+          if (document.getElementById(avail_printing_checkbox_id).checked == false)
+          {
+            if (confirm('Are you sure you wanna get it printed yourself?') == false)
+            {
+              return false;
+            }
+          }
           $(add_to_cart_form_id).submit(function() { // catch the form's submit event
               $.ajax({
                   url : this.action, 

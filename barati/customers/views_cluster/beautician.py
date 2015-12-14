@@ -14,6 +14,8 @@ class Beautician(Dashboard, View):
       def __init__(self):
          self.template_name = 'customers/beautician.html'
          self.wishlist_list = []
+         self.filter_values = (0, 10000)
+         self.popular_price_filter_values = (2000, 7000)
 
       def get_context_data(self, **kwargs):
          context = super(Beautician, self).get_context_data(**kwargs)   
@@ -39,20 +41,55 @@ class Beautician(Dashboard, View):
          gender = request.GET.get('for')
          query = "select id, name from beauticians where type_id = " + type + " and gender = '" + str(gender) + "'"
          if gender == None:
-            self.beauticians = m.Beauticians.objects.filter(type_id=type)#raw(query)
+            self.beauticians = m.Beauticians.objects.filter(type_id=type, actual_price__range=self.popular_price_filter_values)#raw(query)
          else:
-            self.beauticians = m.Beauticians.objects.filter(type_id=type, gender=str(gender))#raw(query)   
+            self.beauticians = m.Beauticians.objects.filter(\
+               type_id=type, gender=str(gender),\
+               actual_price__range=self.popular_price_filter_values)# use raw query
          return self.beauticians
-
+      
+      def get_price_filtered_beauticians(self, request, selected_filter_values, **kwargs):
+         type = self.kwargs['type']
+         gender = request.GET.get('for')
+         query = "select id, name from beauticians where type_id = " + type + " and gender = '" + str(gender) + "'"
+         if gender == None:
+            self.beauticians = m.Beauticians.objects.filter(type_id=type, actual_price__range=selected_filter_values)#raw(query)
+         else:
+            self.beauticians = m.Beauticians.objects.filter(\
+               type_id=type, gender=str(gender),\
+               actual_price__range=selected_filter_values)# use raw query
+         return self.beauticians
+      
       #@login_required(login_url='/auth/login/')
       def get(self, request, **kwargs):
          subcategories = self.get_context_data()['beautician_types']
          beauticians = self.get_beauticians(request)
          wishlist_list = self.prepare_wishlist_data(request)
-         context_dict = {'subcategories' : subcategories, 'beauticians' : beauticians, 'category' : 'beauticians', 'wishlist_list' : wishlist_list}
+         filter_values = self.filter_values
+         context_dict = {
+            'subcategories' : subcategories, 'beauticians' : beauticians, 'category' : 'beauticians', \
+            'wishlist_list' : wishlist_list, 'filter_values' : filter_values,\
+            'popular_price_filter_values' : self.popular_price_filter_values
+            }
          context_dict.update(self.get_context_data())
-         return render(request, self.template_name, context_dict)   
-
+         return render(request, self.template_name, context_dict)
+      
+      def post(self, request, **kwargs):
+         slider_values = request.POST.get('slider');
+         selected_filter_values = None
+         if slider_values is not None:
+            selected_filter_values = tuple(slider_values.split(','))
+         subcategories = self.get_context_data()['beautician_types']
+         beauticians = self.get_price_filtered_beauticians(request, selected_filter_values)
+         wishlist_list = self.prepare_wishlist_data(request)
+         context_dict = {
+            'subcategories' : subcategories, 'beauticians' : beauticians, 'category' : 'beauticians', \
+            'wishlist_list' : wishlist_list, 'filter_values' : self.filter_values,\
+            'selected_filter_values' : selected_filter_values
+            }
+         context_dict.update(self.get_context_data())
+         return render(request, self.template_name, context_dict)
+         
    except Exception as e:      
       print e
       print sys.exc_traceback.tb_lineno

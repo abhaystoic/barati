@@ -2,17 +2,17 @@
 
 <link rel="stylesheet" href="{% static 'css/star-ratings.css' %}">
 <script type="text/javascript" src="{% static 'js/star-ratings.js' %}"></script>
-{% for card_detail in card_details %}
+{% for beautician_detail in beautician_details %}
 <head>
-<meta property="og:url"           content="http://127.0.0.1:8000/card_details/{{card_detail.id}}" />
+<meta property="og:url"           content="http://127.0.0.1:8000/beautician_details/{{beautician_detail.id}}" />
 <meta property="og:type"          content="website" />
 <meta property="og:title"         content="Barati" />
 <meta property="og:description"   content="Ab shadi easy hai" />
-<meta property="og:image"         content="{% static '' %}{{card_detail.ref_id|get_pic_path}}" />
+<meta property="og:image"         content="{% static '' %}{{beautician_detail.ref_id|get_pic_path}}" />
 </head>
 <div class="col-sm-5">
 <div class="view-product">
-	<img src="{% static '' %}{{card_detail.ref_id|get_pic_path}}" alt="" />
+	<img src="{% static '' %}{{beautician_detail.ref_id|get_pic_path}}" alt="" />
 	<h3>ZOOM</h3>
 </div>
 <div id="similar-product" class="carousel slide" data-ride="carousel">
@@ -47,29 +47,23 @@
 </div>	
 <br>
 <div>
-	{% if card_colors %}
-		<p><b>Also available in</b></p>
-		{% for color in card_colors %}
-			<span><image style="height:40px;width:40px;" src="{%static 'images/cards/colors/' %}{{color.color}}.png" /></span>
-		{% endfor %}
-	{% endif %}
 
 </div>
 </div>
-<form action="/add_to_cart/{{card_detail.ref_id}}" id="add_to_cart" method="POST"><!--Add to cart form BEGIN-->
+<form action="/add_to_cart/{{beautician_detail.ref_id}}" id="add_to_cart" method="POST"><!--Add to cart form BEGIN-->
 {% csrf_token %}
-<input type="hidden" name="product_type" value="cards" />
-<input type="hidden" name="price" value="{{card_detail.actual_price}}" />
+<input type="hidden" name="product_type" value="beauticians" />
+<input type="hidden" name="price" value="{{beautician_detail.actual_price}}" />
 <div class="product-information"><!--/product-information-->
-<h2>{{card_detail.name}}</h2>
-<p>{{card_detail.short_description}}</p>
-<p>Product ID: {{card_detail.ref_id}}</p>
+<h2>{{beautician_detail.name}}</h2>
+<p>{{beautician_detail.short_description}}</p>
+<p>Product ID: {{beautician_detail.ref_id}}</p>
 {% load ratings %}
-{% ratings card_detail %}
+{% ratings beautician_detail %}
+<br>
 <span>
-	<span>{{card_detail.actual_price}} Rs Per Card</span>
-	<label>Quantity:</label>
-	<input type="text" name = "quantity" value="1" />
+	<span>Rs {{beautician_detail.actual_price}}</span>
+	
 	{% if request.user.username %}
 	<button type="submit" class="btn btn-default cart">
 		<i class="fa fa-shopping-cart"></i>
@@ -85,13 +79,10 @@
 	<!--<button class="fancy-btn open" type="button">Can I haz Modal?</button>-->
 	{% endif %}
 </span>
-<p><b>Printing Price: </b>{{card_detail.printing_price}} Rs Per Card &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="avail_printing_checkbox" id="avail_printing_checkbox" value="avail_printing"><span style="color:red;">&nbsp;Avail Printing</span></input></p>
-<input type="hidden" value="{{card_detail.printing_price}}" name="card_printing_price_per_card"/>
-<p><b>Availability:</b> In Stock</p>
-<p><b>Condition:</b> New</p>
+{% if beautician_detail.home_visit_charge != 'NA' %}
+<p><b>Home visit charges: </b>Rs {{beautician_detail.home_visit_charge}}&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="avail_home_visit" id="avail_home_visit" value="avail_home_visit"><span style="color:red;">&nbsp;Avail Home Visit</span></input></p>
+{% endif %}
 <p><b>Shopkeeper:</b> XYZ</p>
-<p><a href="#card_content">Add content before ordering</a></p>
-	{% include 'customers/card_content_popup.html' %}
 
 <!-- FB Share-->
 <div id="fb-root"></div>
@@ -104,7 +95,7 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 <!-- share button code -->
-<div class="fb-share-button" data-href="http://127.0.0.1:8000/card_details/{{card_detail.id}}" data-layout="button_count"></div>
+<div class="fb-share-button" data-href="http://127.0.0.1:8000/beautician_details/{{beautician_detail.id}}" data-layout="button_count"></div>
 <!-- FB Share-->
 </div><!--/product-information-->
 </form> <!--Add to cart form END-->
@@ -115,18 +106,44 @@
 		<ul class="nav nav-tabs">
 			<li><a href="#details" data-toggle="tab">Details</a></li>
 			<li><a href="#companyprofile" data-toggle="tab">Company Profile</a></li>
-			<li class="active"><a href="#reviews" data-toggle="tab">Reviews ({{all_reviews.count}})</a></li>
+			{% if beautician_detail.home_visit_charge != 'NA' %}
+				<li><a href="#homevisitpolicy" data-toggle="tab">Home Visit Policy</a></li>
+			{% endif %}
+			<li class="active"><a href="#reviews" data-toggle="tab">Reviews {% if all_reviews %}({{all_reviews.count}}){% endif %}</a></li>
 		</ul>
 	</div>
 	<div class="tab-content">
 		<div class="tab-pane fade" id="details" >
-			<p>{{card_detail.long_description}}</p>
+			<p>{{beautician_detail.long_description}}</p>
+			<p><b>Services :</b>{{beautician_detail.services}}</p>
+			{% if beautician_detail.gender == 'female' %}
+			<p><b>Female person availabile :</b>
+				{% if beautician_detail.female_person_available == False %}
+					No
+				{% else %}
+					YES
+				{% endif %}
+			{% endif %}
+			</p>
+			<p><b>Home Visit Available : </b>
+			{% if beautician_detail.home_visit_charge != 'NA' %}
+				YES
+				<p><b>Home Visit Charges : </b>
+					Rs {{beautician_detail.home_visit_charge}}
+				</p>
+			{% else %}
+				NO
+			{% endif %}	
+			</p>
 		</div>
 		
 		<div class="tab-pane fade" id="companyprofile" >
 			<p>Profile</p>
 		</div>
 		
+		<div class="tab-pane fade" id="homevisitpolicy" >
+			<p>{{beautician_detail.home_visit_policy}}</p>
+		</div>
 		<div class="tab-pane fade active in" id="reviews" >
 			<div class="col-sm-12">
 				{% if request.user.username %}
@@ -158,14 +175,14 @@
 						<p><b>Write Your Review</b></p>
 						<form action="/submit_review/" name="submit_review" id="submit_review" method="post">
 							{% csrf_token %}
-							<input type="hidden" name="reviewed_ref_id" value="{{card_detail.ref_id}}">
+							<input type="hidden" name="reviewed_ref_id" value="{{beautician_detail.ref_id}}">
 							<span>
 								<input type="text" name="title_review" placeholder="Review title" required="true"/>
 							</span>
 							<textarea name="detailed_review" placeholder="Your opinion about this product"></textarea>
 							<br>
 							<select name="recommendation" class="recommendation_select_box">
-								<option selected="true" value="">Will you recommend this product?</option>
+								<option selected="true" value="">Will you recommend this service?</option>
 								<option value="yes">Yes</option>
 								<option value="no">No</option>
 								<option value="maybe">Maybe</option>
@@ -177,7 +194,7 @@
 							</button>
 							<br><br>
 							{% load ratings %}
-							{% ratings card_detail %}
+							{% ratings beautician_detail %}
 						</form>
 						{% endif %}
 				{% else %}	
@@ -211,18 +228,11 @@
 
 
 {% include 'customers/login_popup.html' %}
-{% endfor %} <!--card_detail object-->
+{% endfor %} <!--beautician_detail object-->
 
 <script type="text/javascript">
 $(document).ready(function() {
     $('#add_to_cart').submit(function() { // catch the form's submit event
-    	if (document.getElementById('avail_printing_checkbox').checked == false)
-    	{
-    		if (confirm('Are you sure you wanna get it printed yourself?') == false)
-    		{
-    			return false;
-    		}
-    	}
         $.ajax({
             url : this.action, 
             type : "POST",
@@ -267,4 +277,4 @@ $(document).ready(function() {
     });
 
     });
-</script>	
+</script>

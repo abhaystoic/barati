@@ -11,6 +11,7 @@ class Wishlist(Dashboard, View):
       def __init__(self):
          self.template_name = 'customers/wishlist.html'
          self.wishlist_list = []
+         self.product_type_dict = {}
       
       def get_context_data(self, **kwargs):
          context = super(Wishlist, self).get_context_data(**kwargs)
@@ -27,15 +28,19 @@ class Wishlist(Dashboard, View):
                cards_in_wishlist = m.Cards.objects.filter(ref_id=wish.ref_id)
                if cards_in_wishlist:
                   self.wishlist_list.append(cards_in_wishlist[0])
+                  self.product_type_dict.update({wish.ref_id : 'card'})
                   
-               venues_in_wishlist = m.Venues.objects.filter(ref_id=wish.ref_id)
-               if venues_in_wishlist:
-                  self.wishlist_list.append(venues_in_wishlist[0])
+               beauticians_in_wishlist = m.Beauticians.objects.filter(ref_id=wish.ref_id)
+               if beauticians_in_wishlist:
+                  self.wishlist_list.append(beauticians_in_wishlist[0])
+                  self.product_type_dict.update({wish.ref_id : 'beautician'})
+                  
          return self.wishlist_list
          
       def get(self, request, **kwargs):
          wishlist_list = self.prepare_wishlist(request)
          context_dict = {'wishlist_list' : wishlist_list}
+         context_dict.update({'product_type_dict' : self.product_type_dict})#Used for dynamically preparing URL in the template
          context_dict.update(self.get_context_data())
          return render(request, self.template_name, context_dict)
 
