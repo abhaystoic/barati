@@ -41,7 +41,7 @@ class Wishlist(Dashboard, View):
          wishlist_list = self.prepare_wishlist(request)
          context_dict = {'wishlist_list' : wishlist_list}
          context_dict.update({'product_type_dict' : self.product_type_dict})#Used for dynamically preparing URL in the template
-         context_dict.update(self.get_context_data())
+         context_dict.update(self.get_context_data(request=request))
          return render(request, self.template_name, context_dict)
 
    except Exception as general_exception:

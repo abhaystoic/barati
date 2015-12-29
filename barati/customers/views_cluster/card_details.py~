@@ -31,7 +31,6 @@ class Card_Details(Dashboard, View):
       
       def get_card_colors(self, **kwargs):
          card_colors = m.Card_Colors.objects.filter(card_id=self.kwargs['card_id'])
-         print card_colors
          return card_colors
       
       def get_user_review(self, *args, **kwargs):

@@ -1,0 +1,3 @@
+{{ object.city }}
+{{ object.user.get_full_name }}
+{{ object.locality }}

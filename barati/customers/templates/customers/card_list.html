@@ -8,7 +8,7 @@
 						<a style = "text-decoration:none;"href = "/card_details/{{card.id}}">
 
 						<img style="width:200px;height:170px;" src="{% static '' %}{{card.ref_id|get_pic_path}}" alt="{{card.short_description}}" title="{{card.short_description}}"/>
-						<h2>{{card.short_description}}</h2>
+						<h2>{{card.name}}</h2>
 						<p>{{card.actual_price}} Rs (Per Card) </p>
 						<!--<p>Product ID {{card.ref_id}}</p>-->
 						<p><b>Printing Price: </b> Rs {{card.printing_price}} (Per Card)</p>

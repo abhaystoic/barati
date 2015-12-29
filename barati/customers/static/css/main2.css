@@ -513,7 +513,8 @@ ul.sub-menu {
   margin-top: 0;
   outline: medium none;
   padding: 7px;
-  width: 212px;
+  width: 155px;
+  height:38px;
 }
 
 
@@ -866,6 +867,10 @@ h2.title {
 	font-family: 'Roboto', sans-serif;
 	font-size: 18px;
 	font-weight: 700;
+	width:100%;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
 }
 .product-overlay h2{
 	color: #fff;

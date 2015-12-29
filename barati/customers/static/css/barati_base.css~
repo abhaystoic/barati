@@ -152,48 +152,6 @@ a#pop:hover, a#update_cert:hover {
    border: 0px none;
    border-radius: 0px;
 }
-.date_picker{
-   width:110px;
-   background: url('../images/home/datepick.png');
-   background-size: 21%;
-   background-repeat: no-repeat;
-   background-position: left center;
-   padding-left: 22px;
-   border: 1px solid;
-   border-color:#696763;
-   
-}
-.location{
-   background: url('../images/home/loc.png');
-   background-size: 10%;
-   background-repeat: no-repeat;
-   background-position: left center;
-   padding-left: 20px;
-   border: 1px solid;
-   border-color:#696763;
-   
-}
-.sublocation{
-   background: url('../images/home/sublocation.png');
-   background-size: 9%;
-   background-repeat: no-repeat;
-   background-position: left center;
-   padding-left: 20px;
-   border: 1px solid;
-   border-color:#696763;
-   
-}
-.search{
-   background: url('../images/home/search.png');
-   background-size: 10%;
-   background-repeat: no-repeat;
-   background-position: left center;
-   padding-left: 20px;
-   border: 1px solid;
-   border-color:#696763;
-   
-}
-
 
 .header-middle{
    /*Need to give a theme color*/
@@ -205,4 +163,237 @@ a#pop:hover, a#update_cert:hover {
 .left-sidebar{
    width:80%;
    margin-top:6px;
+}
+
+
+@import url(http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+.search {
+  width: 100%;
+  position: relative;
+}
+.search:before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-family: 'FontAwesome';
+  content: '\f002';
+  background: #8FC357;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  -webkit-font-smoothing: subpixel-antialiased;
+  font-smooth: always;
+}
+
+.searchTerm {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 10%;
+  border: 1px solid #696763;
+  padding: 5px;
+  height: 30px;
+     border-radius: 5px;
+  outline: none;
+}
+
+.searchButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  opacity: 0;
+  cursor: pointer;
+}
+.date_picker{
+   width: 10%;
+   background: url('../images/home/datepick.png');
+   background-size: 21%;
+   background-repeat: no-repeat;
+   background-position: left center;
+   padding-left: 22px;
+}
+
+.location{
+   width: 15%;
+   background: url('../images/home/loc.png');
+   background-size: 10%;
+   background-repeat: no-repeat;
+   background-position: left center;
+   padding-left: 20px;
+}
+.sublocation{
+   width: 15%;
+   background: url('../images/home/sublocation.png');
+   background-size: 9%;
+   background-repeat: no-repeat;
+   background-position: left center;
+   padding-left: 20px;
+}
+.search{
+   width: 20%;
+   background: url('../images/home/search.png');
+   background-size: 10%;
+   background-repeat: no-repeat;
+   background-position: left center;
+   padding-left: 25px;
+}
+
+/* DIV slicing. Refer to : http://www.responsivegridsystem.com/calculator/ */
+/*  SECTIONS  */
+.section_budget {
+	clear: both;
+	padding: 0px;
+	margin: 0px;
+}
+
+/*  COLUMN SETUP  */
+.col {
+	display: block;
+	float:left;
+	margin: 1% 0 1% 0.1%;
+}
+.col:first-child { margin-left: 0; }
+
+/*  GROUPING  */
+.group:before,
+.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; /* For IE 6/7 */ }
+
+/*  GRID OF THREE  */
+.span_3_of_3 { width: 100%; }
+.span_2_of_3 { width: 66.63%; }
+.span_1_of_3 { width: 33.26%; }
+
+/*  GO FULL WIDTH BELOW 480 PIXELS */
+@media only screen and (max-width: 480px) {
+	.col {  margin: 1% 0 1% 0%; }
+	.span_3_of_3, .span_2_of_3, .span_1_of_3 { width: 100%; }
+}
+
+.budget_section input{
+   width:100px;
+}
+
+.pie {
+   position:absolute;
+   width:200px;
+   height:200px;
+   clip:rect(0px,100px,200px,0px);
+   -moz-border-radius:100px;
+   -webkit-border-radius:100px;
+   border-radius:100px;
+}
+
+
+/*  SECTIONS  */
+.section_pie_chart {
+	clear: both;
+	padding: 0px;
+	margin: 0px;
+}
+
+/*  COLUMN SETUP  */
+.col {
+	display: block;
+	float:left;
+	margin: 1% 0 1% 0.1%;
+}
+.col:first-child { margin-left: 0; }
+
+/*  GROUPING  */
+.group:before,
+.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; /* For IE 6/7 */ }
+
+/*  GRID OF TWO  */
+.span_2_of_2 {
+	width: 100%;
+}
+.span_1_of_2 {
+	width: 49.95%;
+}
+
+/*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
+
+@media only screen and (max-width: 480px) {
+	.col { 
+		margin: 1% 0 1% 0%;
+	}
+}
+
+@media only screen and (max-width: 480px) {
+	.span_2_of_2, .span_1_of_2 { width: 100%; }
+}
+
+/*Bottom budget section*/
+.widget-content {
+    width: 350px;
+    height: 300px;
+    border: 2px solid #000;
+    position: fixed;
+    right: 10%;
+    bottom: 0;
+    z-index:1;
+    display:none;
+    background:#fff;
+
+}
+.widget-content-header{
+   height: 30px;
+   color: #000;
+   cursor:pointer;
+   background: #fe980f; /* Old browsers */
+background: -moz-linear-gradient(top, #fe980f 52%, #f9cc95 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #fe980f 52%,#f9cc95 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #fe980f 52%,#f9cc95 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fe980f', endColorstr='#f9cc95',GradientType=0 ); /* IE6-9 */
+}
+.widget-min{
+   width: 350px;
+   height:30px;
+   border-left: 2px solid #000;
+   border-right: 2px solid #000;
+   border-bottom: 2px solid #000;
+   z-index:1;
+   position: fixed;
+   right: 10%;
+   bottom: 0;
+   z-index:1;
+   cursor:pointer;
+background: #fe980f; /* Old browsers */
+background: -moz-linear-gradient(top, #fe980f 52%, #f9cc95 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, #fe980f 52%,#f9cc95 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, #fe980f 52%,#f9cc95 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fe980f', endColorstr='#f9cc95',GradientType=0 ); /* IE6-9 */
+}
+.btn-minimize {
+    color: #000;
+    position: fixed;
+    right: 10%;
+    bottom: 0;
+    z-index:1;
+}
+.btn-minimize.btn-plus {
+    color: #000;
+    position: fixed;
+    right: 10%;
+    bottom: 0;
+    z-index:1;
+}
+green{
+   color:green;
+}
+red{
+   color:red;
+}
+/* Highlight the selected subcategory */
+.current_subcategory{
+   background:#e5e5e5;t
 }

@@ -21,6 +21,7 @@ class Address(models.Model):
    state = models.CharField(max_length=50, blank=True, null=True)
    country = models.CharField(max_length=50, blank=True, null=True)
    zipcode = models.CharField(max_length=50, blank=True, null=True)
+   timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
    
    class Meta:
       managed = True
@@ -49,6 +50,32 @@ class Users(models.Model):
    def __unicode__(self):
       return unicode(self.username)
 		
+class Budget(models.Model):
+   id = models.AutoField(primary_key=True)
+   user = models.ForeignKey(Users)
+   min_master = models.FloatField(blank=True, null=True)
+   max_master = models.FloatField(blank=True, null=True)
+   min_venue = models.FloatField(blank=True, null=True)
+   max_venue = models.FloatField(blank=True, null=True)
+   min_card = models.FloatField(blank=True, null=True)
+   max_card = models.FloatField(blank=True, null=True)
+   min_beautician = models.FloatField(blank=True, null=True)
+   max_beautician = models.FloatField(blank=True, null=True)
+   min_mehendi = models.FloatField(blank=True, null=True)
+   max_mehendi = models.FloatField(blank=True, null=True)
+   min_music = models.FloatField(blank=True, null=True)
+   max_music = models.FloatField(blank=True, null=True)
+   min_gift = models.FloatField(blank=True, null=True)
+   max_gift = models.FloatField(blank=True, null=True)
+   min_tent = models.FloatField(blank=True, null=True)
+   max_tent = models.FloatField(blank=True, null=True)
+   
+   class Meta:
+      managed = True
+      db_table = 'budget'
+   def __unicode__(self):
+      return unicode(self.name)
+      
 class Vendors(models.Model):
    id = models.AutoField(primary_key=True)
    name = models.CharField(max_length=100, unique=True)
@@ -64,7 +91,7 @@ class Vendors(models.Model):
       db_table = 'vendors'
    def __unicode__(self):
       return unicode(self.name)
-      
+
 class Vendor_Cordinators(models.Model):
    id = models.AutoField(primary_key=True)
    vendor_id = models.ForeignKey(Vendors, blank=True, null=True)

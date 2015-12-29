@@ -30,7 +30,6 @@
 	{% include 'customers/header.html'%}
 	{% include 'customers/slider.html'%}
 		{% include 'customers/index_left_sidebar.html'%}
-
 	<section>
 		<div class="container">
 			<div class="row">
@@ -52,5 +51,32 @@
 	<script src="{% static 'js/price-range.js' %}"></script>
     <script src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript">
+    	$('#window').dialog({
+		    draggable: false,
+		    height: 200,
+		    buttons: [
+		    {
+		        text: "minimize",
+		        click: function() {
+		            $(this).parents('.ui-dialog').animate({
+		                height: '40px',
+		                top: $(window).height() - 50
+		            }, 200);            
+		        }
+		    }]
+		   
+		    
+		});
+
+		$('#open').click(function() {
+		   $('#window').parents('.ui-dialog').animate({
+		       //set the positioning to center the dialog - 200 is equal to height of dialog
+		       top: ($(window).height()-200)/2,
+		       //set the height again
+		       height: 200
+		            }, 200); 
+		});
+    </script>
 </body>
 </html>

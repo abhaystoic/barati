@@ -56,11 +56,11 @@ class Card(Dashboard, View):
          wishlist_list = self.prepare_wishlist_data(request)
          filter_values = self.filter_values
          context_dict = {
-            'subcategories' : subcategories, 'cards' : cards, 'category' : 'card',\
+            'subcategories' : subcategories, 'cards' : cards, 'category' : 'card', 'type' : self.kwargs['type'], \
             'wishlist_list' : wishlist_list, 'filter_values' : filter_values,\
             'popular_price_filter_values' : self.popular_price_filter_values
             }
-         context_dict.update(self.get_context_data())
+         context_dict.update(self.get_context_data(request=request))
          return render(request, self.template_name, context_dict)
       
       def post(self, request, **kwargs):
@@ -72,11 +72,11 @@ class Card(Dashboard, View):
          cards = self.get_filtered_cards_list(request, selected_filter_values)
          wishlist_list = self.prepare_wishlist_data(request)
          context_dict = {
-            'subcategories' : subcategories, 'cards' : cards, 'category' : 'card',\
+            'subcategories' : subcategories, 'cards' : cards, 'category' : 'card', 'type' : self.kwargs['type'],\
             'wishlist_list' : wishlist_list, 'filter_values' : self.filter_values,\
             'selected_filter_values' : selected_filter_values
             }
-         context_dict.update(self.get_context_data())
+         context_dict.update(self.get_context_data(request=request))
          return render(request, self.template_name, context_dict)
 
    except Exception as e:      

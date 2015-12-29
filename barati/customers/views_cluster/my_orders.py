@@ -54,7 +54,7 @@ class My_Orders(Dashboard, View):
             product_details = self.prepare_product_details(order.ref_id, order.product_type)
             product_details_dict.update({'product_details_' + str(order.ref_id) : product_details})
          
-         context_dict.update(self.get_context_data())
+         context_dict.update(self.get_context_data(request=request))
          context_dict.update({'all_delivery_statuses_dict' : delivery_status_dict , 'all_product_details_dict' : product_details_dict})
          #print context_dict['all_product_details_dict'], 'sasas'
          return render(request, self.template_name, context_dict)

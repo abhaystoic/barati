@@ -8,7 +8,6 @@ from customers import models as m
 import sys, json
 from dashboard import Dashboard
 from django.db import connection, transaction
-from django.db.models import Sum
 
 #@login_required(login_url='/auth/login/')
 class Cart(Dashboard, View):
@@ -20,7 +19,7 @@ class Cart(Dashboard, View):
       def get_context_data(self, **kwargs):
          context = super(Cart, self).get_context_data(**kwargs)
          return context
-
+      
       def get_queryset(self, *args, **kwargs):
          request = args[0]
          user_id = m.Users.objects.get(username=request.user.username).id
@@ -86,10 +85,7 @@ class Cart(Dashboard, View):
             if str(product.product_type) == "fireworks":
                self.fireworks_list.append(m.Fireworks.objects.get(ref_id = str(product.ref_id)))
          
-         self.cart_sub_total = m.Cart.objects.filter(user_id = user_id).aggregate(cart_sub_total = Sum('total_price'))
-         if self.cart_sub_total['cart_sub_total'] is not None:
-            self.tax = self.cart_sub_total['cart_sub_total'] * 0.10
-            self.grand_total = float(self.tax) + float(self.cart_sub_total['cart_sub_total'])
+         self.grand_total = super(Cart, self).calculate_grand_total(user_id)
          self.prod_dict = {'card_list' : self.card_list, 'printing_preference_dict' : printing_preference_dict, 'venue_list' : self.venue_list, 'beautician_list' : self.beautician_list, \
             'music_list' : self.music_list, 'gift_list' : self.gift_list, 'photo_video_list' : self.photo_video_list, \
             'bakery_list' : self.bakery_list, 'ghodi_bagghi_list' : self.ghodi_bagghi_list, 'band_list' : self.band_list, \
@@ -100,7 +96,7 @@ class Cart(Dashboard, View):
       #@login_required(login_url='/auth/login/')
       def get(self, request, **kwargs):
          context_dict = self.get_queryset(request)
-         context_dict.update(self.get_context_data())
+         context_dict.update(self.get_context_data(request=request))
          return render(request, self.template_name, context_dict)   
    
    except Exception as e:      

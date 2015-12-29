@@ -1,4 +1,48 @@
 {% load staticfiles %}
+	{% if request.user.username %}
+	<!--Bottom budget section START-->
+	<div class="widget-content">
+		<div class="widget-content-header text-center">
+			Budget Management Tool
+		</div>
+		{% for b in budget %}
+			<div class="text-center">
+			<b>Min Barati Budget: </b>Rs {{b.min_master}}
+			</div>
+			<div class="text-center">
+			<b>Max Barati Budget: </b>Rs {{b.max_master}}
+			</div>
+			<div class="text-center">
+			{% if grand_total %}
+				<b>Current Cart Total: </b>Rs {{grand_total}}
+			{% else %}
+				<b>Your cart is probably empty</b>
+			{% endif %}
+			</div>
+			<div class="text-center">
+			<input type="checkbox" /> <b>Include previous orders/purchases </b>
+			</div>
+		{% endfor %}
+		<br>
+		<div>
+		{% if budget_balance.1 == 0 %}
+			<green>You are well within budget. <br> You can spend Rs {{budget_balance.0}} more.</green>
+		{% elif  budget_balance.1 == 1 %}
+			<red>You have exceeded your budget by Rs {{budget_balance.0}}!</red>
+			<br>
+			<green>It's OK! Marriage is for once but memories are for LIFETIME!</green>
+		{% endif %}	
+		</div>
+		<br>
+		<div>
+			<a href="/budget"> Lock/Update your budget preferences.</a>
+		</div>
+	</div>
+	<div class="widget-min text-center btn-minimize">
+		<span class="" id="">Budget Management Tool</span>
+	</div>
+	<!--Bottom budget section END-->
+	{% endif %}
 <footer id="footer"><!--Footer-->
 		<div class="footer-top">
 			<div class="container">

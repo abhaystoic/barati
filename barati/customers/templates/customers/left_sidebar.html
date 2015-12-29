@@ -1,4 +1,6 @@
 {% load staticfiles %}
+<script type="text/javascript">
+</script>
 <div class="col-sm-3" style="background:#fff">
 <div class="left-sidebar">
 						<h2>Category</h2>
@@ -7,7 +9,7 @@
 							{% for subcategory in subcategories %}
 								<div class="panel panel-default">
 									<div class="panel-heading">
-										<h4 class="panel-title"><a href="/{{category}}/{{subcategory.id}}">{{subcategory}}</a></h4>
+										<h4 class="panel-title" id="sub_category_{{subcategory.id}}"><a href="/{{category}}/{{subcategory.id}}">{{subcategory}}</a></h4>
 									</div>
 								</div>
 							{% endfor %}
@@ -122,6 +124,8 @@
 					</div>
 <script type="text/javascript">
 	$(document).ready(function() {
+		/* Highlight the selected subcategory */
+		$('#sub_category_{{type}}').addClass("current_subcategory");
 		if (window.location.href.indexOf("?for=female") > -1)
 		{
 			$('input:radio[id="gender_female"]').attr('checked', 'checked');
