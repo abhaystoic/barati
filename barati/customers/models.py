@@ -49,7 +49,20 @@ class Users(models.Model):
       db_table = 'users'
    def __unicode__(self):
       return unicode(self.username)
-		
+
+class Main_Preferences(models.Model):
+   id = models.AutoField(primary_key=True)
+   user = models.ForeignKey(Users)
+   date = models.DateField(blank=True, null=True)
+   location = models.CharField(max_length=50, blank=True, null=True)
+   sublocation = models.CharField(max_length=50, blank=True, null=True)
+   
+   class Meta:
+      managed = True
+      db_table = 'main_preferences'
+   def __unicode__(self):
+      return unicode(self.name)
+
 class Budget(models.Model):
    id = models.AutoField(primary_key=True)
    user = models.ForeignKey(Users)
@@ -264,6 +277,10 @@ class Venues(models.Model):
    min_capacity = models.IntegerField()
    max_capacity = models.IntegerField()
    accomodation_available = models.BooleanField()
+   actual_price = models.IntegerField()
+   discount_perc = models.FloatField(blank=True, null=True)
+   discount_rs = models.FloatField(blank=True, null=True)
+   discounted_price = models.FloatField(blank=True, null=True)
    
    class Meta:
       managed = True
@@ -283,12 +300,14 @@ class Cards(models.Model):
    max_numbers = models.IntegerField()
    actual_price = models.IntegerField()
    printing_price = models.FloatField(blank=True, null=True)
+   discount_perc = models.FloatField(blank=True, null=True)
    discount_rs = models.FloatField(blank=True, null=True)
    discounted_price = models.FloatField(blank=True, null=True)
    length = models.FloatField(blank=True, null=True)
    width = models.FloatField(blank=True, null=True)
    weight = models.FloatField(blank=True, null=True)
    barati_confidence_perc = models.FloatField(blank=True, null=True)
+   timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
    
    class Meta: 
       managed = True
@@ -354,6 +373,7 @@ class Beauticians(models.Model):
    long_description = models.CharField(max_length=800, blank=True, null=True)
    services = models.CharField(max_length=800, blank=True, null=True)
    actual_price = models.IntegerField()
+   discount_perc = models.FloatField(blank=True, null=True)
    discount_rs = models.FloatField(blank=True, null=True)
    discounted_price = models.FloatField(blank=True, null=True)
    unisex = models.NullBooleanField(blank=True)
@@ -361,6 +381,7 @@ class Beauticians(models.Model):
    home_visit_charge = models.IntegerField(blank=True, null=True)
    home_visit_policy = models.CharField(max_length=800, blank=True, null=True)
    barati_confidence_perc = models.FloatField(blank=True, null=True)
+   timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
    
    class Meta: 
       managed = True

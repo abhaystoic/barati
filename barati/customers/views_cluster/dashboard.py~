@@ -5,14 +5,14 @@ from django.shortcuts import render, render_to_response
 from django.views.generic import View
 from django.http import HttpResponse
 from customers import models as m
-import sys, json
+import sys, json, datetime
 from django.db.models import Sum
 #@login_required(login_url='/auth/login/')
 class Dashboard(View):
    try:
       def __init__(self):
          self.template_name = 'customers/index.html'
-      
+
       def calculate_grand_total(self, user_id):
          self.grand_total = None
          self.cart_sub_total = m.Cart.objects.filter(user_id = user_id).aggregate(cart_sub_total = Sum('total_price'))
@@ -31,7 +31,7 @@ class Dashboard(View):
          budget = None
          grand_total = None
          budget_balance = None
-         
+         main_preferences = None
          query = "select id, name from venue_types"
          venue_types = m.Venue_Types.objects.raw(query)
          
@@ -71,24 +71,29 @@ class Dashboard(View):
          query = "select id, name from tent_types"
          tent_types = m.Tent_Types.objects.raw(query)
          
-         #Pull data for Budgeting Tool if the user is logged in
-         if request is not None:
+         #Pull data for Budgeting Tool and main preferences if the user is logged in
+         if request is not None and request.user.username:
             user_id = m.Users.objects.get(username=request.user.username).id
-            query = "select id, min_master, max_master from budget where user_id = {}".format(str(user_id))
-            budget = m.Budget.objects.raw(query)
-            grand_total = self.calculate_grand_total(user_id)
-            if grand_total and budget[0].max_master:
-               if grand_total <= budget[0].max_master:
-                  budget_balance = (budget[0].max_master - grand_total, 0)
-               elif grand_total > budget[0].max_master:
-                  budget_balance = (grand_total - budget[0].max_master, 1)
+            if user_id:
+               query = "select id, min_master, max_master from budget where user_id = {}".format(str(user_id))
+               budget = m.Budget.objects.raw(query)
+               grand_total = self.calculate_grand_total(user_id)
+               if grand_total and len(list(budget)) !=0 and budget[0].max_master:
+                  if grand_total <= budget[0].max_master:
+                     budget_balance = (budget[0].max_master - grand_total, 0)
+                  elif grand_total > budget[0].max_master:
+                     budget_balance = (grand_total - budget[0].max_master, 1)
+                     
+               query = "select id, date, location, sublocation from main_preferences where user_id = {}".format(str(user_id))
+               main_preferences = m.Main_Preferences.objects.raw(query)
+         print 'main_preferences::', main_preferences
          context = {\
          'venue_types' : venue_types, 'card_types' : card_types, 'beautician_types' : beautician_types,\
          'gift_types' : gift_types, 'photo_types' : photo_types,\
          'video_types' : video_types, 'bakery_types' : bakery_types, 'ghodi_bagghi_types' : ghodi_bagghi_types,\
          'band_types' : band_types, 'mehendi_types' : mehendi_types, 'fireworks_types' : fireworks_types,\
          'tent_types' : tent_types, 'music_types' : music_types, 'budget' : budget, 'budget_balance' : budget_balance, \
-         'grand_total' : grand_total \
+         'grand_total' : grand_total, 'main_preferences' : main_preferences \
          }
          return context
          

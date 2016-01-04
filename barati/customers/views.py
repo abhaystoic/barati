@@ -11,7 +11,7 @@ from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.template.defaulttags import register
 from customers import models as m
-import sys, json, os
+import sys, json, os, datetime
 
 from customers.views_cluster.dashboard import Dashboard
 
@@ -126,7 +126,7 @@ def multiply(first, second):
       print "Line number : " + str(sys.exc_traceback.tb_lineno)
       return "not_found"
 
-@register.filter(name = 'decrement') 
+@register.filter(name = 'decrement')
 def decrement(value):
    try:
       value = value - 1
@@ -135,3 +135,10 @@ def decrement(value):
       print str(general_exception)
       print "Line number : " + str(sys.exc_traceback.tb_lineno)
       return "not_found"
+
+@register.filter(name = 'change_date_format_for_template')
+def change_date_format_for_template(unformatted_date):
+   formatted_date = None
+   if unformatted_date:
+      formatted_date = datetime.datetime.strptime(str(unformatted_date), '%Y-%m-%d').strftime('%d-%b-%Y')
+   return formatted_date

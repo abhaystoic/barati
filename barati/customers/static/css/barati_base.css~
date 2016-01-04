@@ -1,5 +1,6 @@
 #user_dropdown{
-   background-color:#696763;
+   /*background-color:#696763;*/
+   background:transparent;
    font-size:11px;
    text-decoration:none;
 }
@@ -342,7 +343,13 @@ a#pop:hover, a#update_cert:hover {
     bottom: 0;
     z-index:1;
     display:none;
-    background:#fff;
+    background:#fff url('../images/home/budget.png') no-repeat;
+    -khtml-opacity:.50; 
+ -moz-opacity:.50; 
+ -ms-filter:"alpha(opacity=50)";
+  filter:alpha(opacity=50);
+  filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.5);
+  opacity:.50; 
 
 }
 .widget-content-header{
@@ -350,10 +357,10 @@ a#pop:hover, a#update_cert:hover {
    color: #000;
    cursor:pointer;
    background: #fe980f; /* Old browsers */
-background: -moz-linear-gradient(top, #fe980f 52%, #f9cc95 100%); /* FF3.6-15 */
-background: -webkit-linear-gradient(top, #fe980f 52%,#f9cc95 100%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to bottom, #fe980f 52%,#f9cc95 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fe980f', endColorstr='#f9cc95',GradientType=0 ); /* IE6-9 */
+   background: -moz-linear-gradient(top, #fe980f 52%, #f9cc95 100%); /* FF3.6-15 */
+   background: -webkit-linear-gradient(top, #fe980f 52%,#f9cc95 100%); /* Chrome10-25,Safari5.1-6 */
+   background: linear-gradient(to bottom, #fe980f 52%,#f9cc95 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fe980f', endColorstr='#f9cc95',GradientType=0 ); /* IE6-9 */
 }
 .widget-min{
    width: 350px;
@@ -396,4 +403,16 @@ red{
 /* Highlight the selected subcategory */
 .current_subcategory{
    background:#e5e5e5;t
+}
+
+/* Making Autocomplete scrollable */
+.ui-autocomplete {
+   max-height: 200px;
+   overflow-y: auto;
+   /* prevent horizontal scrollbar */
+   overflow-x: hidden;
+   cursor: pointer;
+}
+.ui-menu-item a{
+   cursor: pointer;
 }

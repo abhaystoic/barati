@@ -26,7 +26,7 @@
 	background: #fff;
 	position: relative;
 	z-index: 1;
-	background-color:#40403E;
+	background-color: #fff;/*#40403E;*/
 }
 
 /* Main menu style */
@@ -48,14 +48,14 @@
 
 /* Main menu link style */
 .cbp-hsmenu > li > a {
-	color: #fff;/*color of the text in the dropdown menu*/
+	color: #000;/*color of the text in the dropdown menu*/
 	font-size: 0.8em;
 	line-height: 2.5em;
 	display: inline-block;
 	position: relative;
 	z-index: 10000;
 	outline: none;
-	font-weight:bold;
+	font-weight:normal;
 }
 
 .no-touch .cbp-hsmenu > li > a:hover,
@@ -112,7 +112,7 @@
 	z-index: 0;
 	text-align: center; /* for aligning the sub items */
 	visibility: hidden;
-   background-color:#40403E;
+   background-color:#fff;/*#40403E;*/
 }
 
 .cbp-hssubmenu:before, 
@@ -134,7 +134,7 @@
 	-webkit-transition: opacity 0.1s 0s;
 	-moz-transition: opacity 0.1s 0s;
 	transition: opacity 0.1s 0s;
-	background-color:#40403E;
+	background-color:#fff;/*#40403E;*/
 }
 
 /* First 6 items don't have upper box shadow */

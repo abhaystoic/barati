@@ -14,7 +14,7 @@
     <link href="{% static 'css/prettyPhoto.css' %}" rel="stylesheet">
     <link href="{% static 'css/price-range.css' %}" rel="stylesheet">
     <link href="{% static 'css/animate.css' %}" rel="stylesheet">
-	<link href="{% static 'css/main.css' %}" rel="stylesheet">
+	<link href="{% static 'css/main2.css' %}" rel="stylesheet">
 	<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="{% static 'js/html5shiv.js' %}"></script>
@@ -120,9 +120,15 @@
 								</span>
 								<span>
 									<button type="submit" class="btn btn-default">Login</button> <br/>
-									<a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">
-							        	<image src="{% static 'images/social/sign_in_facebook.png' %}" />
-							        </a>
+									{% if request.path == '/auth/login/' %}
+										<a href="{% url 'social:begin' 'facebook' %}">
+							        		<image src="{% static 'images/social/sign_in_facebook.png' %}" />
+							        	</a>
+							        {% else %}
+							        	<a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">
+							        		<image src="{% static 'images/social/sign_in_facebook.png' %}" />
+								        </a>
+							        {% endif %}	
 						        </span>
 							</div>
 							</form>

@@ -6,6 +6,11 @@
 <script src="{% static 'js/modernizr.custom.js' %}"></script>
 <link rel="stylesheet" type="text/css" media="all" href="{% static 'css/jsDatePick_ltr.min.css' %}" />
 <script type="text/javascript" src="{% static 'js/jsDatePick.min.1.3.js' %}"></script>
+
+<link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" /><!--Autcomplete-->
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script><!--Autcomplete-->
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script><!--Autcomplete-->
+
 <script type="text/javascript">
 	window.onload = function(){
 		new JsDatePick({
@@ -50,8 +55,9 @@
 					<div class="col-sm-8">
 						<div class="shop-menu pull-right">
 							<ul class="nav navbar-nav">
-								<li><a href="" style="font-weight:bold;">Call Us Now for HELP! &nbsp;&nbsp;&nbsp;+011 123 45 67</a></li>
+								<li><a href="#" style="font-weight:bold;">Call Us Now for HELP! &nbsp;&nbsp;&nbsp;+011 123 45 67</a></li>
 								<li><a href="/wishlist"><i class="fa fa-star"></i> Wishlist</a></li>
+								<!--<li><a href=""><i class="fa fa-star"></i> FEEL requests</a></li>-->
 								<li><a href="/my_orders"><i class="fa fa-crosshairs"></i> My Orders</a></li>
 								<li><a href="/cart"><i class="fa fa-shopping-cart"></i> Cart</a></li>
 								{% if request.user.username %}
@@ -61,6 +67,7 @@
                                     	<li><a href="#" id="user_dropdown"><i class="fa fa-user"></i> My Account</a></li>
                                     	<li><a href="#" id="user_dropdown"><i class="fa fa-crosshairs"></i> My Reviews</a></li>
                                     	<li><a href="/budget" id="user_dropdown"><i class="fa fa-crosshairs"></i> My Budget</a></li>
+                                    	<li><a href="#" id="user_dropdown"><i class="fa fa-crosshairs"></i> Pending payments</a></li>
                                     	<li><a href="/auth/logout" id="user_dropdown"><i class="fa fa-crosshairs"></i> Logout</a></li>
 	                                    </ul>
 	                                </li>
@@ -74,14 +81,55 @@
 					</div>
 					<div class="main_filters">
 								<br/><br/>
-								<form>
-									<input type="text" class="date_picker searchTerm" id="inputField" placeholder="Date" />
-									<input type="text" class="location searchTerm" placeholder="Location"/>
-									<input type="text" class="sublocation searchTerm" placeholder="Sub Location"/>
-									<input type="text" class="search searchTerm" placeholder="Search your dream products"/> 
-									<button type="button" style="margin-top:-2px;height:30px;" class=" btn btn-default get">GO</button>
-								</form>
-
+								<form id="main_preferences" name="main_preferences" action="/save_main_preferences/" method="post" > 
+									{% csrf_token %}
+									<span style="margin-left:-100px">Lock your preferences---></span>
+									<input type="text" class="date_picker searchTerm" title="Date of Marriage/Function" id="inputField" name="main_preference_date" autocomplete="off"
+									{% if main_preferences %}
+										{% with main_preferences|first as main_preferences %}
+											{% if main_preferences.date %}
+												value="{{main_preferences.date|change_date_format_for_template}}"
+											{% else %}	
+												placeholder="Date"
+											{% endif %}
+										{% endwith %}
+									{% else %}
+										placeholder="Date"
+									{% endif %}
+									placeholder = "Date" />
+									<input type="text" class="location searchTerm" name="main_preference_location" id="main_preference_location" value="Delhi" 
+									{% if main_preferences %}
+										{% with main_preferences|first as main_preferences %} 
+											{% if main_preferences.location %}
+												value="{{main_preferences.location}}"
+											{% else %}
+												placeholder="Location"
+											{% endif %}	
+										{% endwith %}
+									{% else %}
+										placeholder="Location"
+									{% endif %}
+									/>
+									<script id="jsbin-javascript1" src="{% static 'js/autocomplete_location.js' %}"></script><!--Automcomplete-->
+										<input type="text" class="sublocation searchTerm" name="main_preference_sublocation" id="main_preference_sublocation" 
+										{% if main_preferences %}
+											{% with main_preferences|first as main_preferences %}
+												{% if main_preferences.sublocation %}
+													value="{{main_preferences.sublocation}}"
+												{% else %}
+													placeholder="Locality"
+												{% endif %}	
+											{% endwith %}
+										{% else %}
+											placeholder="Locality"
+										{% endif %}
+										/>
+										
+									<script id="jsbin-javascript2" src="{% static 'js/autocomplete_sublocation.js' %}"></script><!--Automcomplete-->
+									<input type="text" class="search searchTerm" id="search_everything" name="search_everything" placeholder="Search your dream products" /> 
+									<script id="jsbin-javascript3" src="{% static 'js/autocomplete_everything.js' %}"></script><!--Automcomplete-->
+									<button type="submit" style="margin-top:-2px;height:30px;visibility:hidden;" id="go_btn" class=" btn btn-default get">GO</button>
+									</form>
 					</div>
 				</div>
 			</div>
@@ -241,6 +289,57 @@
 
 	</header><!--/header-->
 	<script src="{% static 'js/cbpHorizontalSlideOutMenu.min.js' %}"></script>
-		<script>
-			var menu = new cbpHorizontalSlideOutMenu( document.getElementById( 'cbp-hsmenu-wrapper' ) );
-		</script>
+<script>
+	var menu = new cbpHorizontalSlideOutMenu( document.getElementById( 'cbp-hsmenu-wrapper' ) );
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+	/*	
+	if (window.location.hash === '#focus-location') 
+	{
+        $( "#main_preference_sublocation" ).focus();//Focus the location input box
+    }*/
+	$('#main_preferences').submit(function() { // catch the form's submit event
+      $.ajax({
+          url : this.action, 
+          type : "POST",
+          dataType: "json",
+          data: $(this).serialize(), // get the form data
+          context : this,
+          success : function(json) {
+            if (json == "success_main_preferences_saved")
+            {
+              window.location = location.pathname;// + "?blabla#focus-location"; // redirect back to the calling page
+              /*document.cookie = createFocusCookie("focus", "location");*/
+            }
+            },
+          error : function(xhr,errmsg,err) {
+            remove_spinner(); 
+            alert(xhr.status + ": " + xhr.responseText);
+            }
+      });
+      return false;
+  });
+	/*To avoid form submission on enter press*/
+  $('form input').on('keypress', function(e) {
+    return e.which !== 13;
+	});
+
+	/*$('#search').submit(function() { // catch the form's submit event
+      $.ajax({
+          url : this.action, 
+          type : "GET",
+          dataType: "json",
+          data: $(this).serialize(), // get the form data
+          context : this,
+          success : function(json) {
+            },
+          error : function(xhr,errmsg,err) {
+            remove_spinner(); 
+            alert(xhr.status + ": " + xhr.responseText);
+            }
+      });
+      return false;
+    });*/
+});
+</script>

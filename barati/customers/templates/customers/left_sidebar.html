@@ -15,17 +15,19 @@
 							{% endfor %}
 							{% endif %}
 						</div><!--/category-products-->
+
 						<div class="panel-group category-products" id="accordian">
 							<div class="panel panel-default">
 								<div class="panel-heading" >
 								<h4 class="panel-title">
 								<form name="confidence_check_form" id="confidence_check_form">
-									<a><input type="checkbox" name="confidence_check_filter" id="confidence_check_filter" class="confidence_check_filter" value="confidence_check_filter">&nbsp;&nbsp;Add Barati Confidence</input></a>
+									<a><input type="checkbox" name="confidence_check_filter" id="confidence_check_filter" class="confidence_check_filter" value="add_confidence">&nbsp;&nbsp;Add Barati Confidence</input></a>
 								</form>
 								</h4>
 								</div>
 							</div>
 						</div>
+						
 						<!--Gender Selector for beauticians | START-->
 						{% if beautician_details or card_details %}
 						{% else %}
@@ -48,9 +50,7 @@
 								<div class="panel panel-default">
 									<div class="panel-heading" >
 									<h4 class="panel-title">
-									<form name="home_visit_form" id="home_visit_form">
 										<a><input type="checkbox" name="home_visit_filter" id="home_visit_filter" class="home_visit_filter" value="home_visit_available">&nbsp;&nbsp;Need Home Visit</input></a>
-									</form>
 									</h4>
 									</div>
 								</div>
@@ -84,33 +84,15 @@
 
 						{% if beautician_details or card_details %}
 						{% else %}
-						<div class="brands_products"><!--brands_products-->
-							<h2>Brands</h2>
-							<div class="brands-name">
-								<ul class="nav nav-pills nav-stacked">
-									<li><a href="#"> <span class="pull-right">(50)</span>Acne</a></li>
-									<li><a href="#"> <span class="pull-right">(56)</span>Grüne Erde</a></li>
-									<li><a href="#"> <span class="pull-right">(27)</span>Albiro</a></li>
-									<li><a href="#"> <span class="pull-right">(32)</span>Ronhill</a></li>
-									<li><a href="#"> <span class="pull-right">(5)</span>Oddmolly</a></li>
-									<li><a href="#"> <span class="pull-right">(9)</span>Boudestijn</a></li>
-									<li><a href="#"> <span class="pull-right">(4)</span>Rösch creative culture</a></li>
-								</ul>
-							</div>
-						</div><!--/brands_products-->
-						{% endif %}
-
-						{% if beautician_details or card_details %}
-						{% else %}
 						<div class="brands_products"><!--Discount-->
 							<div class="brands-name">
 								<h2>Discount</h2>
 								<ul class="nav nav-pills nav-stacked">
-									<li><a> <span class="pull-right"></span><input type="checkbox" value="">&nbsp;&nbsp;0% - 10%</input></a></li>
-									<li><a> <span class="pull-right"></span><input type="checkbox" value="">&nbsp;&nbsp;10% - 20%</input></a></li>
-									<li><a> <span class="pull-right"></span><input type="checkbox" value="">&nbsp;&nbsp;20% - 30%</input></a></li>
-									<li><a> <span class="pull-right"></span><input type="checkbox" value="">&nbsp;&nbsp;30% - 40%</input></a></li>
-									<li><a> <span class="pull-right"></span><input type="checkbox" value="">&nbsp;&nbsp;More than 40%</input></a></li>
+									<li><a> <span class="pull-right"></span><input type="checkbox" id="0-10" class="discountsCheckbox" name="discounts" value="filter">&nbsp;&nbsp;0% - 10%</input></a></li>
+									<li><a> <span class="pull-right"></span><input type="checkbox" id="10-20" class="discountsCheckbox" name="discounts" value="filter">&nbsp;&nbsp;10% - 20%</input></a></li>
+									<li><a> <span class="pull-right"></span><input type="checkbox" id="20-30" class="discountsCheckbox" name="discounts" value="filter">&nbsp;&nbsp;20% - 30%</input></a></li>
+									<li><a> <span class="pull-right"></span><input type="checkbox" id="30-40" class="discountsCheckbox" name="discounts" value="filter">&nbsp;&nbsp;30% - 40%</input></a></li>
+									<li><a> <span class="pull-right"></span><input type="checkbox" id="40-100" class="discountsCheckbox" name="discounts" value="filter">&nbsp;&nbsp;More than 40%</input></a></li>
 								</ul>
 							</div>
 						</div><!--/Discount-->
@@ -126,11 +108,13 @@
 	$(document).ready(function() {
 		/* Highlight the selected subcategory */
 		$('#sub_category_{{type}}').addClass("current_subcategory");
-		if (window.location.href.indexOf("?for=female") > -1)
+
+		//Select the one present in the URL
+		if (window.location.href.indexOf("for=female") > -1)
 		{
 			$('input:radio[id="gender_female"]').attr('checked', 'checked');
 		}
-		else if (window.location.href.indexOf("?for=male") > -1)
+		else if (window.location.href.indexOf("for=male") > -1)
 		{
 			$('input:radio[id="gender_male"]').attr('checked', 'checked');
 		}
@@ -138,19 +122,150 @@
 		{
 			$('input:radio[id="gender_all"]').attr('checked', 'checked');
 		}
+
+		if (window.location.href.indexOf("home_visit=available") > -1)
+		{
+			$('input:checkbox[id="home_visit_filter"]').attr('checked', 'checked');
+		}
+		if (window.location.href.indexOf("confidence_check_filter=add_confidence") > -1)
+		{
+			$('input:checkbox[id="confidence_check_filter"]').attr('checked', 'checked');
+		}
+
+		//Discounts
+		if (window.location.href.indexOf("0-10=filter") > -1)
+		{
+			$('input:checkbox[id="0-10"]').attr('checked', 'checked');
+		}
+		if (window.location.href.indexOf("10-20=filter") > -1)
+		{
+			$('input:checkbox[id="10-20"]').attr('checked', 'checked');
+		}
+		if (window.location.href.indexOf("20-30=filter") > -1)
+		{
+			$('input:checkbox[id="20-30"]').attr('checked', 'checked');
+		}
+		if (window.location.href.indexOf("30-40=filter") > -1)
+		{
+			$('input:checkbox[id="30-40"]').attr('checked', 'checked');
+		}
+		if (window.location.href.indexOf("40-100=filter") > -1)
+		{
+			$('input:checkbox[id="40-100"]').attr('checked', 'checked');
+		}
 	});
 	$('input:radio[name="gender_filter"]').change(function(){
-    	var current_url = location.pathname;
+    	var current_url = location.pathname + '?';
         if ($(this).is(':checked') && $(this).val() == 'male') {
-        	url2 = "?for=male";
+        	//url2 = "&for=male";
+        	setGetParameter('for', 'male');
         }
         if ($(this).is(':checked') && $(this).val() == 'female') {
-         	url2 = "?for=female";   
+         	setGetParameter('for', 'female');
         }
         if ($(this).is(':checked') && $(this).val() == 'all') {
-            url2 = "";
+            setGetParameter('for', 'all');
         }
-        window.location = current_url + url2;
+        //window.location = current_url + url2;
+    });
+    $('#home_visit_filter').change(function(){
+        if ($('#home_visit_filter').is(':checked') && $('#home_visit_filter').val() == 'home_visit_available') 
+        {
+        	setGetParameter('home_visit', 'available');
+        }
+        else
+        {
+        	setGetParameter('home_visit', 'not_available');
+        }
+    });
+    $('#confidence_check_filter').change(function(){
+        if ($('#confidence_check_filter').is(':checked') && $('#confidence_check_filter').val() == 'add_confidence') 
+        {
+        	setGetParameter('confidence_check_filter', 'add_confidence');
+        }
+        else
+        {
+        	setGetParameter('confidence_check_filter', 'ignore_confidence');
+        }
+    });
+    
+    /*
+    var discounts = [];
+    $(".discountsCheckbox").change(function() {
+	    $.each($("input[name='discounts']:checked"), function(){
+	        discounts.push($(this).val());
+	        setGetParameter(discounts.join("*"), 'filter');
+	    });
+	});*/
+	$('#0-10').change(function(){
+        if ($('#0-10').is(':checked') && $('#0-10').val() == 'filter') 
+        {
+        	setGetParameter('0-10', 'filter');
+        }
+        else
+        {
+        	setGetParameter('0-10', 'no-filter');
+        }
+    });
+    $('#10-20').change(function(){
+        if ($('#10-20').is(':checked') && $('#10-20').val() == 'filter') 
+        {
+        	setGetParameter('10-20', 'filter');
+        }
+        else
+        {
+        	setGetParameter('10-20', 'no-filter');
+        }
+    });
+    $('#20-30').change(function(){
+        if ($('#20-30').is(':checked') && $('#20-30').val() == 'filter') 
+        {
+        	setGetParameter('20-30', 'filter');
+        }
+        else
+        {
+        	setGetParameter('20-30', 'no-filter');
+        }
+    });
+    $('#30-40').change(function(){
+        if ($('#30-40').is(':checked') && $('#30-40').val() == 'filter') 
+        {
+        	setGetParameter('30-40', 'filter');
+        }
+        else
+        {
+        	setGetParameter('30-40', 'no-filter');
+        }
+    });
+    $('#40-100').change(function(){
+        if ($('#40-100').is(':checked') && $('#40-100').val() == 'filter') 
+        {
+        	setGetParameter('40-100', 'filter');
+        }
+        else
+        {
+        	setGetParameter('40-100', 'no-filter');
+        }
     });
 
+    function setGetParameter(paramName, paramValue)
+	{
+	    var url = window.location.href;
+	    if (url.indexOf(paramName + "=") >= 0)
+	    {
+	        var prefix = url.substring(0, url.indexOf(paramName));
+	        var suffix = url.substring(url.indexOf(paramName));
+	        suffix = suffix.substring(suffix.indexOf("=") + 1);
+	        suffix = (suffix.indexOf("&") >= 0) ? suffix.substring(suffix.indexOf("&")) : "";
+	        url = prefix + paramName + "=" + paramValue + suffix;
+	    }
+	    else
+	    {
+	    if (url.indexOf("?") < 0)
+	        url += "?" + paramName + "=" + paramValue;
+	    else
+	        url += "&" + paramName + "=" + paramValue;
+	    }
+	    window.location.href = url;
+	}
 </script>

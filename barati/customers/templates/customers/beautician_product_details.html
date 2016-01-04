@@ -79,7 +79,7 @@
 	<!--<button class="fancy-btn open" type="button">Can I haz Modal?</button>-->
 	{% endif %}
 </span>
-{% if beautician_detail.home_visit_charge != 'NA' %}
+{% if beautician_detail.home_visit_charge != 'NA' and beautician_detail.home_visit_charge  %}
 <p><b>Home visit charges: </b>Rs {{beautician_detail.home_visit_charge}}&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="avail_home_visit" id="avail_home_visit" value="avail_home_visit"><span style="color:red;">&nbsp;Avail Home Visit</span></input></p>
 {% endif %}
 <p><b>Shopkeeper:</b> XYZ</p>
@@ -105,8 +105,8 @@
 	<div class="col-sm-12">
 		<ul class="nav nav-tabs">
 			<li><a href="#details" data-toggle="tab">Details</a></li>
-			<li><a href="#companyprofile" data-toggle="tab">Company Profile</a></li>
-			{% if beautician_detail.home_visit_charge != 'NA' %}
+			<li><a href="#companyprofile" data-toggle="tab"> Vendor Profile</a></li>
+			{% if beautician_detail.home_visit_charge != 'NA' and beautician_detail.home_visit_charge %}
 				<li><a href="#homevisitpolicy" data-toggle="tab">Home Visit Policy</a></li>
 			{% endif %}
 			<li class="active"><a href="#reviews" data-toggle="tab">Reviews {% if all_reviews %}({{all_reviews.count}}){% endif %}</a></li>
@@ -126,7 +126,7 @@
 			{% endif %}
 			</p>
 			<p><b>Home Visit Available : </b>
-			{% if beautician_detail.home_visit_charge != 'NA' %}
+			{% if beautician_detail.home_visit_charge != 'NA' and beautician_detail.home_visit_charge %}
 				YES
 				<p><b>Home Visit Charges : </b>
 					Rs {{beautician_detail.home_visit_charge}}

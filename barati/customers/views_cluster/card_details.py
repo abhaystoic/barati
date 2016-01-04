@@ -13,6 +13,7 @@ from dashboard import Dashboard
 class Card_Details(Dashboard, View):
    try:
       def __init__(self):
+         self.wishlist_list = []
          self.template_name = 'customers/card_details.html'
 
       def get_context_data(self, **kwargs):
@@ -28,6 +29,16 @@ class Card_Details(Dashboard, View):
          query = "select id, name from cards where id = " + str(self.kwargs['card_id'])
          self.card_details = m.Cards.objects.raw(query)
          return self.card_details
+      
+      def prepare_wishlist_data(self, *args, **kwargs):
+         request = args[0]
+         if request.user.username:
+            user_id = m.Users.objects.get(username= request.user.username).id
+            query = "select id, ref_id from wishlist where user_id=" + str(user_id)
+            wishlist = m.Wishlist.objects.raw(query)
+            for wish in wishlist:
+               self.wishlist_list.append(str(wish.ref_id))
+         return self.wishlist_list    
       
       def get_card_colors(self, **kwargs):
          card_colors = m.Card_Colors.objects.filter(card_id=self.kwargs['card_id'])
@@ -59,7 +70,8 @@ class Card_Details(Dashboard, View):
       def get(self, request, **kwargs):
          subcategories = self.get_context_data()['card_types']
          card_details = self.get_card_details()
-         context_dict = {'subcategories' : subcategories, 'card_details' : card_details}
+         wishlist_list = self.prepare_wishlist_data(request)
+         context_dict = {'subcategories' : subcategories, 'card_details' : card_details, 'wishlist_list' : wishlist_list}
          context_dict.update({'user_review' : self.get_user_review(request)})
          context_dict.update({'all_reviews' : self.get_all_reviews()})
          context_dict.update({'card_colors' : self.get_card_colors()})

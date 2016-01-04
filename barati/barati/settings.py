@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'social.apps.django_app.default',
     'rest_framework',
     'axes', # Defense mechanism against Brute Force attack
+    'haystack', #Search mechanism
     'customers',
     'vendors',
     'star_ratings' #Rating system #https://github.com/wildfish/django-star-ratings
@@ -117,7 +118,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = "/home/abhay/workspace_barati/barati/static/"
 
 LOGIN_URL = '/auth/login/'
-LOGIN_REDIRECT_URL = '/dashboard'
+#LOGIN_REDIRECT_URL = '/dashboard'
 
 STATICFILES_FINDERS = (
 	"django.contrib.staticfiles.finders.FileSystemFinder",
@@ -133,16 +134,28 @@ REST_FRAMEWORK = {
 #Social Auth plugin: http://psa.matiasaguirre.net/docs/configuration/django.html
 AUTHENTICATION_BACKENDS = (
    'social.backends.facebook.FacebookOAuth2',
-   'social.backends.google.GoogleOAuth2',
-   'social.backends.twitter.TwitterOAuth',
+   #'social.backends.google.GoogleOAuth2',
+   #'social.backends.twitter.TwitterOAuth',
    'django.contrib.auth.backends.ModelBackend',
 )
-#SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
+SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 SOCIAL_AUTH_FACEBOOK_KEY = 1710233362554820
 SOCIAL_AUTH_FACEBOOK_SECRET = '131c039e7bdc74edaf8b823ce2f2dc3d'
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/dashboard'
-SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/dashboard'
 SOCIAL_AUTH_SANITIZE_REDIRECTS = True
 SOCIAL_AUTH_REDIRECT_IS_HTTPS = False
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/dashboard'
 SOCIAL_AUTH_URLOPEN_TIMEOUT = 30 #seconds
+
+#Search
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'haystack',
+    },
+}
+ES_DISABLED = False
+ES_URLS = ['http://127.0.0.1:9200']
+# enable signal processor that for every change in the models will run update_index
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

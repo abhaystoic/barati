@@ -41,22 +41,23 @@
 					</div>
 			</div>
 			<div class="choose">
-				<form id="add_to_wishlist{{forloop.counter}}" class="add_to_wishlist" name="add_to_wishlist{{forloop.counter}}" method="post" action="/add_to_wishlist/">
-					{% csrf_token %}
-					<input type="hidden" name="ref_id" value="{{card.ref_id}}" />
 					<ul class="nav nav-pills nav-justified">
 						{% if request.user.username %}
 								{% if card.ref_id in wishlist_list %}
 									<li><a href="/wishlist"><i class="fa fa-plus-square"></i>In Wishlist</a></li>
 								{% else %}
-									<li><a href="#" onclick="add_to_wishlist({{forloop.counter}})"><i class="fa fa-plus-square"></i><button type="submit" style="border:none;background:transparent;" > Add to wishlist</button></a></li>
+									<form id="add_to_wishlist{{forloop.counter}}" class="add_to_wishlist" name="add_to_wishlist{{forloop.counter}}" method="post" action="/add_to_wishlist/">
+										{% csrf_token %}
+										<input type="hidden" name="ref_id" value="{{card.ref_id}}" />	
+										<li><a href="#" onclick="add_to_wishlist({{forloop.counter}})"><i class="fa fa-plus-square"></i><button type="submit" style="border:none;background:transparent;" > Add to wishlist</button></a></li>
+									</form>
 								{% endif %}
+								<li><a href="#"><i class="fa fa-plus-square"></i>Add to FEEL Requests</a></li>
 							{% else %}
 								<li><a href="#login" onclick=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+								<li><a href="#login"><i class="fa fa-plus-square"></i>Add to FEEL Requests</a></li>
 							{% endif %}
-						<li><a href="#"><i class="fa fa-plus-square"></i>Get it's FEEL</a></li>
 					</ul>
-				</form>
 			</div>
 		</div>
 	</div>
