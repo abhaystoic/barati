@@ -343,14 +343,7 @@ a#pop:hover, a#update_cert:hover {
     bottom: 0;
     z-index:1;
     display:none;
-    background:#fff url('../images/home/budget.png') no-repeat;
-    -khtml-opacity:.50; 
- -moz-opacity:.50; 
- -ms-filter:"alpha(opacity=50)";
-  filter:alpha(opacity=50);
-  filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.5);
-  opacity:.50; 
-
+    /background:#fff url('../images/home/budget.png') no-repeat;
 }
 .widget-content-header{
    height: 30px;

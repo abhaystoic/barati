@@ -61,12 +61,11 @@
       google.load("visualization", "1", {packages:["corechart"]});
       google.setOnLoadCallback(drawChart);
       function drawChart() {
-
         var data = google.visualization.arrayToDataTable([
           ['Product', 'Price'],
-          ['Card',     6000],
-          ['Venue',      0],
-          ['Beautician',  8000],
+          ['Card',     {{current_cart_card_expense}}],
+          ['Venue',      {{current_cart_venue_expense}}],
+          ['Beautician',  {{current_cart_beautician_expense}}],
           ['Music',  0],
           ['Gifts',  0],
           ['Photos/Videos',  0],

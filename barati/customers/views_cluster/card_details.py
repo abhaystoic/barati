@@ -71,7 +71,11 @@ class Card_Details(Dashboard, View):
          subcategories = self.get_context_data()['card_types']
          card_details = self.get_card_details()
          wishlist_list = self.prepare_wishlist_data(request)
-         context_dict = {'subcategories' : subcategories, 'card_details' : card_details, 'wishlist_list' : wishlist_list}
+         #Get tax 
+         tax = super(Card_Details, self).get_tax('card')
+         context_dict = {'subcategories' : subcategories, 'card_details' : card_details, 'wishlist_list' : wishlist_list,\
+         'tax' : tax
+         }
          context_dict.update({'user_review' : self.get_user_review(request)})
          context_dict.update({'all_reviews' : self.get_all_reviews()})
          context_dict.update({'card_colors' : self.get_card_colors()})

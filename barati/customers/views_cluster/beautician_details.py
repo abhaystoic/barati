@@ -55,7 +55,9 @@ class Beautician_Details(Dashboard, View):
       def get(self, request, **kwargs):
          subcategories = self.get_context_data()['beautician_types']
          beautician_details = self.get_beautician_details()
-         context_dict = {'subcategories' : subcategories, 'beautician_details' : beautician_details}
+         #Get tax 
+         tax = super(Beautician_Details, self).get_tax('beautician')
+         context_dict = {'subcategories' : subcategories, 'beautician_details' : beautician_details, 'tax' : tax}
          context_dict.update({'user_review' : self.get_user_review(request)})
          context_dict.update({'all_reviews' : self.get_all_reviews()})
          context_dict.update(self.get_context_data(request=request))

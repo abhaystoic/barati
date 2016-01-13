@@ -67,16 +67,31 @@
 							{% with all_product_details_dict|get_item_for_my_orders:key as product %}
 								<tr>
 								<td class="cart_product" style="margin-top:-1px;">
-									<a href="/card_details/{{product.id}}"><img width = "100px" height = "100px" src="{% static '' %}{{product.ref_id|get_pic_path}}" alt="{% static '' %}{{ product.ref_id|get_pic_path }}"></a>
+									<a href="/{{product_type_dict|get_item:product.ref_id}}_details/{{product.id}}"><img width = "100px" height = "100px" src="{% static '' %}{{product.ref_id|get_pic_path}}" alt="{% static '' %}{{ product.ref_id|get_pic_path }}"></a>
 								</td>
 								<td></td>
 								<td class="cart_description">
 									<h4><a href="/card_details/{{product.id}}">{{product.name}}</a></h4>
-									<p>Product Idea: {{product.ref_id}}</p>
+									<p>Product ID: {{product.ref_id}}</p>
 									<p>{{product.short_description}}</p>
 								</td>
 								<td class="cart_price">
-									<label>{{product.actual_price}} Rs</label>
+									<label>
+									{% with product_type_dict|get_item:product.ref_id as product_type %}
+										{% if product_type == 'beautician' %}
+											{{product.actual_price|add_tax:tax_beautician }}
+										{% endif %}	
+
+										{% if product_type == 'card' %}
+											{{product.actual_price|add_tax:tax_card }}
+										{% endif %}	
+
+										{% if product_type == 'venue' %}
+											{{product.actual_price|add_tax:tax_venue }}
+										{% endif %}	
+									{% endwith %}
+
+									</label>
 								</td>
 								<td></td>
 								<td class="" style="border-top:0px;">

@@ -52,8 +52,8 @@
 </div>
 <form action="/add_to_cart/{{beautician_detail.ref_id}}" id="add_to_cart" method="POST"><!--Add to cart form BEGIN-->
 {% csrf_token %}
-<input type="hidden" name="product_type" value="beauticians" />
-<input type="hidden" name="price" value="{{beautician_detail.actual_price}}" />
+<input type="hidden" name="product_type" value="beautician" />
+<input type="hidden" name="price" value="{{beautician_detail.actual_price|add_tax:tax}}" />
 <div class="product-information"><!--/product-information-->
 <h2>{{beautician_detail.name}}</h2>
 <p>{{beautician_detail.short_description}}</p>
@@ -62,7 +62,7 @@
 {% ratings beautician_detail %}
 <br>
 <span>
-	<span>Rs {{beautician_detail.actual_price}}</span>
+	<span>Rs {{beautician_detail.actual_price|add_tax:tax}}</span>
 	
 	{% if request.user.username %}
 	<button type="submit" class="btn btn-default cart">

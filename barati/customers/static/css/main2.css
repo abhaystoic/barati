@@ -784,7 +784,7 @@ h2.title:before{
 }
 
 .shipping {
-  background-color: #F2F2F2;
+  background-color: #fff;/*#F2F2F2;*/
   margin-top: 40px;
   overflow: hidden;
   padding-top: 20px;
@@ -2531,5 +2531,3 @@ h2.title {
 .contact-info .social-networks ul li a:hover{
   color: #FE980F;
 }
-
-

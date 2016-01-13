@@ -12,7 +12,7 @@
 							<h2>{{beautician.0}} ({{beautician.1}})</h2>
 						{% endwith %}
 						<p>{{beautician.name}}</p>
-						<p>Rs {{beautician.actual_price}}</p>
+						<p>Rs {{beautician.actual_price|add_tax:tax}}</p>
 						<!--<p>Product ID {{beautician.ref_id}}</p>-->
 						<!--<button type="button" class="btn btn-default cart">
 							Get the feel
@@ -20,8 +20,8 @@
 						</a>
 						<form action="/add_to_cart/{{beautician.ref_id}}" class="add_to_cart" id="add_to_cart{{forloop.counter}}" method="POST"><!--Add to cart form BEGIN-->
 							{% csrf_token %}
-							<input type="hidden" name="product_type" value="beauticians" />
-							<input type="hidden" name="price" value="{{beautician.actual_price}}" />
+							<input type="hidden" name="product_type" value="beautician" />
+							<input type="hidden" name="price" value="{{beautician.actual_price|add_tax:tax}}" />
 							<!--
 							<div class="cart_quantity_button">
 								<a class="cart_quantity_up" style="width:15px;" href="#" > + </a>

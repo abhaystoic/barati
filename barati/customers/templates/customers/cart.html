@@ -34,7 +34,7 @@
 				<ol class="breadcrumb">
 				  <li><a href="/">Home</a></li>
 				  <li class="active">Shopping Cart</li>
-				  {% if card_list or beautician_list %}
+				  {% if card_list or beautician_list or venue_list %}
 				  	<li style="float:right;"><a href="#checked-options">Proceed to Check Out</a></li>
 				  {% else %}	
 				  	<li style="float:right;"><a href="/">Continue Shopping...</a></li>
@@ -43,7 +43,7 @@
 			</div>
 			<div class="table-responsive cart_info">
 				<table class="table table-condensed">
-					{% if card_list or beautician_list %}
+					{% if card_list or beautician_list or venue_list %}
 					<thead>
 						<tr class="cart_menu">
 							<td class="image">Item</td>
@@ -60,7 +60,7 @@
 					{% endif %}	
 					</thead>
 					<tbody>
-						{% if card_list or beautician_list %}
+						{% if card_list or beautician_list or venue_list %}
 						
 							{% if card_list %}
 							{% for product in card_list %}
@@ -73,6 +73,12 @@
 								{% include 'customers/cart_products_beauticians.html'%}
 							{% endfor %}
 							{% endif %}	
+
+							{% if venue_list %}
+							{% for product in venue_list %}
+								{% include 'customers/cart_products_venue.html'%}
+							{% endfor %}
+							{% endif %}
 
 						{% else %}
 							<tr>
@@ -87,7 +93,7 @@
 	</section> <!--/#cart_items-->
 <section id="do_action">
 <div class="container">
-		{% if card_list %} <!--Don't show cart if there is nothing in it -->
+		{% if card_list or beautician_list or venue_list %} <!--Don't show cart if there is nothing in it -->
 		<form id = "checkout" method="post" action="/checkout/">
 		<div class="checkout-options" id="checked-options">
 			<p>Check Out, Relax and Enjoy the Wedding!</p>
@@ -133,10 +139,10 @@
 						<div class="col-sm-3">
 						<div class="total_area">
 							<ul>
-								<li>Sub Total <span>Rs. {{cart_sub_total}}</span></li>
-								<li>Tax <span>{{tax}}</span></li>
 								<!--<li>Shipping Cost <span>Free</span></li>-->
-								<li>Total <span>{{grand_total}}</span></li>
+								<li>Total <span>Rs. {{grand_total}}</span></li>
+								<li>Incl. Tax <span>Rs. {{total_tax_payable}}</span></li>
+								<li>To pay <span>Rs. {{grand_total}}</span></li>
 							</ul>
 								
 								{% csrf_token %}

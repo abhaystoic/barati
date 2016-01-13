@@ -9,7 +9,7 @@
 	<p>{{product.short_description}}</p>
 </td>
 <td class="cart_price">
-	<label>{{product.actual_price}}</label>
+	<label>{{product.actual_price|add_tax:tax_beautician}}</label>
 </td>
 <td class="cart_quantity">
 	<div class="cart_quantity_button">

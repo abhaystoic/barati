@@ -1,0 +1,77 @@
+{% load staticfiles %}
+	{% if venues %}
+	{% for venue in venues%}
+	<div class="col-sm-4">
+		<div class="product-image-wrapper">
+			<div class="single-products">
+					<div class="productinfo text-center">
+						<a style = "text-decoration:none;"href = "/venue_details/{{venue.id}}">
+
+						<img style="width:200px;height:170px;" src="{% static '' %}{{venue.ref_id|get_pic_path}}" alt="{{venue.short_description}}" title="{{venue.short_description}}"/>
+						<h2>{{venue.name}}</h2>
+						<p>{{venue.actual_price|add_tax:tax}} </p>
+						<!--<p>Product ID {{venue.ref_id}}</p>-->
+						<!--<button type="button" class="btn btn-default cart">
+							Get the feel
+						</button>-->
+						</a>
+						<form action="/add_to_cart/{{venue.ref_id}}" class="add_to_cart" id="add_to_cart{{forloop.counter}}" method="POST"><!--Add to cart form BEGIN-->
+							{% csrf_token %}
+							<input type="hidden" name="product_type" value="venue" />
+							<input type="hidden" name="price" value="{{venue.actual_price|add_tax:tax}}" />
+							{% if request.user.username %}
+								<a href="#" onclick="add_to_cart({{forloop.counter}})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i><button type="submit" style="border:none;background:transparent;" >  Add to cart</button></a>
+							{% else %}
+								<a style = "" href = "#login"  class="btn btn-default add-to-cart">
+								<button type="button" style="border:none;background:transparent;">
+									<i class="fa fa-shopping-cart"></i>
+									Add to cart
+								</button>
+								</a>
+							{% endif %}
+						</form> <!--Add to cart form END-->
+					</div>
+			</div>
+			<div class="choose">
+					<ul class="nav nav-pills nav-justified">
+						{% if request.user.username %}
+								{% if venue.ref_id in wishlist_list %}
+									<li><a href="/wishlist"><i class="fa fa-plus-square"></i>In Wishlist</a></li>
+								{% else %}
+									<form id="add_to_wishlist{{forloop.counter}}" class="add_to_wishlist" name="add_to_wishlist{{forloop.counter}}" method="post" action="/add_to_wishlist/">
+										{% csrf_token %}
+										<input type="hidden" name="ref_id" value="{{venue.ref_id}}" />	
+										<li><a href="#" onclick="add_to_wishlist({{forloop.counter}})"><i class="fa fa-plus-square"></i><button type="submit" style="border:none;background:transparent;" > Add to wishlist</button></a></li>
+									</form>
+								{% endif %}
+								<li><a href="#"><i class="fa fa-plus-square"></i>Add to FEEL Requests</a></li>
+							{% else %}
+								<li><a href="#login" onclick=""><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+								<li><a href="#login"><i class="fa fa-plus-square"></i>Add to FEEL Requests</a></li>
+							{% endif %}
+					</ul>
+			</div>
+		</div>
+	</div>
+	{% endfor %}						
+	{% endif %}
+{% include 'customers/login_popup.html' %}
+
+<script type="text/javascript">
+   $(function () {
+    $('.cart_quantity_up').on('click',function(){
+        var $qty=$(this).closest('div').find('.cart_quantity_input');
+        var currentVal = parseInt($qty.val());
+        if (!isNaN(currentVal)) {
+            $qty.val(currentVal + 1);
+        }
+    });
+    $('.cart_quantity_down').on('click',function(){
+        var $qty=$(this).closest('div').find('.cart_quantity_input');
+        var currentVal = parseInt($qty.val());
+        if (!isNaN(currentVal) && currentVal > 0) {
+            $qty.val(currentVal - 1);
+        }
+    });
+});
+</script>

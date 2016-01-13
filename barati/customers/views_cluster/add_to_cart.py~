@@ -36,7 +36,7 @@ def Add_To_Cart(request, ref_id):
          else:
             total_price = quantity * price   
       else:
-         #Quantity is irrelevant here but need to give a 1 value to maintain uniform 
+         #Quantity is irrelevant here but need to give a 1 value to maintain uniform
          quantity = 1
          total_price = price
       checked_out = "false"

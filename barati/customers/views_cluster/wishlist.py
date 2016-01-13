@@ -40,7 +40,19 @@ class Wishlist(Dashboard, View):
       def get(self, request, **kwargs):
          wishlist_list = self.prepare_wishlist(request)
          context_dict = {'wishlist_list' : wishlist_list}
+         
+         user_id = m.Users.objects.get(username= request.user.username).id
+         #Get tax percentages 
+         super(Wishlist, self).get_each_tax()
+         self.grand_total = super(Wishlist, self).calculate_grand_total(user_id)
+         
          context_dict.update({'product_type_dict' : self.product_type_dict})#Used for dynamically preparing URL in the template
+         context_dict.update({\
+         'tax_venue' : self.tax_venue, 'tax_beautician' : self.tax_beautician, 'tax_gift' : self.tax_gift,\
+         'tax_music' : self.tax_music, 'tax_photo_video' : self.tax_photo_video, 'tax_bakery' : self.tax_bakery,\
+         'tax_ghodi_bagghi' : self.tax_ghodi_bagghi, 'tax_band' : self.tax_band, 'tax_mehendi' : self.tax_mehendi,\
+         'tax_firework' : self.tax_firework, 'tax_card' : self.tax_card
+         })
          context_dict.update(self.get_context_data(request=request))
          return render(request, self.template_name, context_dict)
 

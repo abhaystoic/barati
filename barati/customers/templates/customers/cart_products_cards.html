@@ -7,10 +7,12 @@
 	<h4><a href="/card_details/{{product.id}}">{{product.name}}</a></h4>
 	<p>Product ID: {{product.ref_id}}</p>
 	<p>{{product.short_description}}</p>
+	{% if printing_preference_dict|get_item:product.ref_id %}
 	<p>Printing price : Rs {{product.printing_price}} per card</p>
+	{% endif %}
 </td>
 <td class="cart_price">
-	<label>{{product.actual_price}}</label>
+	<label>{{product.actual_price|add_tax:tax_card}}</label>
 </td>
 <td class="cart_quantity">
 	<div class="cart_quantity_button">

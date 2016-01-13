@@ -35,7 +35,7 @@
 				  <li><a href="/">Home</a></li>
 				  <li class="active">Wishlist</li>
 				  {% if wishlist_list %}
-				  	<li style="float:right;"><a href="#checked-options">Proceed to Check Out</a></li>
+				  	<li style="float:right;"><a href="/cart">Proceed to Check Out</a></li>
 				  {% else %}	
 				  	<li style="float:right;"><a href="/">Continue Shopping...</a></li>
 				  {% endif %}
@@ -78,12 +78,26 @@
 								<p>{{product.short_description}}</p>
 							</td>
 							<td class="cart_price">
-								<label>{{product.actual_price}} Rs</label>
+								<label>
+								{% with product_type_dict|get_item:product.ref_id as product_type %}
+									{% if product_type == 'beautician' %}
+										{{product.actual_price|add_tax:tax_beautician }}
+									{% endif %}	
+
+									{% if product_type == 'card' %}
+										{{product.actual_price|add_tax:tax_card }}
+									{% endif %}	
+
+									{% if product_type == 'venue' %}
+										{{product.actual_price|add_tax:tax_venue }}
+									{% endif %}	
+								{% endwith %}
+								</label>
 							</td>
-							<form action="/remove_from_wishlist/{{product.ref_id}}" id="remove_from_wish_list{{forloop.counter}}" method="post">	
+							<form action="/remove_from_wishlist/{{product.ref_id}}" id="remove_from_wishlist{{forloop.counter}}" method="post">	
 							{% csrf_token %}
 							<td class="cart_delete" style="border-top:0px;">
-								 <a class="cart_quantity_delete" href="#" onclick="document.forms[{{forloop.counter}}].submit();"><i class="fa fa-times" >Remove</i></a>
+								 <button class="cart_quantity_delete btn btn-default add-to-cart" href="#" type="submit" onclick="return remove_from_wishlist({{forloop.counter}})"><i class="fa fa-times">Remove</i></button>
 							</td>
 							</form>
 							</tr>
@@ -109,5 +123,32 @@
 	<script src="{% static 'js/price-range.js' %}"></script>
     <script src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript">
+    function remove_from_wishlist(item_seq_number)
+   	{
+          var remove_from_wishlist_form_id = '#remove_from_wishlist'+ String(item_seq_number);
+          $(remove_from_wishlist_form_id).submit(function() { // catch the form's submit event
+              $.ajax({
+                  url : this.action, 
+                  type : "POST",
+                  dataType: "json",
+                  data: $(this).serialize(), // get the form data
+                  context : this,
+                  success : function(json) {
+                    alert(json);
+                    if (json == "success_remove_from_wishlist")
+                    {
+                      window.location = location.pathname; // redirect back to the calling page
+                    }
+                    },
+                  error : function(xhr,errmsg,err) {
+                    remove_spinner(); 
+                    alert(xhr.status + ": " + xhr.responseText);
+                    }
+              });
+              return false;
+          });
+    }	
+    </script>
 </body>
 </html>

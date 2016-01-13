@@ -172,23 +172,13 @@ class Gift_Types(models.Model):
    def __unicode__(self):
       return unicode(self.name)
       
-class Photo_Types(models.Model):
+class Photo_Video_Types(models.Model):
    id = models.AutoField(primary_key=True)   
    name = models.CharField(max_length=50)
    
    class Meta:
       managed = True
-      db_table = 'photo_types'
-   def __unicode__(self):
-      return unicode(self.name)
-
-class Video_Types(models.Model):
-   id = models.AutoField(primary_key=True)   
-   name = models.CharField(max_length=50)
-   
-   class Meta:
-      managed = True
-      db_table = 'video_types'
+      db_table = 'photo_video_types'
    def __unicode__(self):
       return unicode(self.name)
 
@@ -274,13 +264,13 @@ class Venues(models.Model):
    address = models.ForeignKey(Address, blank=True, null=True)
    short_description = models.CharField(max_length=100)
    long_description = models.CharField(max_length=800)
-   min_capacity = models.IntegerField()
    max_capacity = models.IntegerField()
    accomodation_available = models.BooleanField()
    actual_price = models.IntegerField()
    discount_perc = models.FloatField(blank=True, null=True)
    discount_rs = models.FloatField(blank=True, null=True)
    discounted_price = models.FloatField(blank=True, null=True)
+   timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
    
    class Meta:
       managed = True
@@ -479,3 +469,28 @@ class Reviews(models.Model):
       db_table = 'reviews'
    def __unicode__(self):
       return unicode(self.ref_id)
+      
+class Tax_And_Refund_Policies(models.Model):
+   id = models.AutoField(primary_key=True)
+   product_type = models.CharField(max_length=100, blank=True, null=True, unique=True)
+   #All figures in percentage
+   #Tax breakdown
+   total_tax = models.FloatField(blank=True, null=True)
+   #Payment policies
+   min_payment_needed_before_confirmation = models.FloatField(blank=True, null=True)
+   #Refund policies
+   refund_before_confirmation = models.FloatField(blank=True, null=True)
+   refund_within_2_days = models.FloatField(blank=True, null=True)
+   refund_between_2_7_days = models.FloatField(blank=True, null=True)
+   refund_between_7_15_days = models.FloatField(blank=True, null=True)
+   refund_between_15_30_days = models.FloatField(blank=True, null=True)
+   refund_after_30_days_or_processing = models.FloatField(blank=True, null=True)
+   #Only for cards
+   refund_after_die_preparing = models.FloatField(blank=True, null=True)
+   timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+   
+   class Meta: 
+      managed = True
+      db_table = 'tax_and_refund_policies'
+   def __unicode__(self):
+      return unicode(self.product_type)

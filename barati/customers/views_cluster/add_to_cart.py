@@ -25,7 +25,7 @@ def Add_To_Cart(request, ref_id):
       else:
          avail_printing = True   
       user_id = m.Users.objects.get(username=request.user.username).id
-      price = int(request.POST.get('price'))
+      price = float(request.POST.get('price'))
       quantity = None
       total_price = None
       if request.POST.get('quantity') is not None:

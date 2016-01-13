@@ -79,63 +79,68 @@
 							</ul>
 						</div>
 					</div>
-					<div class="main_filters">
-								<br/><br/>
-								<form id="main_preferences" name="main_preferences" action="/save_main_preferences/" method="post" > 
-									{% csrf_token %}
-									<span style="margin-left:-100px">Lock your preferences---></span>
-									<input type="text" class="date_picker searchTerm" title="Date of Marriage/Function" id="inputField" name="main_preference_date" autocomplete="off"
-									{% if main_preferences %}
-										{% with main_preferences|first as main_preferences %}
-											{% if main_preferences.date %}
-												value="{{main_preferences.date|change_date_format_for_template}}"
-											{% else %}	
-												placeholder="Date"
-											{% endif %}
-										{% endwith %}
-									{% else %}
-										placeholder="Date"
-									{% endif %}
-									placeholder = "Date" />
-									<input type="text" class="location searchTerm" name="main_preference_location" id="main_preference_location" value="Delhi" 
-									{% if main_preferences %}
-										{% with main_preferences|first as main_preferences %} 
-											{% if main_preferences.location %}
-												value="{{main_preferences.location}}"
-											{% else %}
-												placeholder="Location"
-											{% endif %}	
-										{% endwith %}
-									{% else %}
-										placeholder="Location"
-									{% endif %}
-									/>
-									<script id="jsbin-javascript1" src="{% static 'js/autocomplete_location.js' %}"></script><!--Automcomplete-->
-										<input type="text" class="sublocation searchTerm" name="main_preference_sublocation" id="main_preference_sublocation" 
-										{% if main_preferences %}
-											{% with main_preferences|first as main_preferences %}
-												{% if main_preferences.sublocation %}
-													value="{{main_preferences.sublocation}}"
-												{% else %}
-													placeholder="Locality"
-												{% endif %}	
-											{% endwith %}
-										{% else %}
-											placeholder="Locality"
-										{% endif %}
-										/>
-										
-									<script id="jsbin-javascript2" src="{% static 'js/autocomplete_sublocation.js' %}"></script><!--Automcomplete-->
-									<input type="text" class="search searchTerm" id="search_everything" name="search_everything" placeholder="Search your dream products" /> 
-									<script id="jsbin-javascript3" src="{% static 'js/autocomplete_everything.js' %}"></script><!--Automcomplete-->
-									<button type="submit" style="margin-top:-2px;height:30px;visibility:hidden;" id="go_btn" class=" btn btn-default get">GO</button>
-									</form>
-					</div>
 				</div>
 			</div>
 		</div><!--/header-middle-->
 		
+<div class="main_filters">
+	<form id="main_preferences" name="main_preferences" action="/save_main_preferences/" method="post" > 
+		{% csrf_token %}
+		<input type="text" class="date_picker searchTerm" title="Date of Marriage/Function" id="inputField" name="main_preference_date" autocomplete="off"
+		{% if main_preferences %}
+			{% with main_preferences|first as main_preferences %}
+				{% if main_preferences.date %}
+					value="{{main_preferences.date|change_date_format_for_template}}"
+				{% else %}	
+					placeholder="Date"
+				{% endif %}
+			{% endwith %}
+		{% else %}
+			placeholder="Date"
+		{% endif %}
+		placeholder = "Date" />
+		<input type="text" class="location searchTerm" name="main_preference_location" id="main_preference_location" value="Delhi" 
+		{% if main_preferences %}
+			{% with main_preferences|first as main_preferences %} 
+				{% if main_preferences.location %}
+					value="{{main_preferences.location}}"
+				{% else %}
+					placeholder="Location"
+				{% endif %}	
+			{% endwith %}
+		{% else %}
+			placeholder="Location"
+		{% endif %}
+		/>
+		<script id="jsbin-javascript1" src="{% static 'js/autocomplete_location.js' %}"></script><!--Automcomplete-->
+			<input type="text" class="sublocation searchTerm" name="main_preference_sublocation" id="main_preference_sublocation" 
+			{% if main_preferences %}
+				{% with main_preferences|first as main_preferences %}
+					{% if main_preferences.sublocation %}
+						value="{{main_preferences.sublocation}}"
+					{% else %}
+						placeholder="Locality"
+					{% endif %}	
+				{% endwith %}
+			{% else %}
+				placeholder="Locality"
+			{% endif %}
+			/>
+			
+		<script id="jsbin-javascript2" src="{% static 'js/autocomplete_sublocation.js' %}"></script><!--Automcomplete-->
 
+		<select name="product_type_main_filter" id="product_type_main_filter">
+			<option value="all">Select product type</option>
+			<option value="cards">Cards</option>
+			<option value="beauticians">Beauticians</option>
+			<option value="venues">Venues</option>
+		</select>
+
+		<input type="text" class="search searchTerm" id="search_everything" name="search_everything" placeholder="Search your dream products" /> 
+		<script id="jsbin-javascript3" src="{% static 'js/autocomplete_everything.js' %}"></script><!--Automcomplete-->
+		<button type="submit" style="margin-top:-2px;height:30px;visibility:hidden;" id="go_btn" class=" btn btn-default get">GO</button>
+	</form>
+</div>
 		<div class="container_drop_menu">
 			<div class="main">
 				<nav class="" id="cbp-hsmenu-wrapper">
@@ -146,7 +151,7 @@
 								<ul class="cbp-hssubmenu">
                                     	{% if venue_types %}
                                     	{% for type in venue_types %}
-                                        <li><a href="/venue/{{type.id}}"><img src="images/1.png" alt="img01"/><span>{{type.name}}</span></a></li>
+                                        	<li><a href="/venue/{{type.id}}"><img src="{% static 'images/home/venue1.jpg' %}" alt="img01"/><span>{{type.name}}</span></a></li>
                                         {% endfor %}
                                         {% endif %}
 								</ul>
@@ -156,7 +161,7 @@
 								<ul class="cbp-hssubmenu">
 									{% if card_types %}
                                 	{% for type in card_types %}
-                                	<li><a href="/card/{{type.id}}"><img src="{% static 'images/home/card1.jpg' %}" alt="{{type.name}}"/><span>{{type.name}}</span></a></li>
+                                		<li><a href="/card/{{type.id}}"><img src="{% static 'images/home/card1.jpg' %}" alt="{{type.name}}"/><span>{{type.name}}</span></a></li>
                                     {% endfor %}
                                     {% endif %}
 								</ul>
@@ -167,48 +172,45 @@
 								<ul class="cbp-hssubmenu">
 									{% if beautician_types %}
                                 	{% for type in beautician_types %}
-									<li><a href="/beauticians/{{type.id}}?for=male"><img src="{% static 'images/home/beautician-men.jpg' %}" style="max-height:120px" alt="img01"/><span>{{type.name}} (Groom)</span></a></li> 
-									<li><a href="/beauticians/{{type.id}}?for=female"><img src="{% static 'images/home/beautician-female.jpg' %}" alt="img01"/><span>{{type.name}} (Bride)</span></a></li> 
+										<li><a href="/beauticians/{{type.id}}"><img src="{% static 'images/home/beautician-men.jpg' %}" style="max-height:120px" alt="img01"/><span>{{type.name}}</span></a></li>
 									{% endfor %}
 									{% endif %}
+									<li><a href="#"><img src="{% static 'images/home/beautician-female.jpg' %}" alt="img01"/><span>Mehendi</span></a></li> 	
 									<li><a href="/beauticians/packages?for=male"><img src="{% static 'images/home/beautician-men.jpg' %}" style="max-height:120px" alt="img01"/><span>Packages for HIM</span></a></li> 
-									<li><a href="/beauticians/packages?for=female"><img src="{% static 'images/home/beautician-female.jpg' %}" alt="img01"/><span>Packages for HER</span></a></li> 	
+									<li><a href="/beauticians/packages?for=female"><img src="{% static 'images/home/beautician-female.jpg' %}" alt="img01"/><span>Packages for HER</span></a></li>
 								</ul>
 							</li>
 							<li>
 								<a href="#"><image src="{% static 'images/home/music.png' %}" width="30px" height="30px" />Music</a>
 								<ul class="cbp-hssubmenu">
-									<li><a href="#"><img src="images/1.png" alt="img01"/><span>Delicate Wine</span></a></li>
-									<li><a href="#"><img src="images/2.png" alt="img02"/><span>Fine Spirit</span></a></li>
-									<li><a href="#"><img src="images/3.png" alt="img03"/><span>Heavenly Ale</span></a></li>
-									<li><a href="#"><img src="images/4.png" alt="img04"/><span>Juicy Lemonade</span></a></li>
-									<li><a href="#"><img src="images/5.png" alt="img05"/><span>Wise Whiskey</span></a></li>
-									<li><a href="#"><img src="images/6.png" alt="img06"/><span>Sweet Rum</span></a></li>
+									{% if music_types %}
+                                	{% for type in music_types %}
+                                    	<li><a href="/music/{{type.id}}"><img src="{% static 'images/home/venue1.jpg' %}" alt="img01"/><span>{{type.name}}</span></a></li>
+                                    {% endfor %}
+                                    {% endif %}
 								</ul>
 							</li>
 							<li>
 								<a href="#"><image src="{% static 'images/home/gift.png' %}" width="30px" height="30px" />Gifts</a>
 								<ul class="cbp-hssubmenu">
-									<li><a href="/shop"><a href="#"><img src="images/1.png" alt="img01"/><span>Traditional</span></a></li>
-									<li><a href="/product_details"><a href="#"><img src="images/1.png" alt="img01"/><span>Personalized</span></a></li> 
-									<li><a href="/checkout"><a href="#"><img src="images/1.png" alt="img01"/><span>For Bride</span></a></li> 
-									<li><a href="/cart"><a href="#"><img src="images/1.png" alt="img01"/><span>For Groom</span></a></li> 
-									<li><a href="/auth/login"><a href="#"><img src="images/1.png" alt="img01"/><span>For Guests</span></a></li> 
+									{% if gift_types %}
+                                	{% for type in gift_types %}
+                                    	<li><a href="/gift/{{type.id}}"><img src="{% static 'images/home/gifts.jpg' %}" alt="img01"/><span>{{type.name}}</span></a></li>
+                                    {% endfor %}
+                                    {% endif %}
 								</ul>
 							</li>
 							<li>
 								<a href="#"><image src="{% static 'images/home/photos.png' %}" width="30px" height="30px" />Photos/Videos</a>
 								<ul class="cbp-hssubmenu">
-									<li><a href="#"><img src="{% static 'images/photos_videos/candid_dropdown_menu.jpg' %}" alt="img01"/><span>Candid</span></a></li>
-									<li><a href="/shop"><img src="{% static 'images/photos_videos/taditional_dropdown_menu.jpg' %}" alt="img01"/><span>Traditional</span></a></li>
-									<li><a href="/checkout"><img src="{% static 'images/photos_videos/taditional_dropdown_menu.jpg' %}" alt="img01"/><span>Traditional + Candid</span></a></li> 
-									<li><a href="#"><img src="{% static 'images/photos_videos/prewedding_dropdown_menu.jpg' %}"/><span>Pre Wedding Photography</span></a></li>
-									<li><a href="#"><img src="{% static 'images/photos_videos/prewedding_dropdown_menu.jpg' %}"/><span>Pre Wedding Videography</span></a></li>
-									<li><a href="#"><img src="{% static 'images/photos_videos/prewedding_dropdown_menu.jpg' %}"/><span>I need everything</span></a></li>
-									<li><a href="#"><img src="{% static 'images/photos_videos/prewedding_dropdown_menu.jpg' %}"/><span>Packages</span></a></li>
+									{% if photo_video_types %}
+                                	{% for type in photo_video_types %}
+                                    	<li><a href="/photo_video/{{type.id}}"><img src="{% static 'images/photos_videos/prewedding_dropdown_menu.jpg' %}" alt="img01"/><span>{{type.name}}</span></a></li>
+                                    {% endfor %}
+                                    {% endif %}
 								</ul>
 							</li>
-							<li>
+							<!--<li>
 								<a href="#"><image src="{% static 'images/home/bakery.png' %}" width="30px" height="30px" />Bakery</a>
 								<ul class="cbp-hssubmenu">
 									<li><a href="#"><img src="images/1.png" alt="img01"/><span>Delicate Wine</span></a></li>
@@ -218,68 +220,55 @@
 									<li><a href="#"><img src="images/5.png" alt="img05"/><span>Wise Whiskey</span></a></li>
 									<li><a href="#"><img src="images/6.png" alt="img06"/><span>Sweet Rum</span></a></li>
 								</ul>
-							</li>
+							</li>-->
 							<li>
 								<a href="#"><image src="{% static 'images/home/ghodi.png' %}" width="30px" height="30px" />Ghodi/Bagghi</a>
 								<ul class="cbp-hssubmenu cbp-hssub-rows">
-									<li><a href="#"><img src="images/7.png" alt="img07"/><span>Lovely Slurp</span></a></li>
-									<li><a href="#"><img src="images/8.png" alt="img08"/><span>Lemony Grappa</span></a></li>
-									<li><a href="#"><img src="images/9.png" alt="img09"/><span>Eggy Liquor</span></a></li>
-									<li><a href="#"><img src="images/10.png" alt="img10"/><span>Fresh Juice</span></a></li>
-									<li><a href="#"><img src="images/1.png" alt="img01"/><span>Delicate Wine</span></a></li>
-									<li><a href="#"><img src="images/2.png" alt="img02"/><span>Fine Spirit</span></a></li>
-									<li><a href="#"><img src="images/3.png" alt="img03"/><span>Heavenly Ale</span></a></li>
-									<li><a href="#"><img src="images/4.png" alt="img04"/><span>Juicy Lemonade</span></a></li>
-									<li><a href="#"><img src="images/5.png" alt="img05"/><span>Wise Whiskey</span></a></li>
-									<li><a href="#"><img src="images/6.png" alt="img06"/><span>Sweet Rum</span></a></li>
-									<li><a href="#"><img src="images/1.png" alt="img01"/><span>Delicate Wine</span></a></li>
-									<li><a href="#"><img src="images/2.png" alt="img02"/><span>Fine Spirit</span></a></li>
+									{% if ghodi_bagghi_types %}
+                                	{% for type in ghodi_bagghi_types %}
+                                    	<li><a href="/ghodi_bagghi/{{type.id}}"><img src="{% static '' %}" alt="img01"/><span>{{type.name}}</span></a></li>
+                                    {% endfor %}
+                                    {% endif %}
 								</ul>
 							</li>
 							<li>
 								<a href="#"><image src="{% static 'images/home/band.png' %}" width="30px" height="30px" />Bands</a>
 								<ul class="cbp-hssubmenu">
-									<li><a href="#"><img src="images/1.png" alt="img01"/><span>Delicate Wine</span></a></li>
-									<li><a href="#"><img src="images/2.png" alt="img02"/><span>Fine Spirit</span></a></li>
-									<li><a href="#"><img src="images/3.png" alt="img03"/><span>Heavenly Ale</span></a></li>
-									<li><a href="#"><img src="images/4.png" alt="img04"/><span>Juicy Lemonade</span></a></li>
-									<li><a href="#"><img src="images/5.png" alt="img05"/><span>Wise Whiskey</span></a></li>
-									<li><a href="#"><img src="images/6.png" alt="img06"/><span>Sweet Rum</span></a></li>
+									{% if band_types %}
+                                	{% for type in band_types %}
+                                    	<li><a href="/band/{{type.id}}"><img src="{% static '' %}" alt="img01"/><span>{{type.name}}</span></a></li>
+                                    {% endfor %}
+                                    {% endif %}
 								</ul>
 							</li>
 
-							<li>
-								<a href="#"><image src="{% static 'images/home/mehendi.png' %}" width="30px" height="30px" />Mehendi</a>
-								<ul class="cbp-hssubmenu">
-									<li><a href="#"><img src="images/10.png" alt="img10"/><span>Fresh Juice</span></a></li>
-									<li><a href="#"><img src="images/6.png" alt="img06"/><span>Sweet Rum</span></a></li>
-									<li><a href="#"><img src="images/9.png" alt="img09"/><span>Eggy Liquor</span></a></li>
-								</ul>
-							</li>
-
-							<li>
+							<!--<li>
 								<a href="#"><image src="{% static 'images/home/firework.png' %}" width="30px" height="30px" />Fireworks</a>
 								<ul class="cbp-hssubmenu">
-									<li><a href="#"><img src="images/1.png" alt="img01"/><span>Delicate Wine</span></a></li>
-									<li><a href="#"><img src="images/2.png" alt="img02"/><span>Fine Spirit</span></a></li>
-									<li><a href="#"><img src="images/3.png" alt="img03"/><span>Heavenly Ale</span></a></li>
-									<li><a href="#"><img src="images/4.png" alt="img04"/><span>Juicy Lemonade</span></a></li>
-									<li><a href="#"><img src="images/5.png" alt="img05"/><span>Wise Whiskey</span></a></li>
-									<li><a href="#"><img src="images/6.png" alt="img06"/><span>Sweet Rum</span></a></li>
+									{% if firework_types %}
+                                	{% for type in firework_types %}
+                                    	<li><a href="/firework/{{type.id}}"><img src="{% static '' %}" alt="img01"/><span>{{type.name}}</span></a></li>
+                                    {% endfor %}
+                                    {% endif %}
 								</ul>
-							</li>
+							</li>-->
 							<li>
 								<a href="#"><image src="{% static 'images/home/tent.png' %}" width="30px" height="30px" />Tent Houses</a>
 								<ul class="cbp-hssubmenu">
-									<li><a href="#"><img src="images/1.png" alt="img01"/><span>Delicate Wine</span></a></li>
-									<li><a href="#"><img src="images/2.png" alt="img02"/><span>Fine Spirit</span></a></li>
-									<li><a href="#"><img src="images/3.png" alt="img03"/><span>Heavenly Ale</span></a></li>
-									<li><a href="#"><img src="images/4.png" alt="img04"/><span>Juicy Lemonade</span></a></li>
-									<li><a href="#"><img src="images/5.png" alt="img05"/><span>Wise Whiskey</span></a></li>
-									<li><a href="#"><img src="images/6.png" alt="img06"/><span>Sweet Rum</span></a></li>
+									{% if tent_types %}
+                                	{% for type in tent_types %}
+                                    	<li><a href="/tent/{{type.id}}"><img src="{% static '' %}" alt="img01"/><span>{{type.name}}</span></a></li>
+                                    {% endfor %}
+                                    {% endif %}
 								</ul>
 							</li>
-							
+							<li>
+								<a href="#"><image src="{% static 'images/home/tent.png' %}" width="30px" height="30px" />Others</a>
+								<ul class="cbp-hssubmenu">
+                                    	<li><a href="/fireworks/1"><img src="{% static 'images/home/fireworks.jpg' %}" alt="img01"/><span>Fireworks`</span></a></li>
+								</ul>
+							</li>
+
 						</ul>
 					</div>
 					

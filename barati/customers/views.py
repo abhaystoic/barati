@@ -11,7 +11,7 @@ from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.template.defaulttags import register
 from customers import models as m
-import sys, json, os, datetime
+import sys, json, os, datetime, decimal
 
 from customers.views_cluster.dashboard import Dashboard
 
@@ -120,6 +120,17 @@ def get_total_price(key, request):
 def multiply(first, second):
    try:
       value = first * second
+      return value
+   except Exception as general_exception:
+      print str(general_exception)
+      print "Line number : " + str(sys.exc_traceback.tb_lineno)
+      return "not_found"
+
+#A Filter for getting tax
+@register.filter(name = 'add_tax')
+def add_tax(actual_price, tax):
+   try:
+      value = round(decimal.Decimal(actual_price + actual_price * (tax/100)), 2)
       return value
    except Exception as general_exception:
       print str(general_exception)
