@@ -92,7 +92,7 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 <!-- share button code -->
-<div class="fb-share-button" data-href="http://127.0.0.1:8000/beautician_details/{{beautician_detail.id}}" data-layout="button_count"></div>
+<div class="fb-share-button" data-href="http://127.0.0.1:8000/venue_details/{{venue_detail.id}}" data-layout="button_count"></div>
 <!-- FB Share-->
 </div><!--/product-information-->
 </form> <!--Add to cart form END-->
@@ -206,7 +206,7 @@
 
 
 {% include 'customers/login_popup.html' %}
-{% endfor %} <!--beautician_detail object-->
+{% endfor %} <!--venue_detail object-->
 
 <script type="text/javascript">
 $(document).ready(function() {

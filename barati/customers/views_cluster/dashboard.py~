@@ -37,7 +37,7 @@ class Dashboard(View):
          return
           
       def calculate_grand_total(self, user_id):
-         self.grand_total = 0
+         self.grand_total = None
          self.tax = 0 #Stores total payable tax amount in rs
          self.grand_total = m.Cart.objects.filter(user_id = user_id).aggregate(grand_total = Sum('total_price'))
          
@@ -46,9 +46,10 @@ class Dashboard(View):
          if cart_products is not None:
             for product in cart_products:
                self.tax = self.tax + self.get_tax(product.product_type)
-         
-         print self.tax
-         return float(self.grand_total['grand_total'])
+         if self.grand_total['grand_total']:
+            return float(self.grand_total['grand_total'])
+         else:
+            return None
          
       def get_context_data(self, **kwargs):
          
@@ -115,7 +116,7 @@ class Dashboard(View):
          context = {\
          'venue_types' : venue_types, 'card_types' : card_types, 'beautician_types' : beautician_types,\
          'gift_types' : gift_types, 'photo_video_types' : photo_video_types,\
-         'video_types' : video_types, 'bakery_types' : bakery_types, 'ghodi_bagghi_types' : ghodi_bagghi_types,\
+         'bakery_types' : bakery_types, 'ghodi_bagghi_types' : ghodi_bagghi_types,\
          'band_types' : band_types, 'mehendi_types' : mehendi_types, 'fireworks_types' : fireworks_types,\
          'tent_types' : tent_types, 'music_types' : music_types, 'budget' : budget, 'budget_balance' : budget_balance, \
          'grand_total' : grand_total, 'main_preferences' : main_preferences \

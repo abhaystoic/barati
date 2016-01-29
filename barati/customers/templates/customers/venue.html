@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Venue | Barati</title>
+    <title>Venues | Barati</title>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/prettyPhoto.css' %}" rel="stylesheet">
@@ -34,9 +34,10 @@
 			<div class="row">
 				
 				<div class="col-sm-9 padding-right">
-
-					{% include 'customers/featured_items.html'%}
-					
+					<div class="features_items"><!--features_items-->
+					<h2 class="title text-center">Venues</h2>
+						{% include 'customers/venue_list.html'%}
+					</div><!--features_items-->
 
 					{% include 'customers/recommended_items.html'%}					
 					
@@ -53,5 +54,59 @@
 	<script src="{% static 'js/price-range.js' %}"></script>
     <script src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/barati_base.js' %}"></script>
 </body>
 </html>
+<script type="text/javascript">
+	function add_to_cart(venue_seq_number)
+   	{
+          var add_to_cart_form_id = '#add_to_cart'+ String(venue_seq_number);
+          $(add_to_cart_form_id).submit(function() { // catch the form's submit event
+              $.ajax({
+                  url : this.action, 
+                  type : "POST",
+                  dataType: "json",
+                  data: $(this).serialize(), // get the form data
+                  context : this,
+                  success : function(json) {
+                    alert(json);
+                    if (json == "success_add_to_cart")
+                    {
+                      window.location = location.pathname; // redirect back to the calling page
+                    }
+                    },
+                  error : function(xhr,errmsg,err) {
+                    remove_spinner(); 
+                    alert(xhr.status + ": " + xhr.responseText);
+                    }
+              });
+              return false;
+          });
+    }
+
+    function add_to_wishlist(venue_seq_number)
+   	{
+          var add_to_wishlist_form_id = '#add_to_wishlist'+ String(venue_seq_number);
+          $(add_to_cart_form_id).submit(function() { // catch the form's submit event
+              $.ajax({
+                  url : this.action, 
+                  type : "POST",
+                  dataType: "json",
+                  data: $(this).serialize(), // get the form data
+                  context : this,
+                  success : function(json) {
+                    alert(json);
+                    if (json == "success_add_to_wish_list")
+                    {
+                      window.location = location.pathname; // redirect back to the calling page
+                    }
+                    },
+                  error : function(xhr,errmsg,err) {
+                    remove_spinner(); 
+                    alert(xhr.status + ": " + xhr.responseText);
+                    }
+              });
+              return false;
+          });
+    }	
+</script>

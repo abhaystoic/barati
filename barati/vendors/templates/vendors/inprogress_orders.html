@@ -1,0 +1,138 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Inprogress Orders | Barati</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/prettyPhoto.css' %}" rel="stylesheet">
+    <link href="{% static 'css/price-range.css' %}" rel="stylesheet">
+    <link href="{% static 'css/animate.css' %}" rel="stylesheet">
+	<link href="{% static 'css/main2.css' %}" rel="stylesheet">
+	<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="{% static 'js/html5shiv.js' %}"></script>
+    <script src="{% static 'js/respond.min.js' %}"></script>
+    <![endif]-->       
+    <link rel="shortcut icon" href="{% static 'images/ico/favicon.ico' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{% static 'images/ico/apple-touch-icon-144-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'images/ico/apple-touch-icon-114-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'images/ico/apple-touch-icon-72-precomposed.png' %}">
+    <link rel="apple-touch-icon-precomposed" href="{% static 'images/ico/apple-touch-icon-57-precomposed.png' %}">
+</head><!--/head-->
+
+<body>
+	{% include 'vendors/header.html'%}
+	{% include 'vendors/category_tab.html'%}
+	
+	<section>
+		<div class="container">
+			<div class="row">
+				
+				<div class="col-sm-9 padding-right">
+					
+					<div id="order_table">
+						<table>
+						<thead>
+						<tr>
+							<th>Order ID</th>
+							<th>Order By</th>
+							<th>Product ID</th>
+							<th>Product Type</th>
+							<th>Quantity</th>
+							<th>Total</th>
+							<th>PKG ID</th>
+							<th>Payment Done</th>
+							<th>Payment Method</th>
+							<th>Time of Order</th>
+							<th>Delivery Address</th>
+							<th>Update Order</th>
+						</tr>
+						</thead>
+						<tbody>
+						{% for order in orders %}	
+							<tr>
+									<td data-label="Order ID">{{order.order_id}}</td>
+									<td data-label="Order By">{{order.user}}</td>
+									<td data-label="Product ID">{{order.ref_id}}</td>
+									<td data-label="Product Type">{{order.product_type}}</td>
+									<td data-label="Quantity">{{order.quantity}}</td>
+									<td data-label="Total">{{order.total_price}}</td>
+									<td data-label="PKG ID">{{order.package_id}}</td>
+									<td data-label="Payment Done">{{order.payment_done}}</td>
+									<td data-label="Payment Method">{{order.payment_method}}</td>
+									<td data-label="Time of Order">{{order.timestamp}}</td>
+									<td data-label="Delivery Address">{{order.address.id|get_full_address}}</td>
+									<td>
+										<form action="/vendor/update_order_status/{{order.order_id}}" id="update_order_{{order.order_id}}" method="POST">
+											{% csrf_token %}
+											<select name="status" style="width:100%" required="true">
+												<option value="">-- Select status--</option>
+												<option value="pending">Pending</option>
+												<option value="active">Active</option>
+												<option value="completed">Completed</option>
+												{% if order.product_type == 'card' or order.product_type == 'gift' %}
+													<option value="ready for courier">Ready for courier</option>
+													<option value="handed over to courier">Handed over to courier</option>
+												{% endif %}
+											</select>
+											<button type="submit" class="btn btn-default">Update Order</button> <br/>
+										</form>
+									</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+						</table>
+					</div>
+
+					{% include 'vendors/recommended_items.html'%}					
+					
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	{% include 'vendors/footer.html'%}					
+  
+    <script src="{% static 'js/jquery.js' %}"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
+	<script src="{% static 'js/price-range.js' %}"></script>
+    <script src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script type="text/javascript">
+    	$(document).ready(function() {
+    		$('form').submit(function() { // catch the form's submit event
+              $.ajax({
+                  url : this.action, 
+                  type : "POST",
+                  dataType: "json",
+                  data: $(this).serialize(), // get the form data
+                  context : this,
+                  success : function(json) {
+                    alert(json);
+                    if (json == "success_update_status")
+                    {
+                      window.location = location.pathname; // redirect back to the calling page
+                    }
+                    },
+                  error : function(xhr,errmsg,err) {
+                    remove_spinner(); 
+                    alert(xhr.status + ": " + xhr.responseText);
+                    }
+              });
+              return false;
+          });
+    	});
+    </script>
+    <script type="text/javascript">
+    	$(document).ready(function() {
+    		$('#inprogress_orders_nav').removeClass().addClass('active');
+    	});
+    </script>
+</body>
+</html>

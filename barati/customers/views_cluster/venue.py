@@ -17,6 +17,7 @@ class Venue(Dashboard, View):
          self.wishlist_list = []
          self.filter_values = (10000, 60000)
          self.popular_price_filter_values = (18000, 40000)
+         self.venues = None
 
       def get_context_data(self, **kwargs):
          context = super(Venue, self).get_context_data(**kwargs)   
@@ -38,10 +39,10 @@ class Venue(Dashboard, View):
          return self.wishlist_list   
          
       def get_venues(self, request, **kwargs):
-
+         
          type = self.kwargs['type']
          confidence_check_filter = request.GET.get('confidence_check_filter')
-
+         self.venues = m.Venues.objects.filter(type_id=type)
          #Filter by barati confidence. Select only if confidence > 20%
          if confidence_check_filter == 'add_confidence':
             self.venues = self.venues.exclude(barati_confidence_perc__isnull=True)
@@ -87,18 +88,15 @@ class Venue(Dashboard, View):
          venues =  list(chain(venues_0_10, venues_10_20, venues_20_30, venues_30_40, venues_40_100))
          if venues:
             self.venues = venues
-
          return self.venues
       
       def get_price_filtered_venues(self, request, selected_filter_values, **kwargs):
          type = self.kwargs['type']
          query = "select id, name from venues where type_id = " + type
-         if gender == None:
+         if selected_filter_values is not None:
             self.venues = m.Venues.objects.filter(type_id=type, actual_price__range=selected_filter_values)#raw(query)
          else:
-            self.venues = m.Venues.objects.filter(\
-               type_id=type,\
-               actual_price__range=selected_filter_values)# use raw query
+            self.venues = m.Venues.objects.filter(type_id=type)#raw(query)
          return self.venues
       
       #@login_required(login_url='/auth/login/')

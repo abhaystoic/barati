@@ -56,7 +56,7 @@ class Venue_Details(Dashboard, View):
          subcategories = self.get_context_data()['venue_types']
          venue_details = self.get_venue_details()
          #Get tax 
-         tax = super(Venue, self).get_tax('venue')
+         tax = super(Venue_Details, self).get_tax('venue')
          context_dict = {'subcategories' : subcategories, 'venue_details' : venue_details, 'tax' : tax}
          context_dict.update({'user_review' : self.get_user_review(request)})
          context_dict.update({'all_reviews' : self.get_all_reviews()})

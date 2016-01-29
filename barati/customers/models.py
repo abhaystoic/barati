@@ -13,6 +13,12 @@ class Religion(models.Model):
 
 class Address(models.Model):
    id = models.AutoField(primary_key=True)
+   TYPE_CHOICES = (
+      ('delivery', 'delivery'),
+      ('vendor', 'vendor'),
+      ('customer', 'customer'),
+   )
+   type = models.CharField(choices=TYPE_CHOICES, max_length=10)
    building_number = models.CharField(max_length=50, blank=True, null=True)
    street = models.CharField(max_length=100, blank=True, null=True)
    locality = models.CharField(max_length=50, blank=True, null=True)
@@ -27,12 +33,20 @@ class Address(models.Model):
       managed = True
       db_table = 'address'
    def __unicode__(self):
-      return unicode(self.locality)
+      return_string = (str(self.building_number) if self.building_number != None else '') + ' ' + \
+         (str(self.street) if self.street != None else '') + ' ' + (str(self.locality) if self.locality != None else '')
+      return unicode(return_string)
      
 
 class Users(models.Model):
    id = models.AutoField(primary_key=True)
    username = models.CharField(max_length=50, unique=True)
+   ROLE_CHOICES = (
+      ('customer', 'customer'),
+      ('vendor', 'vendor'),
+      ('admin', 'admin'),
+   )
+   role = models.CharField(choices=ROLE_CHOICES, max_length=10)
    first_name = models.CharField(max_length=50, blank=True, null=True)
    middle_name = models.CharField(max_length=100, blank=True, null=True)
    last_name = models.CharField(max_length=50, blank=True, null=True)
@@ -91,6 +105,7 @@ class Budget(models.Model):
       
 class Vendors(models.Model):
    id = models.AutoField(primary_key=True)
+   user = models.ForeignKey(Users)
    name = models.CharField(max_length=100, unique=True)
    address = models.ForeignKey(Address, blank=True, null=True)
    official_email = models.EmailField(max_length=100, blank=True, null=True)
@@ -193,7 +208,7 @@ class Bakery_Types(models.Model):
       return unicode(self.name)
 
 class Ghodi_Bagghi_Types(models.Model):
-   id = models.AutoField(primary_key=True)   
+   id = models.AutoField(primary_key=True)
    name = models.CharField(max_length=50)
    
    class Meta:
@@ -265,11 +280,31 @@ class Venues(models.Model):
    short_description = models.CharField(max_length=100)
    long_description = models.CharField(max_length=800)
    max_capacity = models.IntegerField()
-   accomodation_available = models.BooleanField()
+   accomodation_available = models.NullBooleanField()
    actual_price = models.IntegerField()
    discount_perc = models.FloatField(blank=True, null=True)
    discount_rs = models.FloatField(blank=True, null=True)
    discounted_price = models.FloatField(blank=True, null=True)
+   per_plate_cost_veg = models.FloatField(blank=True, null=True)
+   per_plate_cost_nonveg = models.FloatField(blank=True, null=True)
+   food_type = models.CharField(max_length=800, blank=True, null=True)
+   outside_catering_allowed = models.NullBooleanField()
+   alcohol_serving = models.NullBooleanField()
+   outside_decoration_allowed = models.NullBooleanField()
+   function_types = models.CharField(max_length=800, blank=True, null=True)
+   parking_capacity = models.IntegerField(blank=True, null=True)
+   number_of_rooms = models.IntegerField(blank=True, null=True)
+   per_room_per_day_cost = models.FloatField(blank=True, null=True)
+   valet_parking = models.NullBooleanField()
+   generator_details = models.CharField(max_length=800, blank=True, null=True)
+   audio_video_equipment_details = models.CharField(max_length=800, blank=True, null=True)
+   wheelchair_accessible_details = models.CharField(max_length=800, blank=True, null=True)
+   stage_details = models.CharField(max_length=800, blank=True, null=True)
+   cutlery_and_crockery_details = models.CharField(max_length=800, blank=True, null=True)
+   guest_rooms_details = models.CharField(max_length=800, blank=True, null=True)
+   kitchen_equipment_details = models.CharField(max_length=800, blank=True, null=True)
+   service_staff_details = models.CharField(max_length=800, blank=True, null=True)
+   alcohol_serving = models.FloatField(blank=True, null=True)
    timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
    
    class Meta:
@@ -410,6 +445,7 @@ class Product_Pictures(models.Model):
 class Orders(models.Model):
    order_id = models.AutoField(primary_key=True)
    user = models.ForeignKey(Users, blank=True, null=True)
+   vendor = models.ForeignKey(Vendors, blank=True, null=True)
    ref_id = models.CharField(max_length=100)
    quantity = models.IntegerField(blank=True, null=True)
    total_price = models.FloatField(blank=True, null=True)
@@ -420,6 +456,8 @@ class Orders(models.Model):
    payment_method = models.CharField(max_length=100, blank=True, null=True)
    product_type = models.CharField(max_length=100, blank=True, null=True)
    timestamp = models.DateTimeField(auto_now_add=True)
+   last_status_time = models.DateTimeField(blank=True, null=True)
+   comment = models.CharField(max_length=500, blank=True, null=True)
    address = models.ForeignKey(Address, blank=True, null=True)
    
    class Meta: 
