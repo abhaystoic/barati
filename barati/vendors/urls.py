@@ -22,4 +22,5 @@ urlpatterns = patterns('',
    url(r'^cancel_order/(?P<order_id>[-\w]+)$', login_required(Cancel_Order.as_view()), name = 'cancel_order'),
    url(r'^update_order_status/(?P<order_id>[-\w]+)$', login_required(Update_Order_Status.as_view()), name = 'update_order_status'),
    url(r'^list_product/$', login_required(List_Product.as_view()), name = 'list_product'),
+   url(r'^submit_product/$', login_required(Submit_Product.as_view()), name = 'submit_product'),
    )

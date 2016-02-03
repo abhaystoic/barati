@@ -8,7 +8,7 @@
 <meta property="og:type"          content="website" />
 <meta property="og:title"         content="Barati" />
 <meta property="og:description"   content="Ab shadi easy hai" />
-<meta property="og:image"         content="{% static '' %}{{beautician_detail.ref_id|get_pic_path}}" />
+<meta property="og:image"         content="{% static 'images/' %}{{beautician_detail.ref_id|get_pic_path}}" />
 </head>
 <div class="col-sm-5">
 <div class="view-product">
@@ -19,22 +19,23 @@
 	
 	  <!-- Wrapper for slides -->
 	    <div class="carousel-inner">
+	    	{% with beautician_detail.ref_id|get_other_pics_path as other_pics %}
 			<div class="item active">
-			  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
-			  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
-			  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
+			  {% for pic in other_pics|slice:':3' %}
+			  	<a href=""><img src="{% static 'images/' %}{{pic.picture}}" width="100" height="50" alt=""></a>
+			  {% endfor %}
 			</div>
 			<div class="item">
-			  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
-			  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
-			  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
+			  {% for pic in other_pics|slice:'3:6' %}
+			  	<a href=""><img src="{% static 'images/' %}{{pic.picture}}" width="100" height="50" alt=""></a>
+			  {% endfor %}
 			</div>
 			<div class="item">
-			  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
-			  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
-			  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
+			  {% for pic in other_pics|slice:'6:9' %}
+			  	<a href=""><img src="{% static 'images/' %}{{pic.picture}}" width="100" height="50" alt=""></a>
+			  {% endfor %}
 			</div>
-			
+			{% endwith %}
 		</div>
 
 	  <!-- Controls -->
@@ -63,6 +64,7 @@
 <br>
 <span>
 	<span>Rs {{beautician_detail.actual_price|add_tax:tax}}</span>
+	<span style="font-size:10px;color:black;">(Inc. of all taxes)</span>
 	
 	{% if request.user.username %}
 	<button type="submit" class="btn btn-default cart">
@@ -104,16 +106,17 @@
 <div class="category-tab shop-details-tab"><!--category-tab-->
 	<div class="col-sm-12">
 		<ul class="nav nav-tabs">
-			<li><a href="#details" data-toggle="tab">Details</a></li>
+			<li class="active"><a href="#details" data-toggle="tab">Details</a></li>
 			<li><a href="#companyprofile" data-toggle="tab"> Vendor Profile</a></li>
 			{% if beautician_detail.home_visit_charge != 'NA' and beautician_detail.home_visit_charge %}
 				<li><a href="#homevisitpolicy" data-toggle="tab">Home Visit Policy</a></li>
 			{% endif %}
-			<li class="active"><a href="#reviews" data-toggle="tab">Reviews {% if all_reviews %}({{all_reviews.count}}){% endif %}</a></li>
+			<li><a href="#reviews" data-toggle="tab">Reviews {% if all_reviews %}({{all_reviews.count}}){% endif %}</a></li>
+			<li><a href="#gallery" data-toggle="tab"> Gallery</a></li>
 		</ul>
 	</div>
 	<div class="tab-content">
-		<div class="tab-pane fade" id="details" >
+		<div class="tab-pane fade active in" id="details" >
 			<p>{{beautician_detail.long_description}}</p>
 			<p><b>Services :</b>{{beautician_detail.services}}</p>
 			{% if beautician_detail.gender == 'female' %}
@@ -144,7 +147,7 @@
 		<div class="tab-pane fade" id="homevisitpolicy" >
 			<p>{{beautician_detail.home_visit_policy}}</p>
 		</div>
-		<div class="tab-pane fade active in" id="reviews" >
+		<div class="tab-pane fade" id="reviews" >
 			<div class="col-sm-12">
 				{% if request.user.username %}
 					{% if user_review %}
@@ -223,6 +226,10 @@
 			</div>
 		</div>
 		
+	</div>
+
+	<div class="tab-pane fade" id="gallery" >
+			<p>Gallery</p>
 	</div>
 </div><!--/category-tab-->
 

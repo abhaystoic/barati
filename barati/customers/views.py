@@ -62,12 +62,25 @@ def get_item_for_my_orders(dictionary, key):
       print "Line number : " + str(sys.exc_traceback.tb_lineno)
       return "not_found"
 
-#Filter for cart
+#Get the path of the main pic to be displayed
 @register.filter(name = 'get_pic_path') 
 def get_pic_path(key):
    try:
-      value = m.Product_Pictures.objects.get(ref_id = key).picture_path #Using '.get' To suppress key error (just in case)
-      return value
+      value = m.Product_Pictures.objects.get(name=(str(key)+'_1')).picture #Using '.get' To suppress key error (just in case)
+      return ('images/' + str(value))
+   except Exception as general_exception:
+      print str(general_exception)
+      print "Line number : " + str(sys.exc_traceback.tb_lineno)
+      return "not_found"
+
+#Get the paths of the other images of the product
+@register.filter(name = 'get_other_pics_path') 
+def get_other_pics_path(key):
+   try:
+      other_pic_list = []
+      other_pic_list.extend(m.Product_Pictures.objects.filter(name__contains=(str(key)))) #Using '.get' To suppress key error (just in case)
+      del other_pic_list[0] #Delete the main product pic and display only the other pics
+      return other_pic_list
    except Exception as general_exception:
       print str(general_exception)
       print "Line number : " + str(sys.exc_traceback.tb_lineno)

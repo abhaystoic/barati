@@ -38,7 +38,6 @@ class Beautician(Dashboard, View):
          return self.wishlist_list   
          
       def get_beauticians(self, request, **kwargs):
-
          type = self.kwargs['type']
          gender = request.GET.get('for')
          home_visit = request.GET.get('home_visit')
@@ -103,7 +102,6 @@ class Beautician(Dashboard, View):
          beauticians =  list(chain(beauticians_0_10, beauticians_10_20, beauticians_20_30, beauticians_30_40, beauticians_40_100))
          if beauticians:
             self.beauticians = beauticians
-
          return self.beauticians
       
       def get_price_filtered_beauticians(self, request, selected_filter_values, **kwargs):

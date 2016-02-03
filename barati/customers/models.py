@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator #For phone number validation
+import os
 
 class Religion(models.Model):
    id = models.AutoField(primary_key=True)
@@ -272,8 +273,8 @@ class Videos(models.Model):
       
 class Venues(models.Model):
    id = models.AutoField(primary_key=True)
-   ref_id = models.CharField(max_length=100)
-   vendor_id = models.ForeignKey(Vendors)
+   ref_id = models.CharField(max_length=100, unique=True)
+   vendor = models.ForeignKey(Vendors)
    name = models.CharField(max_length=100)
    type = models.ForeignKey(Venue_Types, blank=True, null=True)
    address = models.ForeignKey(Address, blank=True, null=True)
@@ -281,30 +282,32 @@ class Venues(models.Model):
    long_description = models.CharField(max_length=800)
    max_capacity = models.IntegerField()
    accomodation_available = models.NullBooleanField()
-   actual_price = models.IntegerField()
+   rooms_details = models.CharField(max_length=800, blank=True, null=True)
+   number_of_rooms = models.IntegerField(blank=True, null=True)
+   per_room_per_day_cost = models.FloatField(blank=True, null=True)
+   actual_price = models.FloatField()
    discount_perc = models.FloatField(blank=True, null=True)
    discount_rs = models.FloatField(blank=True, null=True)
    discounted_price = models.FloatField(blank=True, null=True)
+   food_types = models.CharField(max_length=800, blank=True, null=True)
    per_plate_cost_veg = models.FloatField(blank=True, null=True)
    per_plate_cost_nonveg = models.FloatField(blank=True, null=True)
-   food_type = models.CharField(max_length=800, blank=True, null=True)
    outside_catering_allowed = models.NullBooleanField()
    alcohol_serving = models.NullBooleanField()
    outside_decoration_allowed = models.NullBooleanField()
    function_types = models.CharField(max_length=800, blank=True, null=True)
-   parking_capacity = models.IntegerField(blank=True, null=True)
-   number_of_rooms = models.IntegerField(blank=True, null=True)
-   per_room_per_day_cost = models.FloatField(blank=True, null=True)
    valet_parking = models.NullBooleanField()
+   parking_capacity_4_wheelers = models.IntegerField(blank=True, null=True)
+   parking_capacity_2_wheelers = models.IntegerField(blank=True, null=True)
+   generator_available = models.NullBooleanField()
+   generator_cost_type = models.CharField(max_length=50, blank=True, null=True) #included or excluded
+   generator_cost = models.FloatField(blank=True, null=True)
    generator_details = models.CharField(max_length=800, blank=True, null=True)
    audio_video_equipment_details = models.CharField(max_length=800, blank=True, null=True)
-   wheelchair_accessible_details = models.CharField(max_length=800, blank=True, null=True)
+   wheelchair_accessibility = models.CharField(max_length=50, blank=True, null=True)
    stage_details = models.CharField(max_length=800, blank=True, null=True)
-   cutlery_and_crockery_details = models.CharField(max_length=800, blank=True, null=True)
-   guest_rooms_details = models.CharField(max_length=800, blank=True, null=True)
-   kitchen_equipment_details = models.CharField(max_length=800, blank=True, null=True)
+   cutlery_and_crockery_details = models.CharField(max_length=800, blank=True, null=True)   
    service_staff_details = models.CharField(max_length=800, blank=True, null=True)
-   alcohol_serving = models.FloatField(blank=True, null=True)
    timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
    
    class Meta:
@@ -315,15 +318,16 @@ class Venues(models.Model):
 
 class Cards(models.Model):
    id = models.AutoField(primary_key=True)
-   ref_id = models.CharField(max_length=100)
-   vendor_id = models.ForeignKey(Vendors)
+   ref_id = models.CharField(max_length=100, unique=True)
+   vendor = models.ForeignKey(Vendors)
    name = models.CharField(max_length=100)
+   address = models.ForeignKey(Address, blank=True, null=True)
    type = models.ForeignKey(Card_Types, blank=True, null=True)
    short_description = models.CharField(max_length=100)
    long_description = models.CharField(max_length=800)
    min_numbers = models.IntegerField()
    max_numbers = models.IntegerField()
-   actual_price = models.IntegerField()
+   actual_price = models.FloatField()
    printing_price = models.FloatField(blank=True, null=True)
    discount_perc = models.FloatField(blank=True, null=True)
    discount_rs = models.FloatField(blank=True, null=True)
@@ -384,9 +388,10 @@ class Card_Deities(models.Model):
 
 class Beauticians(models.Model):
    id = models.AutoField(primary_key=True)
-   ref_id = models.CharField(max_length=100)
-   vendor_id = models.ForeignKey(Vendors)
+   ref_id = models.CharField(max_length=100, unique=True)
+   vendor = models.ForeignKey(Vendors)
    name = models.CharField(max_length=100)
+   address = models.ForeignKey(Address, blank=True, null=True)
    type = models.ForeignKey(Beautician_Types, blank=True, null=True)
    GENDER_CHOICES = (
       ('male', 'male'),
@@ -397,13 +402,12 @@ class Beauticians(models.Model):
    short_description = models.CharField(max_length=100, blank=True, null=True)
    long_description = models.CharField(max_length=800, blank=True, null=True)
    services = models.CharField(max_length=800, blank=True, null=True)
-   actual_price = models.IntegerField()
+   actual_price = models.FloatField()
    discount_perc = models.FloatField(blank=True, null=True)
    discount_rs = models.FloatField(blank=True, null=True)
    discounted_price = models.FloatField(blank=True, null=True)
-   unisex = models.NullBooleanField(blank=True)
    female_person_available = models.NullBooleanField(blank=True)
-   home_visit_charge = models.IntegerField(blank=True, null=True)
+   home_visit_charge = models.FloatField(blank=True, null=True)
    home_visit_policy = models.CharField(max_length=800, blank=True, null=True)
    barati_confidence_perc = models.FloatField(blank=True, null=True)
    timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
@@ -429,13 +433,16 @@ class Cart(models.Model):
    def __unicode__(self):
       return unicode(self.ref_id)
 
+def get_image_path(instance, filename):
+   return os.path.join(str(instance.picture_path), filename)
+
 #To store paths of the pictures on the server      
 class Product_Pictures(models.Model):
    id = models.AutoField(primary_key=True)
-   name = models.CharField(max_length=100, blank=True, null=True)
+   name = models.CharField(max_length=100, blank=True, null=True, unique=True)
    ref_id = models.CharField(max_length=100, blank=True, null=True)
    picture_path = models.CharField(max_length=200, blank=True, null=True)
-   
+   picture = models.FileField(upload_to=get_image_path, blank=True, null=True)
    class Meta: 
       managed = True
       db_table = 'product_pictures'

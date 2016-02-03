@@ -34,12 +34,17 @@
 			<div class="row">
 				
 				<div class="col-sm-9 padding-right">
-
-				<div>
+				<form action="/vendor/submit_product/" method="POST"  id="submit_product" enctype="multipart/form-data">
+					{% csrf_token %}
 					<table>
+						{% if message %}
+							<tr>
+							<td>{{message}}</td>
+							</tr>
+						{% endif %}
 						<tr>
 							<td>Product ID</td>
-							<td><input type="text" name="product_id" required="true"/> </td>
+							<td><input type="text" name="product_id" /> </td>
 						</tr>
 						<tr>
 							<td>Product Type</td>
@@ -52,35 +57,126 @@
 								</select>
 							</td>
 						</tr>
+
+						<!--Subtype selection starts-->
+						<tr style="display:none" class="venue">
+							<td>Product Subtype</td>
+							<td>
+								<select name="product_venue_type" id="product_venue_type"  style="width:50%" onchange="populate_form()">
+									<option value="">--Select product subtype--</option>
+
+									{% for subtype in venue_subtypes %}
+										<option value="{{subtype}}">{{subtype}}</option>
+									{% endfor %}
+								</select>
+							</td>
+						</tr>
+						<tr style="display:none" class="card">
+							<td>Product Subtype</td>
+							<td>
+								<select name="product_card_type" id="product_card_type"  style="width:50%" onchange="populate_form()">
+									<option value="">--Select product subtype--</option>
+									{% for subtype in card_subtypes %}
+										<option value="{{subtype}}">{{subtype}}</option>
+									{% endfor %}
+								</select>
+							</td>
+						</tr>
+						
+						<tr style="display:none" class="beautician">
+							<td>Product Subtype</td>
+							<td>
+								<select name="product_beautician_type" id="product_beautician_type"  style="width:50%" onchange="populate_form()">
+									<option value="">--Select product subtype--</option>
+
+									{% for subtype in beautician_subtypes %}
+										<option value="{{subtype}}">{{subtype}}</option>
+									{% endfor %}
+								</select>
+							</td>
+						</tr>
+						<!--Subtype selection ends-->
+
 						<tr>
 							<td>Product Name</td>
-							<td><input type="text" name="product_name" required="true"/> </td>
+							<td><input type="text" name="product_name" /> </td>
+						</tr>
+						<tr>
+							<td>Actual Price</td>
+							<td><input type="text" name="product_actual_price" /> </td>
 						</tr>
 						<tr>
 							<td>Short Description</td>
-							<td><input type="text" name="product_short_description" required="true"/> </td>
+							<td><input type="text" name="product_short_description" /> </td>
 						</tr>
 						<tr>
 							<td>Long Description</td>
 							<td><input type="text" name="product_long_description" /> </td>
 						</tr>
+						<tr><td colspan="2">Address (Card Pickup/Parlour/Venue address)</td></tr>
+						<tr>
+							<td>Building Number</td>
+							<td><input type="text" name="product_building_number" /></td>
+						</tr>
+						<tr >
+							<td>Street</td>
+							<td><input type="text" name="product_street" /></td>
+						</tr>
+						<tr >
+							<td>Locality</td>
+							<td><input type="text" name="product_locality" /></td>
+						</tr>
+						<tr >
+							<td>Landmark</td>
+							<td><input type="text" name="product_landmark" /></td>
+						</tr>
+						<tr >
+							<td>City</td>
+							<td><input type="text" name="product_city" /></td>
+						</tr>
+						<tr  >
+							<td>State</td>
+							<td><input type="text" name="product_state" /></td>
+						</tr>
+						<tr >
+							<td>Country</td>
+							<td><input type="text" name="product_country" /></td>
+						</tr>
+						<tr >
+							<td>Zipcode</td>
+							<td><input type="text" name="product_zipcode" required="true" /></td>
+						</tr>
+
+						<!--Venue details starts-->
 						<tr style="display:none" class="venue">
 							<td>Maximum Capacity</td>
-							<td><input type="text" name="product_max_capacity" required="true"/> </td>
+							<td><input type="text" name="product_max_capacity" /> </td>
 						</tr>
 						<tr style="display:none" class="venue">
 							<td>Accomodation Available?</td>
 							<td>
-								<select name="accomodation_available" style="width:50%">
+								<select name="product_accomodation_available" style="width:50%">
 									<option value="">--Select--</option>
 									<option value="yes">Yes</option>
 									<option value="no">No</option>
 								</select>
 							</td>
 						</tr>
-						<tr>
-							<td>Actual Price</td>
-							<td><input type="text" name="product_actual_price" required="true"/> </td>
+						<tr style="display:none" class="venue">
+							<td>Number of rooms</td>
+							<td><input type="text" name="product_number_of_rooms" /> </td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Per room per day cost (excluded from the actual price)</td>
+							<td><input type="text" name="per_room_per_day_cost" /> </td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Room Details</td>
+							<td><input type="text" name="product_room_details" /> </td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Food Types</td>
+							<td><input type="text" name="product_food_types" /> </td>
 						</tr>
 						<tr style="display:none" class="venue">
 							<td>Per Plate Cost (Veg)</td>
@@ -90,16 +186,192 @@
 							<td>Per Plate Cost (Non-Veg)</td>
 							<td><input type="text" name="product_per_plate_cost_nonveg" /> </td>
 						</tr>
+						<tr style="display:none" class="venue">
+							<td>Outside Catering Allowed</td>
+							<td>
+								<select name="product_outside_catering_allowed" style="width:50%">
+									<option value="">--Select--</option>
+									<option value="yes">Yes</option>
+									<option value="no">No</option>
+								</select>
+							</td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Alcohol Serving</td>
+							<td>
+								<select name="product_alcohol_serving" style="width:50%">
+									<option value="">--Select--</option>
+									<option value="yes">Yes</option>
+									<option value="no">No</option>
+								</select>
+							</td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Outside Decoration Allowed</td>
+							<td>
+								<select name="product_outside_decoration_allowed" style="width:50%">
+									<option value="">--Select--</option>
+									<option value="yes">Yes</option>
+									<option value="no">No</option>
+								</select>
+							</td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Function Types</td>
+							<td><input type="text" name="product_function_types" /> </td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Valet Parking</td>
+							<td>
+								<select name="product_valet_parking" style="width:50%">
+									<option value="">--Select--</option>
+									<option value="yes">Yes</option>
+									<option value="no">No</option>
+								</select>
+							</td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Parking Capacity(4 Wheelers)</td>
+							<td><input type="text" name="product_parking_capacity_4_wheelers" /> </td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Parking Capacity(2 Wheelers)</td>
+							<td><input type="text" name="product_parking_capacity_2_wheelers" /> </td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Generator Avaialable?</td>
+							<td>
+								<select name="product_generator_available" style="width:50%">
+									<option value="">--Select--</option>
+									<option value="yes">Yes</option>
+									<option value="no">No</option>
+								</select>
+							</td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Generator Cost Type</td>
+							<td>
+								<select name="product_generator_cost_type" style="width:50%">
+									<option value="">--Select--</option>
+									<option value="included">Included</option>
+									<option value="excluded">Separate</option>
+								</select>
+							</td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Generator Cost (If Separate)</td>
+							<td><input type="text" name="product_generator_cost" /> </td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Generator Details</td>
+							<td><input type="text" name="product_generator_details" /> </td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Available Audio/Video equipments details</td>
+							<td><input type="text" name="product_audio_video_equipment_details" /> </td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Wheel Chair Accessibility</td>
+							<td>
+								<select name="product_wheel_chair_accessibility" style="width:50%">
+									<option value="">--Select--</option>
+									<option value="partially">Partially</option>
+									<option value="fully">Fully</option>
+									<option value="no">No</option>
+								</select>
+							</td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Stage Details (Mention dimensions, material, temporary/permanent, location etc)</td>
+							<td><input type="text" name="product_stage_details" /></td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Cutlery and Crockery Details (For eg. Number of plates, tables, hot vessels, tandoor etc)</td>
+							<td><input type="text" name="product_cutlery_and_crockery_details" /></td>
+						</tr>
+						<tr style="display:none" class="venue">
+							<td>Service Staff Details (For eg. Number of cooks, waiters etc)</td>
+							<td><input type="text" name="product_service_staff_details" /></td>
+						</tr>
+						<!--Venue details ends-->
+
+						<!--Card details starts-->
 						<tr style="display:none" class="card">
-							<td>ssss</td>
-							<td>aaaa</td>
+							<td>Printing price (per card)</td>
+							<td><input type="text" name="product_printing_price" /></td>
+						</tr>
+						<tr style="display:none" class="card">
+							<td>Minimum cards that should be ordered</td>
+							<td><input type="text" name="product_card_min_numbers" /></td>
+						</tr>
+						<tr style="display:none" class="card">
+							<td>Maximum cards that can be ordered</td>
+							<td><input type="text" name="product_card_max_numbers" /></td>
+						</tr>
+						<tr style="display:none" class="card">
+							<td>Length</td>
+							<td><input type="text" name="product_card_length" /></td>
+						</tr>
+						<tr style="display:none" class="card">
+							<td>Width</td>
+							<td><input type="text" name="product_card_width" /></td>
+						</tr>
+						<tr style="display:none" class="card">
+							<td>Weight</td>
+							<td><input type="text" name="product_card_weight" /></td>
+						</tr>
+						<!--Card details Ends-->
+
+
+						<!--Beautician details starts-->
+						<tr style="display:none" class="beautician">
+							<td>For(Gender)</td>
+							<td>
+								<select name="product_beautician_gender" style="width:50%">
+									<option value="">--Select--</option>
+									<option value="male">Male</option>
+									<option value="female">Female</option>
+									<option value="neutral">Unisex</option>
+								</select>
+							</td>
 						</tr>
 						<tr style="display:none" class="beautician">
-							<td>qqqqqq</td>
-							<td>llllll</td>
+							<td>Services (separate by comma)</td>
+							<td><input type="text" name="product_beautician_services" /></td>
+						</tr>
+						<tr style="display:none" class="beautician">
+							<td>Female person available</td>
+							<td>
+								<select name="product_female_person_available" style="width:50%">
+									<option value="">--Select--</option>
+									<option value="true">Yes</option>
+									<option value="no">No</option>
+								</select>
+							</td>
+						</tr>
+						<tr style="display:none" class="beautician">
+							<td>Home visit charges (leave blank if not available for home visit)</td>
+							<td><input type="text" name="product_beautician_home_visit_charge" /></td>
+						</tr>
+						<tr style="display:none" class="beautician">
+							<td>Home visit Policy (leave blank if not available for home visit)</td>
+							<td><input type="text" name="product_beautician_home_visit_policy" /></td>
+						</tr>
+						<!--Beautician details Ends-->
+
+						<tr>
+							<td>Upload product's main pictures (minimum=1 & maximum=5)</td>
+							<td><input type="file" name="product_photos" multiple /></td>
+						</tr>
+						<tr>
+							<td>Upload more pictures (these will be shown in the description part of the product)</td>
+							<td><input type="file" name="product_more_photos" multiple /></td>
+						</tr>
+						<tr>
+							<td colspan="2"><button class="btn btn-default" type="submit" name="submit">Submit</button></td>
 						</tr>
 					</table>
-				</div>
+				</form>
 
 					{% include 'vendors/recommended_items.html'%}					
 					
@@ -116,31 +388,31 @@
 	<script src="{% static 'js/price-range.js' %}"></script>
     <script src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
-    <script type="text/javascript">
+    <!--<script type="text/javascript">
     	$(document).ready(function() {
     		$('form').submit(function() { // catch the form's submit event
               $.ajax({
                   url : this.action, 
                   type : "POST",
+                  enctype: "multipart/form-data",
                   dataType: "json",
                   data: $(this).serialize(), // get the form data
                   context : this,
                   success : function(json) {
                     alert(json);
-                    if (json == "success_update_status")
+                    if (json == "success_submit_product")
                     {
-                      window.location = location.pathname; // redirect back to the calling page
+                      //window.location = location.pathname; // redirect back to the calling page
                     }
                     },
                   error : function(xhr,errmsg,err) {
-                    remove_spinner(); 
                     alert(xhr.status + ": " + xhr.responseText);
                     }
               });
               return false;
           });
     	});
-    </script>
+    </script>-->
     <script type="text/javascript">
     	$(document).ready(function() {
     		$('#list_product_nav').removeClass().addClass('active');

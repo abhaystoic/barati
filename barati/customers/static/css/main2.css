@@ -657,7 +657,7 @@ ul.sub-menu {
 .category-products {
   border: 1px solid #F7F7F0;
   margin-bottom: 35px;
-  padding-bottom: 20px;
+  padding-bottom: 40px;
   padding-top: 15px;
 }
 .left-sidebar h2, .brands_products h2 {
@@ -793,7 +793,7 @@ h2.title:before{
 
 
 .price-range{
-  margin-top:30px;
+  margin-top:90px;
 }
 
 .well {
