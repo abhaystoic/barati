@@ -342,7 +342,7 @@ a#pop:hover, {
     bottom: 0;
     z-index:1;
     display:none;
-    background:#fff url('../images/home/budget.png') no-repeat;
+    /*background:#fff url('../images/home/budget.png') no-repeat;*/
 }
 .widget-content-header{
    height: 30px;

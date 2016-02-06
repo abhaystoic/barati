@@ -68,8 +68,8 @@ class Submit_Product(View):
          #Catching the venue details
          if product_type == 'venue':
             new_venue = m.Venues()
-            ref_id_prefix = 'VEN_'
-            new_venue.ref_id = ref_id_prefix + ref_id
+            #ref_id_prefix = 'VEN_'
+            new_venue.ref_id = ref_id #ref_id_prefix + ref_id
             new_venue.vendor = vendor
             new_venue.name = name
             new_venue.actual_price = actual_price
@@ -106,8 +106,8 @@ class Submit_Product(View):
          #Catching the card details
          if product_type == 'card':
             new_card = m.Cards()
-            ref_id_prefix = 'CRD_'
-            new_card.ref_id = ref_id_prefix + ref_id
+            #ref_id_prefix = 'CRD_'
+            new_card.ref_id = ref_id #ref_id_prefix + ref_id
             new_card.vendor = vendor
             new_card.name = name
             new_card.actual_price = actual_price
@@ -126,8 +126,8 @@ class Submit_Product(View):
          #Catching the beautician details
          if product_type == 'beautician':
             new_beautician = m.Beauticians()
-            ref_id_prefix = 'BTN_'
-            new_beautician.ref_id = ref_id_prefix + ref_id
+            #ref_id_prefix = 'BTN_'
+            new_beautician.ref_id = ref_id #ref_id_prefix + ref_id
             new_beautician.vendor = vendor
             new_beautician.name = name
             new_beautician.actual_price = actual_price

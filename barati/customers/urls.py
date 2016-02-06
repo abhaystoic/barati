@@ -27,7 +27,7 @@ urlpatterns = patterns('',
    url(r'^sign_up/$', Sign_Up.as_view(), name = 'sign_up'),
    url(r'^product_details/$', Product_Details, name = 'product_details'),
    url(r'^budget/$', login_required(Budget.as_view()), name = 'budget'),
-   url(r'^venue/(?P<type>[-\w]+)$', Venue.as_view(), name = 'venue'),
+   url(r'^venues/(?P<type>[-\w]+)$', Venue.as_view(), name = 'venue'),
    url(r'^card/(?P<type>[-\w]+)$', Card.as_view(), name = 'card'),
    url(r'^beauticians/(?P<type>[-\w]+)$', Beautician.as_view(), name = 'beautician'),
 

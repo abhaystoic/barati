@@ -83,7 +83,7 @@
 			</div>
 		</div><!--/header-middle-->
 		
-<div class="main_filters">
+<div class="main_filters" style="margin-left: 90px;">
 	<form id="main_preferences" name="main_preferences" action="/save_main_preferences/" method="post" > 
 		{% csrf_token %}
 		<input type="text" class="date_picker searchTerm" title="Date of Marriage/Function" id="inputField" name="main_preference_date" autocomplete="off"
@@ -141,6 +141,7 @@
 		<button type="submit" style="margin-top:-2px;height:30px;visibility:hidden;" id="go_btn" class=" btn btn-default get">GO</button>
 	</form>
 </div>
+<br>
 		<div class="container_drop_menu">
 			<div class="main">
 				<nav class="" id="cbp-hsmenu-wrapper">
@@ -151,7 +152,7 @@
 								<ul class="cbp-hssubmenu">
                                     	{% if venue_types %}
                                     	{% for type in venue_types %}
-                                        	<li><a href="/venue/{{type.id}}"><img src="{% static 'images/home/venue1.jpg' %}" alt="img01"/><span>{{type.name}}</span></a></li>
+                                        	<li><a href="/venues/{{type.id}}"><img src="{% static 'images/home/venue1.jpg' %}" alt="img01"/><span>{{type.name}}</span></a></li>
                                         {% endfor %}
                                         {% endif %}
 								</ul>

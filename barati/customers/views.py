@@ -66,7 +66,7 @@ def get_item_for_my_orders(dictionary, key):
 @register.filter(name = 'get_pic_path') 
 def get_pic_path(key):
    try:
-      value = m.Product_Pictures.objects.get(name=(str(key)+'_1')).picture #Using '.get' To suppress key error (just in case)
+      value = m.Product_Pictures.objects.get(name__startswith=(str(key)+'_1')).picture #Using '.get' To suppress key error (just in case)
       return ('images/' + str(value))
    except Exception as general_exception:
       print str(general_exception)
@@ -105,7 +105,7 @@ def get_quantity(key, request):
 @register.filter(name = 'get_beautician')
 def get_beautician(ref_id):
    try:
-      vendor_id = m.Beauticians.objects.get(ref_id=ref_id).vendor_id_id
+      vendor_id = m.Beauticians.objects.get(ref_id=ref_id).vendor_id
       beautician = m.Vendors.objects.get(id=vendor_id)
       beautician_name = beautician.name
       locality = m.Address.objects.get(id=beautician.address_id).locality

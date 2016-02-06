@@ -26,7 +26,7 @@
 	background: #fff;
 	position: relative;
 	z-index: 1;
-	background-color: #fff;/*#40403E;*/
+	background-color: #40403E;
 }
 
 /* Main menu style */
@@ -48,7 +48,7 @@
 
 /* Main menu link style */
 .cbp-hsmenu > li > a {
-	color: #000;/*color of the text in the dropdown menu*/
+	color: #fff;/*color of the text in the dropdown menu*/
 	font-size: 0.8em;
 	line-height: 2.5em;
 	display: inline-block;

@@ -16,7 +16,6 @@ class Search_Everything(Dashboard, View):
          pass
       
       def get_type(self, type_name):
-         
          card_types = m.Card_Types.objects.filter(name=type_name)
          if card_types:
             return 'card'
@@ -33,13 +32,14 @@ class Search_Everything(Dashboard, View):
          Please refer http://blog.appliedinformaticsinc.com/autocomplete-quick-intro-django-haystack-solr-jquery/
          '''
          actor_auto = []
-         if request.GET.get('product_type') == 'cards':
+         print request.GET.get('product_type_main_filter')
+         if request.GET.get('product_type_main_filter') == 'cards':
             actor_auto = SearchQuerySet().autocomplete(name_card__startswith=request.GET.get('search_everything'))[:5]#.autocomplete(actor_auto=request.GET.get('main_preference_sublocation', ''))[:5]
-         if request.GET.get('product_type') == 'beauticians':
+         if request.GET.get('product_type_main_filter') == 'beauticians':
             actor_auto = SearchQuerySet().autocomplete(name_beautician__startswith=request.GET.get('search_everything'))[:5]
-         if request.GET.get('product_type') == 'venues':
+         if request.GET.get('product_type_main_filter') == 'venues':
             actor_auto = SearchQuerySet().autocomplete(name_venue__startswith=request.GET.get('search_everything'))[:5]
-         if request.GET.get('product_type') == 'all':
+         if request.GET.get('product_type_main_filter') == 'all' or request.GET.get('product_type_main_filter') == None:
             actor_auto = itertools.chain(
                            SearchQuerySet().autocomplete(name_card__startswith=request.GET.get('search_everything')),\
                            SearchQuerySet().autocomplete(name_beautician__startswith=request.GET.get('search_everything')),\
@@ -49,13 +49,13 @@ class Search_Everything(Dashboard, View):
          suggestions_dict = {}
          suggestions = []
          for result in actor_auto:
-            if request.GET.get('product_type') == 'cards':
+            if request.GET.get('product_type_main_filter') == 'cards':
                suggestions_dict['value'] = result.name_card
-            if request.GET.get('product_type') == 'beauticians':
+            if request.GET.get('product_type_main_filter') == 'beauticians':
                suggestions_dict['value'] = result.name_beautician
-            if request.GET.get('product_type') == 'venues':
+            if request.GET.get('product_type_main_filter') == 'venues':
                suggestions_dict['value'] = result.name_venue
-            if request.GET.get('product_type') == 'all':
+            if request.GET.get('product_type_main_filter') == 'all' or request.GET.get('product_type_main_filter') == None:
                if result.name_card:
                   suggestions_dict['value'] = result.name_card
                if result.name_beautician:
