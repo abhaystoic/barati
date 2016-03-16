@@ -6,10 +6,10 @@ import smtplib
 
 def mail_send(reciever,subject,body):
     fromaddr = settings.EMAIL_HOST_USER
-    toaddr = reciever
+    toaddr = [reciever, 'abhaygupta@barati.in']
     msg = MIMEMultipart()
     msg['From'] = fromaddr
-    msg['To'] = toaddr
+    msg['To'] = ", ".join(toaddr)
     msg['Subject'] = subject
     msg.attach(MIMEText(body, 'plain'))
 
