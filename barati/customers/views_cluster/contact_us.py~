@@ -6,24 +6,24 @@ from django.http import HttpResponse
 from customers import models as m
 import sys, json
 from dashboard import Dashboard
-#from .form_contact_us import ContactUsForm
-#from .email_send import mail_send
+from customers.forms import ContactUsForm
+from customers.mail import mail_send
 
-#@login_required(login_url='/auth/login/')
+# @login_required(login_url='/auth/login/')
 def Contact_Us(request):
-	form = ContactUsForm(request.POST or None)
-	mailSuccess = 0
-    	if form.is_valid():
-		name = form.cleaned_data['name']
-        	email = form.cleaned_data['email']
-        	text = form.cleaned_data['text']
-        	body = 'Name : ' + name + '\nEmail : ' + email + '\n' + text 
-        	mail_send('ishaan.chawla@outlook.com','New Contact Us Info',body)
-		mailSuccess = 1
+    form = ContactUsForm(request.POST or None)
+    mailSuccess = 0
+    if form.is_valid():
+        name = form.cleaned_data['name']
+        email = form.cleaned_data['email']
+        text = form.cleaned_data['text']
+        body = 'Name : ' + name + '\nEmail : ' + email + '\n' + text
+        mail_send('contactus@barati.in', 'Mail from portal : Contact Us enquiry', body)
+        mailSuccess = 1
 
-    	form = ContactUsForm()
-    	context = {
-        	'form' : form,
-		'mailSuccess' : mailSuccess
-    	}
-	return render(request,'customers/contact_us.html',context)
+    form = ContactUsForm()
+    context = {
+        'form': form,
+        'mailSuccess': mailSuccess
+    }
+    return render(request, 'customers/contact_us.html', context)

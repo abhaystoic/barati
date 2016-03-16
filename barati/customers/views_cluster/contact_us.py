@@ -18,7 +18,7 @@ def Contact_Us(request):
         email = form.cleaned_data['email']
         text = form.cleaned_data['text']
         body = 'Name : ' + name + '\nEmail : ' + email + '\n' + text
-        mail_send('contactus@barati.in', 'New Contact Us Info', body)
+        mail_send('contactus@barati.in', 'Mail from portal : Contact Us enquiry', body)
         mailSuccess = 1
 
     form = ContactUsForm()
