@@ -14,54 +14,53 @@
 <meta property="og:description"   content="Ab shadi easy hai" />
 <meta property="og:image"         content="{% static '' %}{{card_detail.ref_id|get_pic_path}}" />
 </head>
-<div class="col-sm-5">
-<div class="view-product">
-	<img id="zoom_01" src="{% static '' %}{{card_detail.ref_id|get_pic_path}}" data-zoom-image="{% static '' %}{{card_detail.ref_id|get_pic_path}}" alt="" />
-	
-	
-</div>
+		<div class="col-sm-5">
+			<div class="view-product">
+				<img id="zoom_01" src="{% static '' %}{{card_detail.ref_id|get_pic_path}}" data-zoom-image="{% static '' %}{{card_detail.ref_id|get_pic_path}}" alt="" />
+			</div>
 
-</div>
-<script>
-    $('#zoom_01').elevateZoom({
-    
-cursor: "crosshair",
-zoomWindowFadeIn: 350,
-zoomWindowFadeOut: 350,
-lensFadeIn: 350, 
-lensFadeOut: 350
-   }); 
-</script>
-<div id="similar-product" class="carousel slide" data-ride="carousel">
+		
+		<script>
+		    $('#zoom_01').elevateZoom({
+		    
+		cursor: "crosshair",
+		zoomWindowFadeIn: 350,
+		zoomWindowFadeOut: 350,
+		lensFadeIn: 350, 
+		lensFadeOut: 350
+		   }); 
+		</script>
+		<div id="similar-product" class="carousel slide" data-ride="carousel">
 	
-	  <!-- Wrapper for slides -->
-	    <div class="carousel-inner">
-			<div class="item active">
-			  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
-			  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
-			  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
+	  	<!-- Wrapper for slides -->
+		    <div class="carousel-inner">
+				<div class="item active">
+				  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
+				  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
+				  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
+				</div>
+				<div class="item">
+				  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
+				  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
+				  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
+				</div>
+				<div class="item">
+				  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
+				  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
+				  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
+				</div>
+				
 			</div>
-			<div class="item">
-			  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
-			  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
-			  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
-			</div>
-			<div class="item">
-			  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
-			  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
-			  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
-			</div>
-			
-		</div>
 
-	  <!-- Controls -->
-	  <a class="left item-control" href="#similar-product" data-slide="prev">
-		<i class="fa fa-angle-left"></i>
-	  </a>
-	  <a class="right item-control" href="#similar-product" data-slide="next">
-		<i class="fa fa-angle-right"></i>
-	  </a>
-</div>	
+		  <!-- Controls -->
+		  <a class="left item-control" href="#similar-product" data-slide="prev">
+			<i class="fa fa-angle-left"></i>
+		  </a>
+		  <a class="right item-control" href="#similar-product" data-slide="next">
+			<i class="fa fa-angle-right"></i>
+		  </a>
+		</div>	
+		
 <br>
 <div>
 	{% if card_colors %}
@@ -85,6 +84,7 @@ lensFadeOut: 350
 		<a href="#"><i class="fa fa-plus-square"></i>Add to FEEL Requests</a>
 	</span>
 {% endif %}
+</div>
 </div>
 
 <form action="/add_to_cart/{{card_detail.ref_id}}" id="add_to_cart" method="POST"><!--Add to cart form BEGIN-->
