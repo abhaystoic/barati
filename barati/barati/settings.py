@@ -27,6 +27,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*",]
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER =  'khushal531@gmail.com'
+EMAIL_HOST_PASSWORD = 'kgupta1494' 
+DEFAULT_FROM_EMAIL = 'khushal531@gmail.com'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Application definition
 
@@ -159,3 +166,5 @@ ES_DISABLED = False
 ES_URLS = ['http://127.0.0.1:9200']
 # enable signal processor that for every change in the models will run update_index
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+
