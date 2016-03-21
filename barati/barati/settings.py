@@ -37,6 +37,13 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Application definition
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.zoho.com'
+EMAIL_HOST_USER = 'contactus@barati.in'
+EMIAL_HOST_PASSWORD = 'Welc0me123!#'
+EMAIL_PORT = 587
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,6 +52,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',   
     'django.contrib.staticfiles',
     'social.apps.django_app.default',
+    'crispy_forms',
     'rest_framework',
     'axes', # Defense mechanism against Brute Force attack
     'haystack', #Search mechanism
@@ -97,7 +105,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'barati',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': 'password',
         'HOST': 'localhost', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',          # Set to empty string for default.
     }
@@ -122,7 +130,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = "/home/abhay/workspace_barati/barati/static/"
+STATIC_ROOT = os.path.join(BASE_DIR,"static")
 
 LOGIN_URL = '/auth/login/'
 #LOGIN_REDIRECT_URL = '/dashboard'
@@ -167,4 +175,8 @@ ES_URLS = ['http://127.0.0.1:9200']
 # enable signal processor that for every change in the models will run update_index
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
+<<<<<<< HEAD
 
+=======
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+>>>>>>> 1ab0abc35c60c36f6652932530c209425a91e115

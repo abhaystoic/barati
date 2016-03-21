@@ -1,0 +1,22 @@
+<html>
+<head>
+	<title>Profile</title>
+</head>
+<body>
+	<h2>Profile</h2>
+
+	{% for field in form %}
+	{{field.error}}
+
+	{% endfor %}
+
+	<form action="/account/profile/" method="post">{%csrf-token %}
+
+	{{form.as_ul}}
+
+	<input type="submit" value="Update" />
+
+</form>
+
+</body>
+</html>
