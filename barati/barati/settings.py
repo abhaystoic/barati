@@ -175,8 +175,5 @@ ES_URLS = ['http://127.0.0.1:9200']
 # enable signal processor that for every change in the models will run update_index
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
-<<<<<<< HEAD
 
-=======
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
->>>>>>> 1ab0abc35c60c36f6652932530c209425a91e115

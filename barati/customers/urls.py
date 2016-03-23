@@ -42,6 +42,7 @@ urlpatterns = patterns('',
    url(r'^search/$', Search.as_view(), name = 'search'),
    url(r'^search_everything/$', Search_Everything.as_view(), name = 'search_everything'),
    url(r'^shop/$', Shop, name = 'shop'),
+   url(r'^account/profile', views.profile, name='profile'),
    )
    
    

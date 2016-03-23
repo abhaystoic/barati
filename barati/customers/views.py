@@ -12,7 +12,8 @@ from django.contrib.auth.models import User
 from django.template.defaulttags import register
 from customers import models as m
 import sys, json, os, datetime, decimal
-
+#from .models import *
+from customers.forms import ProfileForm
 from customers.views_cluster.dashboard import Dashboard
 
 def get_categories():
@@ -166,3 +167,15 @@ def change_date_format_for_template(unformatted_date):
    if unformatted_date:
       formatted_date = datetime.datetime.strptime(str(unformatted_date), '%Y-%m-%d').strftime('%d-%b-%Y')
    return formatted_date
+
+def profile(request):
+    
+   form = ProfileForm(request.POST or None)
+   if form.is_valid():
+      fb = form.save(commit = False)
+      fb.published_date = timezone.now()
+      fb.save()
+      
+   else:
+      form = ProfileForm()
+   return render(request, 'profile.html', {'form': form})

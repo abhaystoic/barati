@@ -1,3 +1,7 @@
 *.pyc
 *.py~
+*.py[co]
+*.egg-info
+*.swp
 barati/settings.py
+barati/customers/migrations/
