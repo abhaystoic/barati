@@ -39,23 +39,13 @@
                         <div class = "row">
                         <div class="col-md-8 col-md-offset-4 col-xs-8 col-xs-offset-4">
 
-                            <form action = "/feedback/" id="FbackForm" method="POST">{% csrf_token %}
+                            <form action = "account/profile" id="ProfileForm" method="POST">{% csrf_token %}
 
 
-                                <div class = "row form-group">
-                                    <label class="label-control"  for="name">Role</label>
-                                </div>
                                 
-                                <div class ="row">    
-                                    <div class="form-group col-md-7 col-xs-9">
-                                        
-                                        {{form.role}}
-                                        <p class="help-block text-danger"></p>
-                                    </div>
-                                </div>
 
                                 <div class = "row form-group">
-                                    <label class="label-control"  for="email">First_Name</label>
+                                    <label class="label-control"  for="first_name">First Name</label>
                                 </div>
                                 
                                 <div class ="row">    
@@ -67,7 +57,7 @@
                                 </div>
 
                                 <div class = "row form-group">
-                                    <label class="label-control"  for="email">Middle_Name</label>
+                                    <label class="label-control"  for="middle_name">Middle Name</label>
                                 </div>
                                 
                                 <div class ="row">    
@@ -80,7 +70,7 @@
 
                                 
                                 <div class = "row form-group">
-                                    <label class="label-control"  for="feedback">Last_name</label>
+                                    <label class="label-control"  for="last_name">Last Name</label>
                                 </div>    
                                 <div class="row">
                                     <div class="form-group col-md-7 col-xs-9">
@@ -91,7 +81,7 @@
                                 </div>
 
                                 <div class = "row form-group">
-                                    <label class="label-control"  for="feedback">Email</label>
+                                    <label class="label-control"  for="email">Email</label>
                                 </div>    
                                 <div class="row">
                                     <div class="form-group col-md-7 col-xs-9">
@@ -102,7 +92,7 @@
                                 </div>
 
                                 <div class = "row form-group">
-                                    <label class="label-control"  for="feedback">Contact1</label>
+                                    <label class="label-control"  for="contact1">Contact1</label>
                                 </div>    
                                 <div class="row">
                                     <div class="form-group col-md-7 col-xs-9">
@@ -113,7 +103,7 @@
                                 </div>
 
                                 <div class = "row form-group">
-                                    <label class="label-control"  for="feedback">Contact2</label>
+                                    <label class="label-control"  for="contact2">Contact2</label>
                                 </div>    
                                 <div class="row">
                                     <div class="form-group col-md-7 col-xs-9">
@@ -124,7 +114,7 @@
                                 </div>
 
                                 <div class = "row form-group">
-                                    <label class="label-control"  for="feedback">Contact3</label>
+                                    <label class="label-control"  for="contact3">Contact3</label>
                                 </div>    
                                 <div class="row">
                                     <div class="form-group col-md-7 col-xs-9">
@@ -135,7 +125,7 @@
                                 </div>
 
                                 <div class = "row form-group">
-                                    <label class="label-control"  for="feedback">Address</label>
+                                    <label class="label-control"  for="address">Address</label>
                                 </div>    
                                 <div class="row">
                                     <div class="form-group col-md-7 col-xs-9">

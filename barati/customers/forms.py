@@ -35,9 +35,9 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Users
-        fields = ('role','first_name','middle_name','last_name','religion','email','contact1','contact2','contact3','address')
+        fields = ('first_name','middle_name','last_name','religion','email','contact1','contact2','contact3','address')
         widgets = {
-            'role' : forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your role'}),
+            
 
 
             'first_name': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your first_name'}),
