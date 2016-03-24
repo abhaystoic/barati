@@ -27,22 +27,23 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*",]
 
-EMAIL_USE_TLS = True
+'''EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER =  'username@gmail.com'
 EMAIL_HOST_PASSWORD = 'password' 
 DEFAULT_FROM_EMAIL = 'username@gmail.com'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
+'''
 # Application definition
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.zoho.com'
 EMAIL_HOST_USER = 'contactus@barati.in'
-EMIAL_HOST_PASSWORD = 'Welc0me123!#'
+EMIAL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -105,7 +106,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'barati',
         'USER': 'postgres',
-        'PASSWORD': 'password',
+        'PASSWORD': '',
         'HOST': 'localhost', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',          # Set to empty string for default.
     }

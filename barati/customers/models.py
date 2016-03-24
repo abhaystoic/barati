@@ -48,6 +48,13 @@ class Users(models.Model):
       ('admin', 'admin'),
    )
    role = models.CharField(choices=ROLE_CHOICES, max_length=10)
+   WHAT_ARE_YOU_CHOICES = (
+      ('bride', 'bride'),
+      ('groom', 'groom'),
+      ('family', 'family'),
+      ('friend', 'friend'),
+   )
+   what_are_you = models.CharField(choices=ROLE_CHOICES, max_length=10)
    first_name = models.CharField(max_length=50, blank=True, null=True)
    middle_name = models.CharField(max_length=100, blank=True, null=True)
    last_name = models.CharField(max_length=50, blank=True, null=True)
