@@ -4,16 +4,17 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.shortcuts import render, render_to_response
-from django.views.generic import View
+from django.views.generic import View,CreateView
 from django.http import HttpResponse
 from django.db import connection, transaction
 from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.template.defaulttags import register
-from customers import models as m
+from customers.models import Users
 import sys, json, os, datetime, decimal
 #from .models import *
 from customers.forms import ProfileForm
+from customers.forms import AddressForm
 from customers.views_cluster.dashboard import Dashboard
 
 def get_categories():
@@ -169,13 +170,23 @@ def change_date_format_for_template(unformatted_date):
    return formatted_date
 
 def profile(request):
+   if request.POST:
     
-   form = ProfileForm(request.POST or None)
-   if form.is_valid():
-      fb = form.save(commit = False)
-      fb.published_date = timezone.now()
-      fb.save()
+      form = ProfileForm(request.POST or None)
+      form1 = AddressForm(data=request.POST,prefix="a")
+      a_valid = form.is_valid()
+      b_valid = form1.is_valid()
+      
+      if a_valid and b_valid:
+       
+         a = form.save()
+         b = form1.save(commit=False)
+         
+         b.save()
+      
       
    else:
       form = ProfileForm()
-   return render(request, 'profile.html', {'form': form})
+      form1 = AddressForm()
+   return render(request, 'profile.html', {'form': form,'form1':form1})
+

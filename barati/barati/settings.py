@@ -106,7 +106,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'barati',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': 'password',
         'HOST': 'localhost', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',          # Set to empty string for default.
     }
@@ -163,6 +163,7 @@ SOCIAL_AUTH_REDIRECT_IS_HTTPS = False
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/dashboard'
 SOCIAL_AUTH_URLOPEN_TIMEOUT = 30 #seconds
 
+AUTH_PROFILE_MODULE = 'Customers.Users'
 #Search
 HAYSTACK_CONNECTIONS = {
     'default': {
