@@ -2,6 +2,8 @@
 
 <link rel="stylesheet" href="{% static 'css/star-ratings.css' %}">
 <script type="text/javascript" src="{% static 'js/star-ratings.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 {% for beautician_detail in beautician_details %}
 <head>
 <meta property="og:url"           content="http://127.0.0.1:8000/beautician_details/{{beautician_detail.id}}" />
@@ -11,44 +13,52 @@
 <meta property="og:image"         content="{% static 'images/' %}{{beautician_detail.ref_id|get_pic_path}}" />
 </head>
 <div class="col-sm-5">
-<div class="view-product">
-	<img src="{% static '' %}{{beautician_detail.ref_id|get_pic_path}}" alt="" />
-	<h3>ZOOM</h3>
-</div>
-<div id="similar-product" class="carousel slide" data-ride="carousel">
 	
-	  <!-- Wrapper for slides -->
-	    <div class="carousel-inner">
-	    	{% with beautician_detail.ref_id|get_other_pics_path as other_pics %}
-			<div class="item active">
-			  {% for pic in other_pics|slice:':3' %}
-			  	<a href=""><img src="{% static 'images/' %}{{pic.picture}}" width="100" height="50" alt=""></a>
-			  {% endfor %}
-			</div>
-			<div class="item">
-			  {% for pic in other_pics|slice:'3:6' %}
-			  	<a href=""><img src="{% static 'images/' %}{{pic.picture}}" width="100" height="50" alt=""></a>
-			  {% endfor %}
-			</div>
-			<div class="item">
-			  {% for pic in other_pics|slice:'6:9' %}
-			  	<a href=""><img src="{% static 'images/' %}{{pic.picture}}" width="100" height="50" alt=""></a>
-			  {% endfor %}
-			</div>
-			{% endwith %}
-		</div>
-
-	  <!-- Controls -->
-	  <a class="left item-control" href="#similar-product" data-slide="prev">
-		<i class="fa fa-angle-left"></i>
-	  </a>
-	  <a class="right item-control" href="#similar-product" data-slide="next">
-		<i class="fa fa-angle-right"></i>
-	  </a>
-</div>	
+			<div id="similar-product" class="carousel slide" data-ride="carousel">
+			<div class="bzoom_wrap ">
+        <ul id="bzoom">
+            <li>
+                <img class="bzoom_thumb_image" src="{% static '' %}{{beautician_detail.ref_id|get_pic_path}}" title="first img" />
+                <img class="bzoom_big_image" src="{% static '' %}{{beautician_detail.ref_id|get_pic_path}}"/>
+            </li>
+            <li>
+                <img class="bzoom_thumb_image" src="{% static 'images/' %}{{pic.picture}}"/>
+                <img class="bzoom_big_image" src="{% static 'images/' %}{{pic.picture}}"/>
+            </li>
+            <li>
+                <img class="bzoom_thumb_image" src="{% static 'images/product-details/similar2.jpg' %}"/>
+                <img class="bzoom_big_image" src="{% static 'images/product-details/similar2.jpg' %}"/>
+            </li>
+            <li>
+                <img class="bzoom_thumb_image" src="{% static 'images/product-details/similar3.jpg' %}"/>
+                <img class="bzoom_big_image" src="{% static 'images/product-details/similar3.jpg' %}"/>
+            </li>
+            <li>
+                <img class="bzoom_thumb_image" src="{% static '' %}{{beautician_detail.ref_id|get_pic_path}}"/>
+                <img class="bzoom_big_image" src="{% static '' %}{{beautician_detail.ref_id|get_pic_path}}"/>
+            </li>
+        </ul>
+    </div>
+</div>
 <br>
-<div>
-
+<div style="margin-top:500px">
+	
+		
+{% if beautician_detail.ref_id in wishlist_list %}
+	<span>
+		<a href="/wishlist"><i class="fa fa-plus-square"></i>In Wishlist</a>
+		<a href="#"><i class="fa fa-plus-square"></i>Add to FEEL Requests</a>
+	</span>	
+{% else %}
+	<span>
+		<form id="add_to_wishlist" class="add_to_wishlist" name="add_to_wishlist" method="post" action="/add_to_wishlist/">
+			{% csrf_token %}
+			<input type="hidden" name="ref_id" value="{{card_detail.ref_id}}" />
+			<a href="#" onclick=""><i class="fa fa-plus-square"></i><button type="submit" style="border:none;background:transparent;" > Add to wishlist</button></a>
+		</form>
+		<a href="#"><i class="fa fa-plus-square"></i>Add to FEEL Requests</a>
+	</span>
+{% endif %}
 </div>
 </div>
 <form action="/add_to_cart/{{beautician_detail.ref_id}}" id="add_to_cart" method="POST"><!--Add to cart form BEGIN-->
@@ -284,4 +294,13 @@ $(document).ready(function() {
     });
 
     });
+</script>
+<script type="text/javascript" src="{% static 'js/jqzoom.js' %}"></script>
+<script type="text/javascript">
+$("#bzoom").zoom({
+	zoom_area_width: 350,
+    autoplay_interval :3000,
+    small_thumbs : 4,
+    autoplay : false
+});
 </script>

@@ -172,10 +172,13 @@ def change_date_format_for_template(unformatted_date):
 def profile(request):
    if request.POST:
       us = m.Users.objects.get(username=request.user.username)
-      add = m.Address.objects.get(users_id=us.id)
+      try:
+         add = m.Address.objects.get(users_id=us.id)
+      except m.Address.DoesNotExist:
+         add=None
       form = ProfileForm(request.POST or None,instance=us)
       if not add:
-         form1 = AddressForm(data=request.POST,prefix="a")
+         form1 = AddressForm(data=request.POST,prefix="a",instance=add)
       else:
          form1 = AddressForm(data=request.POST,prefix="a",instance=add)
       a_valid = form.is_valid()
