@@ -1,7 +1,10 @@
 {% load staticfiles %}
 
+<script type="text/javascript" src="{% static 'js/jquery-1.8.3.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'css/star-ratings.css' %}">
 <script type="text/javascript" src="{% static 'js/star-ratings.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.elevatezoom.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jquery.elevateZoom-3.0.8.min.js' %}"></script>
 {% for venue_detail in venue_details %}
 <head>
 <meta property="og:url"           content="http://127.0.0.1:8000/venue_details/{{venue_detail.id}}" />
@@ -11,10 +14,22 @@
 <meta property="og:image"         content="{% static '' %}{{venue_detail.ref_id|get_pic_path}}" />
 </head>
 <div class="col-sm-5">
-<div class="view-product">
-	<img src="{% static '' %}{{venue_detail.ref_id|get_pic_path}}" alt="" />
-	<h3>ZOOM</h3>
-</div>
+			<div class="view-product">
+				<img id="zoom_01" src="{% static '' %}{{venue_detail.ref_id|get_pic_path}}" data-zoom-image="{% static '' %}{{venue_detail.ref_id|get_pic_path}}" alt="" />
+			</div>
+
+		
+		<script>
+		    $('#zoom_01').elevateZoom({
+		    
+		cursor: "crosshair",
+		zoomWindowFadeIn: 350,
+		zoomWindowFadeOut: 350,
+		lensFadeIn: 350, 
+		lensFadeOut: 350
+		   }); 
+		</script>
+	
 <div id="similar-product" class="carousel slide" data-ride="carousel">
 	
 	  <!-- Wrapper for slides -->
@@ -50,6 +65,7 @@
 
 </div>
 </div>
+
 <form action="/add_to_cart/{{venue_detail.ref_id}}" id="add_to_cart" method="POST"><!--Add to cart form BEGIN-->
 {% csrf_token %}
 <input type="hidden" name="product_type" value="venues" />

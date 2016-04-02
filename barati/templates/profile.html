@@ -16,22 +16,23 @@
     
 </head><!--/head-->
 
-<body>
+<body>{% include 'customers/header.html'%}
+  
 
  <form class="form-horizontal" role="form" action = "/account/profile"  method="POST">
  	{% csrf_token %}
  	{% for field in form %}
   <div class="form-group">
-    <label class="control-label col-sm-2" for="what_you_are">{{field.label}}</label>
-    <div class="col-sm-10">
+    <label class="control-label col-sm-2" >{{field.label}}</label>
+    <div class="col-sm-5">
       {{field}}
     </div>
   </div>
   {% endfor %}
   {% for field1 in form1 %}
   <div class="form-group">
-    <label class="control-label col-sm-2" for="what_you_are">{{field1.label}}</label>
-    <div class="col-sm-10">
+    <label class="control-label col-sm-2" >{{field1.label}}</label>
+    <div class="col-sm-5">
       {{field1}}
     </div>
   </div>
@@ -48,12 +49,3 @@
 
 
 
-<!-- <form action = "/account/profile"  method="POST">{% csrf_token %}
-
-{{form.as_p}}
-{{form1.as_p}}
-
-<div class="col-lg-12 text-center">
-                                        <div id="success"></div>
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </div> -->

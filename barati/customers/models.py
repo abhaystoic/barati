@@ -62,7 +62,7 @@ class Address(models.Model):
    country = models.CharField(max_length=50, blank=True, null=True)
    zipcode = models.CharField(max_length=50, blank=True, null=True)
    timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-   #user_id=models.ForeignKey(Users, blank=True, null=True)
+   users=models.ForeignKey(Users, blank=True, null=True)
    class Meta:
       managed = True
       db_table = 'address'

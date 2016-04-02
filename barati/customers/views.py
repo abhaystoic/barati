@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from django.template.defaulttags import register
 from customers.models import Users
 import sys, json, os, datetime, decimal
-#from .models import *
+from customers import models as m
 from customers.forms import ProfileForm
 from customers.forms import AddressForm
 from customers.views_cluster.dashboard import Dashboard
@@ -171,9 +171,13 @@ def change_date_format_for_template(unformatted_date):
 
 def profile(request):
    if request.POST:
-    
-      form = ProfileForm(request.POST or None)
-      form1 = AddressForm(data=request.POST,prefix="a")
+      us = m.Users.objects.get(username=request.user.username)
+      add = m.Address.objects.get(users_id=us.id)
+      form = ProfileForm(request.POST or None,instance=us)
+      if not add:
+         form1 = AddressForm(data=request.POST,prefix="a")
+      else:
+         form1 = AddressForm(data=request.POST,prefix="a",instance=add)
       a_valid = form.is_valid()
       b_valid = form1.is_valid()
       
@@ -183,7 +187,9 @@ def profile(request):
          b = form1.save(commit=False)
          
          b.save()
-      
+         us_add = m.Address.objects.get(id=b.id)
+         us_add.users_id = us.id
+         us_add.save(update_fields=['users_id'])
       
    else:
       form = ProfileForm()

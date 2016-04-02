@@ -2,8 +2,10 @@
 <script type="text/javascript" src="{% static 'js/jquery-1.8.3.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'css/star-ratings.css' %}">
 <script type="text/javascript" src="{% static 'js/star-ratings.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.elevatezoom.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/jquery.elevateZoom-3.0.8.min.js' %}"></script>
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
 
 
 {% for card_detail in card_details %}
@@ -15,54 +17,39 @@
 <meta property="og:image"         content="{% static '' %}{{card_detail.ref_id|get_pic_path}}" />
 </head>
 		<div class="col-sm-5">
-			<div class="view-product">
-				<img id="zoom_01" src="{% static '' %}{{card_detail.ref_id|get_pic_path}}" data-zoom-image="{% static '' %}{{card_detail.ref_id|get_pic_path}}" alt="" />
-			</div>
 
+<div id="similar-product" class="carousel slide" data-ride="carousel">
+			<div class="bzoom_wrap ">
+        <ul id="bzoom">
+            <li>
+                <img class="bzoom_thumb_image" src="{% static '' %}{{card_detail.ref_id|get_pic_path}}" title="first img" />
+                <img class="bzoom_big_image" src="{% static '' %}{{card_detail.ref_id|get_pic_path}}"/>
+            </li>
+            <li>
+                <img class="bzoom_thumb_image" src="{% static 'images/product-details/similar1.jpg' %}"/>
+                <img class="bzoom_big_image" src="{% static 'images/product-details/similar1.jpg' %}"/>
+            </li>
+            <li>
+                <img class="bzoom_thumb_image" src="{% static '' %}{{card_detail.ref_id|get_pic_path}}"/>
+                <img class="bzoom_big_image" src="{% static '' %}{{card_detail.ref_id|get_pic_path}}"/>
+            </li>
+            <li>
+                <img class="bzoom_thumb_image" src="{% static '' %}{{card_detail.ref_id|get_pic_path}}"/>
+                <img class="bzoom_big_image" src="{% static '' %}{{card_detail.ref_id|get_pic_path}}"/>
+            </li>
+            <li>
+                <img class="bzoom_thumb_image" src="{% static '' %}{{card_detail.ref_id|get_pic_path}}"/>
+                <img class="bzoom_big_image" src="{% static '' %}{{card_detail.ref_id|get_pic_path}}"/>
+            </li>
+        </ul>
+    </div>
+</div>
+
+			
 		
-		<script>
-		    $('#zoom_01').elevateZoom({
-		    
-		cursor: "crosshair",
-		zoomWindowFadeIn: 350,
-		zoomWindowFadeOut: 350,
-		lensFadeIn: 350, 
-		lensFadeOut: 350
-		   }); 
-		</script>
-		<div id="similar-product" class="carousel slide" data-ride="carousel">
-	
-	  	<!-- Wrapper for slides -->
-		    <div class="carousel-inner">
-				<div class="item active">
-				  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
-				  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
-				  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
-				</div>
-				<div class="item">
-				  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
-				  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
-				  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
-				</div>
-				<div class="item">
-				  <a href=""><img src="{% static 'images/product-details/similar1.jpg' %}" alt=""></a>
-				  <a href=""><img src="{% static 'images/product-details/similar2.jpg' %}" alt=""></a>
-				  <a href=""><img src="{% static 'images/product-details/similar3.jpg' %}" alt=""></a>
-				</div>
-				
-			</div>
-
-		  <!-- Controls -->
-		  <a class="left item-control" href="#similar-product" data-slide="prev">
-			<i class="fa fa-angle-left"></i>
-		  </a>
-		  <a class="right item-control" href="#similar-product" data-slide="next">
-			<i class="fa fa-angle-right"></i>
-		  </a>
-		</div>	
 		
 <br>
-<div>
+<div style="margin-top:500px">
 	{% if card_colors %}
 		<p><b>Also available in</b></p>
 		{% for color in card_colors %}
@@ -320,4 +307,13 @@ $('#add_to_wishlist').submit(function() { // catch the form's submit event
           });
           return false;
       });
+</script>
+<script type="text/javascript" src="{% static 'js/jqzoom.js' %}"></script>
+<script type="text/javascript">
+$("#bzoom").zoom({
+	zoom_area_width: 300,
+    autoplay_interval :3000,
+    small_thumbs : 4,
+    autoplay : false
+});
 </script>
