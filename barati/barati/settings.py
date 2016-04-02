@@ -59,7 +59,8 @@ INSTALLED_APPS = (
     'haystack', #Search mechanism
     'customers',
     'vendors',
-    'star_ratings' #Rating system #https://github.com/wildfish/django-star-ratings
+    'star_ratings', #Rating system #https://github.com/wildfish/django-star-ratings
+    'avatar'
 )
 
 MIDDLEWARE_CLASSES = (
