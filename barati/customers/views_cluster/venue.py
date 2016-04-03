@@ -114,7 +114,8 @@ class Venue(Dashboard, View):
             }
          context_dict.update(self.get_context_data(request=request))
          return render(request, self.template_name, context_dict)
-      
+         
+      @page_template('customers/venue.html')
       def post(self, request, **kwargs):
          slider_values = request.POST.get('slider');
          selected_filter_values = None

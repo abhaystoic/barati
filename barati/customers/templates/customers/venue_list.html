@@ -1,4 +1,6 @@
 {% load staticfiles %}
+{% load el_pagination_tags %}
+{% paginate 9 venues %}
 	{% if venues %}
 	{% for venue in venues %}
 	<div class="col-sm-4">
@@ -55,6 +57,13 @@
 	</div>
 	{% endfor %}						
 	{% endif %}
+	{% get_pages %}
+{{ pages.previous }} {{ pages.next }}
+{{ pages.current_start_index }}-{{ pages.current_end_index }} of
+{{ pages.total_count }}.
+{# Just print pages to render the Digg-style pagination. #}
+{{ pages }}
+{% include 'customers/login_popup.html' %}
 {% include 'customers/login_popup.html' %}
 
 <script type="text/javascript">

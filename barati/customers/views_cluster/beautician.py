@@ -8,6 +8,7 @@ from customers import models as m
 import sys, json
 from itertools import chain
 from dashboard import Dashboard
+from el_pagination.decorators import page_template
 
 #@login_required(login_url='/auth/login/')
 class Beautician(Dashboard, View):
@@ -132,6 +133,7 @@ class Beautician(Dashboard, View):
          context_dict.update(self.get_context_data(request=request))
          return render(request, self.template_name, context_dict)
       
+      @page_template('customers/beautician.html')
       def post(self, request, **kwargs):
          slider_values = request.POST.get('slider');
          selected_filter_values = None

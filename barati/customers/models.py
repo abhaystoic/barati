@@ -27,7 +27,7 @@ class Users(models.Model):
       ('family', 'family'),
       ('friend', 'friend'),
    )
-   what_are_you = models.CharField(choices=WHAT_ARE_YOU_CHOICES, max_length=10)
+   what_are_you = models.CharField(choices=WHAT_ARE_YOU_CHOICES, max_length=10, blank=True, null=True)
    first_name = models.CharField(max_length=50, blank=True, null=True)
    middle_name = models.CharField(max_length=100, blank=True, null=True)
    last_name = models.CharField(max_length=50, blank=True, null=True)
