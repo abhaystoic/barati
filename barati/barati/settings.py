@@ -60,7 +60,8 @@ INSTALLED_APPS = (
     'customers',
     'vendors',
     'star_ratings', #Rating system #https://github.com/wildfish/django-star-ratings
-    'avatar'
+    'avatar',
+    'bootstrapform'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -180,3 +181,5 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+AVATAR_AUTO_GENERATE_SIZES=(120,120)

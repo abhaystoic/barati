@@ -1,4 +1,5 @@
  {% load staticfiles %}
+ {% load bootstrap %}
  {% load avatar_tags %}
 <!DOCTYPE html>
 <html lang="en">
@@ -10,44 +11,95 @@
     <title>UserProfile | Barati</title>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
-    
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	<link href="{% static 'css/main2.css' %}" rel="stylesheet">
 	<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
-          
+     <style>
+    .nav-pills > li.active > a, .nav-pills > li.active > a:focus {
+        color: black;
+        background-color: #FE980F;
+    }
+
+        .nav-pills > li.active > a:hover {
+            background-color: #efcb00;
+            color:black;
+        }
+</style>
     
 </head><!--/head-->
 
 <body>{% include 'customers/header.html'%}
   
-  {% avatar user 65 class="img-circle img-responsive" id="user_avatar" %}
+<div style="height:100px">
 
+{% avatar user  %} 
+</div>
 <a href="{% url 'avatar_change' %}">Change your avatar</a>
 <br>
- <form class="form-horizontal" role="form" action = "/account/profile"  method="POST">
- 	{% csrf_token %}
- 	{% for field in form %}
-  <div class="form-group">
-    <label class="control-label col-sm-2" >{{field.label}}</label>
-    <div class="col-sm-3">
-      {{field}}
-    </div>
-  </div>
-  {% endfor %}
-  {% for field1 in form1 %}
-  <div class="form-group">
-    <label class="control-label col-sm-2" >{{field1.label}}</label>
-    <div class="col-sm-5">
-      {{field1}}
-    </div>
-  </div>
-  {% endfor %}
+
+
   
-  <div class="form-group">
+
+    <form class="form-horizontal" role="form" action = "/accounts/profile"  method="POST">
+      {% csrf_token %}
+      <div role="tabpanel" class="col-md-7 col-md-offset-2 col-xs-7 col-xs-offset-4">
+      <!-- Nav tabs -->
+  <ul id="tabs" class="nav nav-pills custom" role="tablist">
+    <li role="presentation" class="active"><a href="#detail1"  aria-controls="detail1" role="tab" data-toggle="tab">Personal Details</a></li>
+   <li role="presentation"><a href="#detail2" aria-controls="detail2" role="tab" data-toggle="tab">University Details</a></li>
+  </ul>
+  <!-- Tab panes -->
+  <div class="tab-content">  
+    <div role="tabpanel" class="panel-warning tab-pane in active" style="margin-top:10px" id="detail1">
+        <div class="panel-heading input-lg">
+            <h4> Personal Details </h4>
+        </div>  
+        <!-- Panel-head -->
+    <div class="panel-body">
+      {% for field in form %}
+            <div class="form-group">
+              <div class="col-sm-2 label-control">
+                <label  >{{field.label}}</label>
+              </div>
+              <div class="col-sm-8">
+                {{field}}
+              </div>
+            </div>
+      {% endfor %}
+    </div>
+  </div>
+    <div role="tabpanel" class="panel-warning tab-pane" style="margin-top:10px" id="detail2">
+        <div class="panel-heading input-lg">
+            <h4> Address Details </h4>
+        </div>  
+        <!-- Panel-head -->
+    <div class="panel-body">
+      {% for field1 in form1 %}
+            <div class="form-group">
+              <div class="col-sm-2 label-control">
+                <label  >{{field1.label}}</label>
+              </div>
+              <div class="col-sm-8">
+                {{field1}}
+              </div>
+            </div>
+      {% endfor %}
+    </div>
+
+    <div class="form-group">
     <div class="col-sm-offset-2 col-sm-10">
       <button type="submit" class="btn btn-success">Submit</button>
     </div>
   </div>
+  </div>
+</div>
+  
+  </div>
 </form>
+
+
 </body>
 </html>
 

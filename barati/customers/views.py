@@ -17,6 +17,8 @@ from customers.forms import ProfileForm
 from customers.forms import AddressForm
 from customers.views_cluster.dashboard import Dashboard
 
+#us=""
+
 def get_categories():
    categories = ('venues', 'cards', 'beauticians', 'gifts', 'photo_videos', 'bakeries', 'ghodi_bagghis', 'bands', 'mehendis', 'fireworks', 'tents', 'music')
    return categries
@@ -170,12 +172,14 @@ def change_date_format_for_template(unformatted_date):
    return formatted_date
 
 def profile(request):
+   us = m.Users.objects.get(username=request.user.username)
+   try:
+      add = m.Address.objects.get(users_id=us.id)
+   except m.Address.DoesNotExist:
+      add=None
    if request.POST:
-      us = m.Users.objects.get(username=request.user.username)
-      try:
-         add = m.Address.objects.get(users_id=us.id)
-      except m.Address.DoesNotExist:
-         add=None
+      
+      
       form = ProfileForm(request.POST or None,instance=us)
       if not add:
          form1 = AddressForm(data=request.POST,prefix="a",instance=add)
@@ -195,7 +199,7 @@ def profile(request):
          us_add.save(update_fields=['users_id'])
       
    else:
-      form = ProfileForm()
-      form1 = AddressForm()
+      form = ProfileForm(instance=us)
+      form1 = AddressForm(instance=add)
    return render(request, 'profile.html', {'form': form,'form1':form1})
 

@@ -47,6 +47,7 @@ class Venue(Dashboard, View):
          if confidence_check_filter == 'add_confidence':
             self.venues = self.venues.exclude(barati_confidence_perc__isnull=True)
             self.venues = self.venues.exclude(barati_confidence_perc__lte=20.0)
+            #if usr logged in main_pref se data uthao n exclude venue not available
 
          #Filter by discount
          discounts_dict = {}

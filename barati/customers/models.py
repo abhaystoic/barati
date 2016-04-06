@@ -52,13 +52,14 @@ class Address(models.Model):
       ('vendor', 'vendor'),
       ('customer', 'customer'),
    )
+   state_choices=(('delhi','delhi'),('mp','mp'),('ap','ap'))
    type = models.CharField(choices=TYPE_CHOICES, max_length=10)
    building_number = models.CharField(max_length=50, blank=True, null=True)
    street = models.CharField(max_length=100, blank=True, null=True)
    locality = models.CharField(max_length=50, blank=True, null=True)
    landmark = models.CharField(max_length=50, blank=True, null=True)
    city = models.CharField(max_length=50, blank=True, null=True)
-   state = models.CharField(max_length=50, blank=True, null=True)
+   state = models.CharField(max_length=50, blank=True, null=True,choices=state_choices)
    country = models.CharField(max_length=50, blank=True, null=True)
    zipcode = models.CharField(max_length=50, blank=True, null=True)
    timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
