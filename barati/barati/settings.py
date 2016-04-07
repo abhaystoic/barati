@@ -61,7 +61,8 @@ INSTALLED_APPS = (
     'vendors',
     'star_ratings', #Rating system #https://github.com/wildfish/django-star-ratings
     'avatar',
-    
+    'el_pagination',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -96,6 +97,11 @@ TEMPLATES = [
     },
 ]
 
+#http://django-el-pagination.readthedocs.org/en/latest/start.html#installation
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'django.core.context_processors.request',
+)
 
 WSGI_APPLICATION = 'barati.wsgi.application'
 
@@ -108,7 +114,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'barati',
         'USER': 'postgres',
-        'PASSWORD': 'password',
+        'PASSWORD': '',
         'HOST': 'localhost', # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',          # Set to empty string for default.
     }
