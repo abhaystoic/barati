@@ -13,8 +13,7 @@ from django.template.defaulttags import register
 from customers.models import Users
 import sys, json, os, datetime, decimal
 from customers import models as m
-from customers.forms import ProfileForm
-from customers.forms import AddressForm
+from customers.forms import ProfileForm,AddressForm,ReligionForm
 from customers.views_cluster.dashboard import Dashboard
 
 #us=""
@@ -177,29 +176,37 @@ def profile(request):
       add = m.Address.objects.get(users_id=us.id)
    except m.Address.DoesNotExist:
       add=None
+   try:
+      rel = m.Religion.objects.get(users_id=us.id)
+   except m.Religion.DoesNotExist:
+      rel=None
    if request.POST:
       
       
       form = ProfileForm(request.POST or None,instance=us)
-      if not add:
-         form1 = AddressForm(data=request.POST,prefix="a",instance=add)
-      else:
-         form1 = AddressForm(data=request.POST,prefix="a",instance=add)
+      form1 = AddressForm(data=request.POST,prefix="a",instance=add)
+      form2=ReligionForm(data=request.POST,prefix="a",instance=rel)
       a_valid = form.is_valid()
       b_valid = form1.is_valid()
+      c_valid = form2.is_valid()
       
-      if a_valid and b_valid:
+      if a_valid and b_valid and c_valid:
        
          a = form.save()
          b = form1.save(commit=False)
-         
+         c = form2.save(commit=False)
          b.save()
+         c.save()
          us_add = m.Address.objects.get(id=b.id)
          us_add.users_id = us.id
          us_add.save(update_fields=['users_id'])
+         us_rel = m.Religion.objects.get(id=c.id)
+         us_rel.users_id =us.id
+         us_rel.save(update_fields=['users_id'])
       
    else:
       form = ProfileForm(instance=us)
       form1 = AddressForm(instance=add)
-   return render(request, 'profile.html', {'form': form,'form1':form1})
+      form2 =ReligionForm(instance=rel)
+   return render(request, 'profile.html', {'form': form,'form1':form1,'form2':form2})
 

@@ -5,3 +5,4 @@
 *.swp
 barati/settings.py
 barati/customers/migrations/
+barati/avatars/

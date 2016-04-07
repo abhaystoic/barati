@@ -43,22 +43,21 @@ class ProfileForm(forms.ModelForm):
       ('family', 'family'),
       ('friend', 'friend'),
    )
-        fields = ('what_are_you','first_name','middle_name','last_name','religion','email','contact1','contact2','contact3')
+        fields = ('what_are_you','first_name','middle_name','last_name','email','contact1','contact2','contact3')
 
-        # widgets = {
+        widgets = {
             
-        #     #'what_are_you': forms.CharField(label='what are you', choice=WHAT_ARE_YOU_CHOICES, widget=forms.Select(attrs={'class':'regDropDown'})),
-        #     #'what_are_you':forms.TextInput(attrs={'class': 'form-control,dropdown','placeholder':'Enter your first_name'}),
-        #     'first_name': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your first_name'}),
-        #     'middle_name': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your middle_name'}),
-        #     'last_name': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your last_name'}),
-        #     #'religion': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your religion'}),
-        #     'email': forms.EmailInput(attrs={'class': 'form-control','placeholder':'Enter your email'}),
-        #     #'phone_regex': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your phone-no'}),
-        #     'contact1': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your contact, format :+999999999'}),
-        #     'contact2': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your contact, format :+999999999'}),
-        #     'contact3': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your contact, format :+999999999'}),
-        #     }
+            'what_are_you':forms.Select(attrs={'class': 'form-control ','placeholder':'Enter state'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your first_name'}),
+            'middle_name': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your middle_name'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your last_name'}),
+            
+            'email': forms.EmailInput(attrs={'class': 'form-control','placeholder':'Enter your email'}),
+            #'phone_regex': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your phone-no'}),
+            'contact1': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your contact, format :+999999999'}),
+            'contact2': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your contact, format :+999999999'}),
+            'contact3': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your contact, format :+999999999'}),
+            }
 
 class AddressForm(forms.ModelForm):
 
@@ -79,9 +78,15 @@ class AddressForm(forms.ModelForm):
             'country': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter country'}),
             'zipcode': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter zipcode'}),
             }
-            
-            
-            
+ 
+class ReligionForm(forms.ModelForm):
+
+    class Meta:
+        model = Religion
+        fields = ( 'religion',)         
+        widgets = {   
+            'religion': forms.Select(attrs={'class': 'form-control','placeholder':'Enter your religion'})
+            }
             
             
             

@@ -61,7 +61,7 @@ INSTALLED_APPS = (
     'vendors',
     'star_ratings', #Rating system #https://github.com/wildfish/django-star-ratings
     'avatar',
-    'bootstrapform'
+    
 )
 
 MIDDLEWARE_CLASSES = (
