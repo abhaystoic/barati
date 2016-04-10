@@ -181,8 +181,6 @@ def profile(request):
    except m.Religion.DoesNotExist:
       rel=None
    if request.POST:
-      
-      
       form = ProfileForm(request.POST or None,instance=us)
       form1 = AddressForm(data=request.POST,prefix="a",instance=add)
       form2=ReligionForm(data=request.POST,prefix="a",instance=rel)
@@ -209,4 +207,3 @@ def profile(request):
       form1 = AddressForm(instance=add)
       form2 =ReligionForm(instance=rel)
    return render(request, 'profile.html', {'form': form,'form1':form1,'form2':form2})
-
