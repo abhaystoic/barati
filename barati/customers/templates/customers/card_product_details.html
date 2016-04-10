@@ -5,9 +5,6 @@
 
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-
-
-
 {% for card_detail in card_details %}
 <head>
 <meta property="og:url"           content="http://127.0.0.1:8000/card_details/{{card_detail.id}}" />
@@ -15,6 +12,7 @@
 <meta property="og:title"         content="Barati" />
 <meta property="og:description"   content="Ab shadi easy hai" />
 <meta property="og:image"         content="{% static '' %}{{card_detail.ref_id|get_pic_path}}" />
+<title>Barati | {{card_detail.name}}</title>
 </head>
 		<div class="col-sm-5">
 

@@ -32,7 +32,6 @@ class Search_Everything(Dashboard, View):
          Please refer http://blog.appliedinformaticsinc.com/autocomplete-quick-intro-django-haystack-solr-jquery/
          '''
          actor_auto = []
-         print request.GET.get('product_type_main_filter')
          if request.GET.get('product_type_main_filter') == 'cards':
             actor_auto = SearchQuerySet().autocomplete(name_card__startswith=request.GET.get('search_everything'))[:5]#.autocomplete(actor_auto=request.GET.get('main_preference_sublocation', ''))[:5]
          if request.GET.get('product_type_main_filter') == 'beauticians':
@@ -45,7 +44,6 @@ class Search_Everything(Dashboard, View):
                            SearchQuerySet().autocomplete(name_beautician__startswith=request.GET.get('search_everything')),\
                            SearchQuerySet().autocomplete(name_venue__startswith=request.GET.get('search_everything'))\
                            )
-         
          suggestions_dict = {}
          suggestions = []
          for result in actor_auto:
