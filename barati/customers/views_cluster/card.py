@@ -88,6 +88,8 @@ class Card(Dashboard, View):
          cards =  list(chain(cards_0_10, cards_10_20, cards_20_30, cards_30_40, cards_40_100))
          if cards:
             self.cards = cards
+         if self.cards is None:
+            self.cards = []
          return self.cards
       
       def get_filtered_cards_list(self, request, selected_filter_values, **kwargs):

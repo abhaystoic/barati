@@ -89,6 +89,8 @@ class Venue(Dashboard, View):
          venues =  list(chain(venues_0_10, venues_10_20, venues_20_30, venues_30_40, venues_40_100))
          if venues:
             self.venues = venues
+         if self.venues is None:
+            self.venues = []   
          return self.venues
       
       def get_price_filtered_venues(self, request, selected_filter_values, **kwargs):
