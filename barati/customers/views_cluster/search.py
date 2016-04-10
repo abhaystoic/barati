@@ -23,6 +23,7 @@ class Search(Dashboard, View):
          '''
          actor_auto= SearchQuerySet().autocomplete(locality__startswith=request.GET.get('main_preference_sublocation' ))[:5]#.autocomplete(actor_auto=request.GET.get('main_preference_sublocation', ''))[:5]
          suggestions = [result.locality for result in actor_auto]
+         suggestions = list(set(suggestions))
          data = json.dumps({
                'results': suggestions
             })
