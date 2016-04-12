@@ -41,7 +41,7 @@ class Religion(models.Model):
    Religion_CHOICES=(
       ("Hinduism","Hinduism"),("Sikhism","Sikhism"),
       ("Buddhism","Buddhism"),("Jainism","Jainism"),
-      ("Islam","Islam"),("Christanity","Christanity")
+      ("Islam","Islam"),("Christianity","Christianity"), ("Other","Other")
       )
    id = models.AutoField(primary_key=True)
    religion= models.CharField(choices=Religion_CHOICES,max_length=50)
