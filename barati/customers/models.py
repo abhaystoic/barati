@@ -566,3 +566,17 @@ class Tax_And_Refund_Policies(models.Model):
       db_table = 'tax_and_refund_policies'
    def __unicode__(self):
       return unicode(self.product_type)
+
+class Product_Availability(models.Model):
+   id = models.AutoField(primary_key=True)
+   ref_id = models.CharField(max_length=100, blank=True, null=True)
+   product_type = models.CharField(max_length=100, blank=True, null=True, unique=True)
+   date = models.DateField(blank=True, null=True)
+   time = models.TimeField(blank=True, null=True)
+
+   class Meta: 
+      managed = True
+      db_table = 'product_availability'
+   def __unicode__(self):
+      return unicode(self.ref_id)
+
