@@ -41,7 +41,7 @@ class Religion(models.Model):
    Religion_CHOICES=(
       ("Hinduism","Hinduism"),("Sikhism","Sikhism"),
       ("Buddhism","Buddhism"),("Jainism","Jainism"),
-      ("Islam","Islam"),("Christanity","Christanity")
+      ("Islam","Islam"),("Christianity","Christianity"), ("Other","Other")
       )
    id = models.AutoField(primary_key=True)
    religion= models.CharField(choices=Religion_CHOICES,max_length=50)
@@ -91,9 +91,6 @@ class Address(models.Model):
       return_string = (str(self.building_number) if self.building_number != None else '') + ' ' + \
          (str(self.street) if self.street != None else '') + ' ' + (str(self.locality) if self.locality != None else '')
       return unicode(return_string)
-     
-
-
 
 class Main_Preferences(models.Model):
    id = models.AutoField(primary_key=True)
