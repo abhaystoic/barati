@@ -43,6 +43,23 @@ class Venue(Dashboard, View):
          type = self.kwargs['type']
          confidence_check_filter = request.GET.get('confidence_check_filter')
          self.venues = m.Venues.objects.filter(type_id=type)
+
+         #filter product according to availability
+         if request.user.username:
+            user_id = m.Users.objects.get(username= request.user.username).id
+            try:
+               preference_date=m.Main_Preferences.objects.get(user_id=user_id).date
+            except m.Main_Preferences.DoesNotExist:
+               preference_date=None
+            if preference_date:
+               try:
+                  venue_booked=m.Product_Availability.objects.get(date=preference_date , ref_id__startswith='VN')
+                  self.venues=self.venues.exclude(ref_id=venue_booked.ref_id)
+               except m.Product_Availability.DoesNotExist:
+                  venue_booked=None
+                
+
+
          #Filter by barati confidence. Select only if confidence > 20%
          if confidence_check_filter == 'add_confidence':
             self.venues = self.venues.exclude(barati_confidence_perc__isnull=True)
