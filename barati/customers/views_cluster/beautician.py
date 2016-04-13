@@ -53,6 +53,20 @@ class Beautician(Dashboard, View):
                type_id=type, gender=str(gender),\
                actual_price__range=self.popular_price_filter_values)# use raw query
 
+         #filter product according to availability
+         if request.user.username:
+            user_id = m.Users.objects.get(username= request.user.username).id
+            try:
+               preference_date=m.Main_Preferences.objects.get(user_id=user_id).date
+            except m.Main_Preferences.DoesNotExist:
+               preference_date=None
+            if preference_date:
+               try:
+                  beaut_booked=m.Product_Availability.objects.get(date=preference_date , ref_id__startswith='BTN')
+                  self.venues=self.beauticians.exclude(ref_id=beaut_booked.ref_id)
+               except m.Product_Availability.DoesNotExist:
+                  beaut_booked=None
+         
          #Filter by home visit availability
          if home_visit == 'available':
             self.beauticians = self.beauticians.exclude(home_visit_charge__isnull=True)
