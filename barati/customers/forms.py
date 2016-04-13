@@ -47,14 +47,14 @@ class ProfileForm(forms.ModelForm):
 
         widgets = {
             
-            'what_are_you':forms.Select(attrs={'class': 'form-control ','placeholder':'Enter state'}),
-            'first_name': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your first_name'}),
+            'what_are_you':forms.Select(attrs={'required':'True','class': 'form-control ','placeholder':'Enter state'}),
+            'first_name': forms.TextInput(attrs={'required':'True','class': 'form-control','placeholder':'Enter your first_name'}),
             'middle_name': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your middle_name'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your last_name'}),
             
-            'email': forms.EmailInput(attrs={'class': 'form-control','placeholder':'Enter your email'}),
+            'email': forms.EmailInput(attrs={'required':'True','class': 'form-control','placeholder':'Enter your email'}),
             #'phone_regex': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your phone-no'}),
-            'contact1': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your contact, format :+999999999'}),
+            'contact1': forms.TextInput(attrs={'required':'True','class': 'form-control','placeholder':'Enter your contact, format :+999999999'}),
             'contact2': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your contact, format :+999999999'}),
             'contact3': forms.TextInput(attrs={'class': 'form-control','placeholder':'Enter your contact, format :+999999999'}),
             }
@@ -85,7 +85,7 @@ class ReligionForm(forms.ModelForm):
         model = Religion
         fields = ( 'religion',)         
         widgets = {   
-            'religion': forms.Select(attrs={'class': 'form-control','placeholder':'Enter your religion'})
+            'religion': forms.Select(attrs={'required':'True','class': 'form-control','placeholder':'Enter your religion'})
             }
             
             

@@ -56,7 +56,7 @@ class Profile(Dashboard, View):
 
             return self.form_valid(request,form,form1, form2)
         else:
-            get(self,request)
+            return self.get(request)
 
            
     def form_valid(self,request, form,form1, form2):
