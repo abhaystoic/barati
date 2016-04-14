@@ -63,9 +63,21 @@ class Beautician(Dashboard, View):
             if preference_date:
                try:
                   beaut_booked=m.Product_Availability.objects.get(date=preference_date , ref_id__startswith='BTN')
-                  self.venues=self.beauticians.exclude(ref_id=beaut_booked.ref_id)
+                  self.beauticians=self.beauticians.exclude(ref_id=beaut_booked.ref_id)
                except m.Product_Availability.DoesNotExist:
                   beaut_booked=None
+            #filter beauticians according to preference sublocation
+            try:
+               preference_location=m.Main_Preferences.objects.get(user_id=user_id).sublocation
+            except Main_Preferences.DoesNotExist:
+               preference_location=None
+            if preference_location:
+               try:
+                  loction_venue=m.Address.objects.get(locality=preference_location)
+                  self.beauticians=self.beauticians.exclude(address_id!=location_venue.id)
+               except m.Address.DoesNotExist:
+                  location_venue=None
+            
          
          #Filter by home visit availability
          if home_visit == 'available':

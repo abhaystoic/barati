@@ -57,9 +57,18 @@ class Venue(Dashboard, View):
                   self.venues=self.venues.exclude(ref_id=venue_booked.ref_id)
                except m.Product_Availability.DoesNotExist:
                   venue_booked=None
-                
-
-
+            #filter venues according to preference sublocation
+            try:
+               preference_location=m.Main_Preferences.objects.get(user_id=user_id).sublocation
+            except Main_Preferences.DoesNotExist:
+               preference_location=None
+            if preference_location:
+               try:
+                  loction_venue=m.Address.objects.get(locality=preference_location)
+                  self.venues=self.venues.exclude(address_id!=location_venue.id)
+               except m.Address.DoesNotExist:
+                  location_venue=None
+            
          #Filter by barati confidence. Select only if confidence > 20%
          if confidence_check_filter == 'add_confidence':
             self.venues = self.venues.exclude(barati_confidence_perc__isnull=True)

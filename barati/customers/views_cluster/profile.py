@@ -66,12 +66,6 @@ class Profile(Dashboard, View):
         c = form2.save(commit=False)
         b.save()
         c.save()
-        # us_add = m.Users.objects.get(id=a.id)
-        # us_add.users_id = self.us.id
-        # us_add.save(update_fields=['users_id'])
-        # us_rel = m.Religion.objects.get(id=c.id)
-        # us_rel.users_id =self.us.id
-        # us_rel.save(update_fields=['users_id'])
         self.us.address_id=b.id
         self.us.religion_id=c.id
         self.us.save(update_fields=['address_id','religion_id'])
