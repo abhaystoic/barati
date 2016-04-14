@@ -4,38 +4,7 @@ import os
 
 
 
-class Users(models.Model):
-   id = models.AutoField(primary_key=True)
-   username = models.CharField(max_length=50, unique=True)
-   ROLE_CHOICES = (
-      ('customer', 'customer'),
-      ('vendor', 'vendor'),
-      ('admin', 'admin'),
-   )
-   role = models.CharField(choices=ROLE_CHOICES, max_length=10)
-   WHAT_ARE_YOU_CHOICES = (
-      ('bride', 'bride'),
-      ('groom', 'groom'),
-      ('family', 'family'),
-      ('friend', 'friend'),
-   )
-   what_are_you = models.CharField(choices=WHAT_ARE_YOU_CHOICES, max_length=10, blank=True, null=True)
-   first_name = models.CharField(max_length=50, blank=True, null=True)
-   middle_name = models.CharField(max_length=100, blank=True, null=True)
-   last_name = models.CharField(max_length=50, blank=True, null=True)
-   #religion = models.ForeignKey(Religion, blank=True, null=True)
-   email = models.EmailField(max_length=100, blank=True, null=True)
-   phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-   contact1 = models.CharField(validators=[phone_regex], max_length=50, blank=True, null=True) # validators should be a list
-   contact2 = models.CharField(validators=[phone_regex], max_length=50, blank=True, null=True) # validators should be a list
-   contact3 = models.CharField(validators=[phone_regex], max_length=50, blank=True, null=True) # validators should be a list
-   #user = models.ForeignKey(auth_user, blank=True, null=True)
-   
-   class Meta:
-      managed = True
-      db_table = 'users'
-   def __unicode__(self):
-      return unicode(self.username)
+
 
 class Religion(models.Model):
    Religion_CHOICES=(
@@ -45,7 +14,7 @@ class Religion(models.Model):
       )
    id = models.AutoField(primary_key=True)
    religion= models.CharField(choices=Religion_CHOICES,max_length=50)
-   users=models.ForeignKey(Users, blank=True, null=True)
+   #users=models.ForeignKey(Users, blank=True, null=True)
    class Meta:
       managed = True
       db_table = 'religion'
@@ -83,7 +52,7 @@ class Address(models.Model):
    country = models.CharField(max_length=50, blank=True, null=True)
    zipcode = models.CharField(max_length=50, blank=True, null=True)
    timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
-   users=models.ForeignKey(Users, blank=True, null=True)
+   #users=models.ForeignKey(Users, blank=True, null=True)
    class Meta:
       managed = True
       db_table = 'address'
@@ -91,6 +60,40 @@ class Address(models.Model):
       return_string = (str(self.building_number) if self.building_number != None else '') + ' ' + \
          (str(self.street) if self.street != None else '') + ' ' + (str(self.locality) if self.locality != None else '')
       return unicode(return_string)
+
+class Users(models.Model):
+   id = models.AutoField(primary_key=True)
+   username = models.CharField(max_length=50, unique=True)
+   ROLE_CHOICES = (
+      ('customer', 'customer'),
+      ('vendor', 'vendor'),
+      ('admin', 'admin'),
+   )
+   role = models.CharField(choices=ROLE_CHOICES, max_length=10)
+   WHAT_ARE_YOU_CHOICES = (
+      ('bride', 'bride'),
+      ('groom', 'groom'),
+      ('family', 'family'),
+      ('friend', 'friend'),
+   )
+   what_are_you = models.CharField(choices=WHAT_ARE_YOU_CHOICES, max_length=10, blank=True, null=True)
+   first_name = models.CharField(max_length=50, blank=True, null=True)
+   middle_name = models.CharField(max_length=100, blank=True, null=True)
+   last_name = models.CharField(max_length=50, blank=True, null=True)
+   religion = models.ForeignKey(Religion, blank=True, null=True)
+   address = models.ForeignKey(Address,blank=True,null=True)
+   email = models.EmailField(max_length=100, blank=True, null=True)
+   phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+   contact1 = models.CharField(validators=[phone_regex], max_length=50, blank=True, null=True) # validators should be a list
+   contact2 = models.CharField(validators=[phone_regex], max_length=50, blank=True, null=True) # validators should be a list
+   contact3 = models.CharField(validators=[phone_regex], max_length=50, blank=True, null=True) # validators should be a list
+   #user = models.ForeignKey(auth_user, blank=True, null=True)
+   
+   class Meta:
+      managed = True
+      db_table = 'users'
+   def __unicode__(self):
+      return unicode(self.username)
 
 class Main_Preferences(models.Model):
    id = models.AutoField(primary_key=True)
