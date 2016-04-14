@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from customers import models as m
 import sys, json
 from dashboard import Dashboard
-#from customers.forms import ContactUsForm
+from customers.forms import ContactUsForm
 from customers.mail import mail_send
 
 # @login_required(login_url='/auth/login/')
