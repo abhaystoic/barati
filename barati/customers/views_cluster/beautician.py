@@ -77,7 +77,7 @@ class Beautician(Dashboard, View):
                   self.beauticians=self.beauticians.exclude(address_id!=location_venue.id)
                except m.Address.DoesNotExist:
                   location_venue=None
-            
+               print location_venue
          
          #Filter by home visit availability
          if home_visit == 'available':
