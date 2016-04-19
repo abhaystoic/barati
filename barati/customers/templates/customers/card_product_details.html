@@ -152,21 +152,47 @@
 							<form action="/update_review/" name="update_review" id="update_review" method="post">
 								{% csrf_token %}
 								<span>
-									<input type="text" name="update_title_review" placeholder="Review title" value="{{user_review.title}}" />
+									<div class="form-group">
+                  						<div class="col-sm-2 label-control">
+											<label for="title">Review Title : </label>
+										</div>
+                  						<div class="col-sm-10">
+											<input type="text" name="update_title_review" placeholder="Review title" value="{{user_review.title}}" />
+										</div>
+									</div>
 								</span>
 								<br>
-								<textarea name="update_detailed_review" placeholder="Your opinion about this product" >{{user_review.detailed_review}}</textarea>
+								<div class="form-group">
+              						<div class="col-sm-2 label-control">
+										<label for="title">Your Review: </label>
+									</div>
+              						<div class="col-sm-10">
+										<textarea name="update_detailed_review" placeholder="Your opinion about this product" >{{user_review.detailed_review}}</textarea>
+									</div>
+								</div>	
 								<br>
-								<select name="update_recommendation" class="recommendation_select_box">
-									<option value="">Will you recommend this product?</option>
-									<option {% if user_review.recommended == 'yes' %}selected{% endif %}>Yes</option>
-									<option {% if user_review.recommended == 'no' %}selected{% endif %}>No</option>
-									<option {% if user_review.recommended == 'maybe' %}selected{% endif %}>Maybe</option>
-								</select>
-								<br><br>
-								<button type="submit" class="btn btn-default">
+								<div class="form-group">
+              						<div class="col-sm-2 label-control">
+										<label for="title">Your Recommendation: </label>
+									</div>
+              						<div class="col-sm-10">
+										<select name="update_recommendation" class="recommendation_select_box">
+											<option value="">Will you recommend this product?</option>
+											<option {% if user_review.recommended == 'yes' %}selected{% endif %}>Yes</option>
+											<option {% if user_review.recommended == 'no' %}selected{% endif %}>No</option>
+											<option {% if user_review.recommended == 'maybe' %}selected{% endif %}>Maybe</option>
+										</select>
+										<br></br>
+									</div>
+								</div>
+								<div class="form-group">
+          							<div class="col-sm-offset-4 col-sm-12">
+										<button type="submit" class="btn btn-default">
 										Update
-								</button>
+										</button>
+										<br><br>
+									</div>
+								</div>	
 							</form>
 							<br><br>
 						{% endif %}	
@@ -200,6 +226,7 @@
 					<p><b>Please login to review.</b></p>
 					<br>
 				{% endif %}
+
 				<p><h4>Customer Reviews</h4></p>
 				{% if all_reviews %}
 				{% for review in all_reviews %}
