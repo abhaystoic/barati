@@ -301,17 +301,20 @@ $(document).ready(function() {
 	
 	$('#update_review').submit(function() { // catch the form's submit event
         $.ajax({
-            url : this.action, 
+            url : "this.action", 
             type : "POST",
             dataType: "json",
             data: $(this).serialize(), // get the form data
             context : this,
             success : function(json) {
               alert(json);
+              console.log("hi");
               var current_url = location.pathname;
               if (json == "success_update_review")
               {
-              	window.location = current_url; // redirect back to the calling page
+              	console.log("hi");
+              	window.location = location.pathname;// redirect back to the calling page
+              	console.log(location.pathname);
               }
               },
             error : function(xhr,errmsg,err) {

@@ -4,6 +4,7 @@ from django.views.generic import View
 from django.http import HttpResponse
 from customers import models as m
 import sys, json
+from django.http import HttpResponseRedirect
 
 class Update_Review(View):
    try:
@@ -24,7 +25,8 @@ class Update_Review(View):
             message = str(general_exception)
             print general_exception
             print sys.exc_traceback.tb_lineno
-         return HttpResponse(json.dumps(message))
+         #return HttpResponse(json.dumps(message))
+         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
    except Exception as general_exception:
       print general_exception
