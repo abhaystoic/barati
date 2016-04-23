@@ -14,7 +14,10 @@ class Dashboard(View):
          self.template_name = 'customers/index.html'
 
       def get_tax(self, product_type):
-         return m.Tax_And_Refund_Policies.objects.filter(product_type=product_type)[0].total_tax
+         try:
+            return m.Tax_And_Refund_Policies.objects.filter(product_type=product_type)[0].total_tax
+         except IndexError:
+            return 0
 
       def get_each_tax(self):
          

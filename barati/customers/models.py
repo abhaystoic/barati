@@ -583,3 +583,54 @@ class Product_Availability(models.Model):
    def __unicode__(self):
       return unicode(self.ref_id)
 
+class Music(models.Model):
+   id = models.AutoField(primary_key=True)
+   ref_id = models.CharField(max_length=100, unique=True)
+   vendor = models.ForeignKey(Vendors)
+   name = models.CharField(max_length=100)
+   address = models.ForeignKey(Address, blank=True, null=True)
+   type = models.ForeignKey(Music_Types, blank=True, null=True) #Occasions - Wedding, Sangeet, etc
+   CATEGORY_CHOICES = (
+      ('dhol', 'dhol'),
+      ('dj', 'dj'),
+      ('orchestra', 'orchestra')
+   )
+   category = models.CharField(choices=CATEGORY_CHOICES, max_length=20)
+   short_description = models.CharField(max_length=100, blank=True, null=True)
+   long_description = models.CharField(max_length=800, blank=True, null=True)
+   sound_available = models.NullBooleanField()
+   floor_available = models.NullBooleanField()
+   artists_available = models.NullBooleanField()
+   artists_details = models.CharField(max_length=800, blank=True, null=True)
+   fog_available = models.NullBooleanField()
+   other_services = models.CharField(max_length=800, blank=True, null=True) #Comma separated values
+   lights_available = models.NullBooleanField()
+   actual_price = models.FloatField()
+   discount_perc = models.FloatField(blank=True, null=True)
+   discount_rs = models.FloatField(blank=True, null=True)
+   discounted_price = models.FloatField(blank=True, null=True)
+   barati_confidence_perc = models.FloatField(blank=True, null=True)
+   # SHIFT_CHOICES = (
+   #    ('morning', 'morning'),
+   #    ('afternoon', 'afternoon'),
+   #    ('evening', 'evening'),
+   #    ('night', 'night')
+   # )
+   # shift = models.CharField(choices=SHIFT_CHOICES, max_length=20)
+   morning_shift = models.BooleanField(default = False)
+   afternoon_shift = models.BooleanField(default = False)
+   evening_shift = models.BooleanField(default = False)
+   night_shift = models.BooleanField(default = False)
+   PLACE_CHOICES = (
+      ('home', 'home'),
+      ('venue', 'venue'),
+      ('private', 'private')
+   )
+   event_place = models.CharField(choices=PLACE_CHOICES, max_length=20)
+   timestamp = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+
+   class Meta:
+      managed = True
+      db_table = 'music'
+   def __unicode__(self):
+      return unicode(self.ref_id)
