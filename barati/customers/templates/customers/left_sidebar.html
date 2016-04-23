@@ -21,7 +21,7 @@
 								<div class="panel-heading" >
 								<h4 class="panel-title">
 								<form name="confidence_check_form" id="confidence_check_form">
-									<a><input type="checkbox" name="confidence_check_filter" id="confidence_check_filter" class="confidence_check_filter" value="add_confidence">&nbsp;&nbsp;Add Barati Confidence</input></a>
+									<a><input type="checkbox" name="confidence_check_filter" id="confidence_check_filter" class="confidence_check_filter" value="add_confidence">&nbsp;&nbsp;Add Barati Confidence</a>
 								</form>
 								</h4>
 								</div>
@@ -37,9 +37,9 @@
 								<div class="panel panel-default">
 									<div class="panel-heading" >
 									<h4 class="panel-title">
-									<a><input type="radio" name="gender_filter" id="gender_male" class="gender_filter" value="male">&nbsp;&nbsp;MALE</input></a>
-									<a><input type="radio" name="gender_filter" id="gender_female" class="gender_filter" value="female">&nbsp;&nbsp;FEMALE</input></a>
-									<a><input type="radio" name="gender_filter" id="gender_all" class="gender_filter" value="all">&nbsp;&nbsp;ALL</input></a>
+									<a><input type="radio" name="gender_filter" id="gender_male" class="gender_filter" value="male">&nbsp;&nbsp;MALE</a>
+									<a><input type="radio" name="gender_filter" id="gender_female" class="gender_filter" value="female">&nbsp;&nbsp;FEMALE</a>
+									<a><input type="radio" name="gender_filter" id="gender_all" class="gender_filter" value="all">&nbsp;&nbsp;ALL</a>
 									</h4>
 									</div>
 								</div>
@@ -50,12 +50,36 @@
 								<div class="panel panel-default">
 									<div class="panel-heading" >
 									<h4 class="panel-title">
-										<a><input type="checkbox" name="home_visit_filter" id="home_visit_filter" class="home_visit_filter" value="home_visit_available">&nbsp;&nbsp;Need Home Visit</input></a>
+										<a><input type="checkbox" name="home_visit_filter" id="home_visit_filter" class="home_visit_filter" value="home_visit_available">&nbsp;&nbsp;Need Home Visit</a>
 									</h4>
 									</div>
 								</div>
 								</div>
-
+                            {% elif category == 'music' %}
+                                <div class="panel-group category-products" id="accordian">
+								<h2>Category</h2>
+								<div class="panel panel-default">
+									<div class="panel-heading" >
+									<h4 class="panel-title">
+									<a><input type="radio" name="music_cat_filter" id="music_cat_dj" class="gender_filter" value="dj">&nbsp;&nbsp;DJ</a>
+									<a><input type="radio" name="music_cat_filter" id="music_cat_dhol" class="gender_filter" value="dhol">&nbsp;&nbsp;DHOL</a>
+									<a><input type="radio" name="music_cat_filter" id="music_cat_orchestra" class="gender_filter" value="orchestra">&nbsp;&nbsp;ORCHESTRA</a>
+									<a><input type="radio" name="music_cat_filter" id="music_cat_all" class="gender_filter" value="all">&nbsp;&nbsp;ALL</a>
+									</h4>
+									</div>
+								</div>
+								</div>
+                                <div class="brands_products"><!--Discount-->
+							        <div class="brands-name">
+								        <h2>Shift</h2>
+								        <ul class="nav nav-pills nav-stacked">	
+                                            <li><a> <span class="pull-right"></span><input type="checkbox" id="shift_morning" class="discountsCheckbox" name="shift_filter" value="filter">&nbsp;&nbsp;MORNING</a></li>
+                                            <li><a> <span class="pull-right"></span><input type="checkbox" id="shift_afternoon" class="discountsCheckbox" name="shift_filter" value="filter">&nbsp;&nbsp;AFTERNOON</a></li>
+                                            <li><a> <span class="pull-right"></span><input type="checkbox" id="shift_evening" class="discountsCheckbox" name="shift_filter" value="filter">&nbsp;&nbsp;EVENING</a></li>
+                                            <li><a> <span class="pull-right"></span><input type="checkbox" id="shift_night" class="discountsCheckbox" name="shift_filter" value="filter">&nbsp;&nbsp;NIGHT</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
 							{% endif %}
 						{% endif %}
 						<!--Gender Selector for beauticians | END-->
@@ -88,11 +112,11 @@
 							<div class="brands-name">
 								<h2>Discount</h2>
 								<ul class="nav nav-pills nav-stacked">
-									<li><a> <span class="pull-right"></span><input type="checkbox" id="0-10" class="discountsCheckbox" name="discounts" value="filter">&nbsp;&nbsp;0% - 10%</input></a></li>
-									<li><a> <span class="pull-right"></span><input type="checkbox" id="10-20" class="discountsCheckbox" name="discounts" value="filter">&nbsp;&nbsp;10% - 20%</input></a></li>
-									<li><a> <span class="pull-right"></span><input type="checkbox" id="20-30" class="discountsCheckbox" name="discounts" value="filter">&nbsp;&nbsp;20% - 30%</input></a></li>
-									<li><a> <span class="pull-right"></span><input type="checkbox" id="30-40" class="discountsCheckbox" name="discounts" value="filter">&nbsp;&nbsp;30% - 40%</input></a></li>
-									<li><a> <span class="pull-right"></span><input type="checkbox" id="40-100" class="discountsCheckbox" name="discounts" value="filter">&nbsp;&nbsp;More than 40%</input></a></li>
+									<li><a> <span class="pull-right"></span><input type="checkbox" id="0-10" class="discountsCheckbox" name="discounts" value="filter">&nbsp;&nbsp;0% - 10%</a></li>
+									<li><a> <span class="pull-right"></span><input type="checkbox" id="10-20" class="discountsCheckbox" name="discounts" value="filter">&nbsp;&nbsp;10% - 20%</a></li>
+									<li><a> <span class="pull-right"></span><input type="checkbox" id="20-30" class="discountsCheckbox" name="discounts" value="filter">&nbsp;&nbsp;20% - 30%</a></li>
+									<li><a> <span class="pull-right"></span><input type="checkbox" id="30-40" class="discountsCheckbox" name="discounts" value="filter">&nbsp;&nbsp;30% - 40%</a></li>
+									<li><a> <span class="pull-right"></span><input type="checkbox" id="40-100" class="discountsCheckbox" name="discounts" value="filter">&nbsp;&nbsp;More than 40%</a></li>
 								</ul>
 							</div>
 						</div><!--/Discount-->
@@ -122,11 +146,50 @@
 		{
 			$('input:radio[id="gender_all"]').attr('checked', 'checked');
 		}
-
+        
+        //Select the Music Category
+        if (window.location.href.indexOf("for=dj") > -1)
+		{
+			$('input:radio[id="music_cat_dj"]').attr('checked', 'checked');
+		}
+		else if (window.location.href.indexOf("for=dhol") > -1)
+		{
+			$('input:radio[id="music_cat_dhol"]').attr('checked', 'checked');
+		}
+        else if (window.location.href.indexOf("for=orchestra") > -1)
+		{
+			$('input:radio[id="music_cat_orchestra"]').attr('checked', 'checked');
+		}
+		else
+		{
+			$('input:radio[id="music_cat_all"]').attr('checked', 'checked');
+		}
+        
+        //Home Visit Filter
 		if (window.location.href.indexOf("home_visit=available") > -1)
 		{
 			$('input:checkbox[id="home_visit_filter"]').attr('checked', 'checked');
 		}
+        
+        //Music Shift
+        if (window.location.href.indexOf("shift_morning=filter") > -1)
+		{
+			$('input:checkbox[id="shift_morning"]').attr('checked', 'checked');
+		}
+		if (window.location.href.indexOf("shift_afternoon=filter") > -1)
+		{
+			$('input:checkbox[id="shift_afternoon"]').attr('checked', 'checked');
+		}
+		if (window.location.href.indexOf("shift_evening=filter") > -1)
+		{
+			$('input:checkbox[id="shift_evening"]').attr('checked', 'checked');
+		}
+		if (window.location.href.indexOf("shift_night=filter") > -1)
+		{
+			$('input:checkbox[id="shift_night"]').attr('checked', 'checked');
+		}
+        
+        //Confidence Filter
 		if (window.location.href.indexOf("confidence_check_filter=add_confidence") > -1)
 		{
 			$('input:checkbox[id="confidence_check_filter"]').attr('checked', 'checked');
@@ -154,6 +217,8 @@
 			$('input:checkbox[id="40-100"]').attr('checked', 'checked');
 		}
 	});
+    
+    // Beauticians
 	$('input:radio[name="gender_filter"]').change(function(){
     	var current_url = location.pathname + '?';
         if ($(this).is(':checked') && $(this).val() == 'male') {
@@ -178,6 +243,25 @@
         	setGetParameter('home_visit', 'not_available');
         }
     });
+    
+    // Music 
+    $('input:radio[name="music_cat_filter"]').change(function(){
+    	var current_url = location.pathname + '?';
+        if ($(this).is(':checked') && $(this).val() == 'dj') {
+        	//url2 = "&for=male";
+        	setGetParameter('for', 'dj');
+        }
+        if ($(this).is(':checked') && $(this).val() == 'dhol') {
+         	setGetParameter('for', 'dhol');
+        }
+        if ($(this).is(':checked') && $(this).val() == 'orchestra') {
+            setGetParameter('for', 'orchestra');
+        }
+        if ($(this).is(':checked') && $(this).val() == 'all') {
+            setGetParameter('for', 'all');
+        }
+        //window.location = current_url + url2;
+    });
     $('#confidence_check_filter').change(function(){
         if ($('#confidence_check_filter').is(':checked') && $('#confidence_check_filter').val() == 'add_confidence') 
         {
@@ -189,6 +273,47 @@
         }
     });
     
+    $('#shift_morning').change(function(){
+        if ($('#shift_morning').is(':checked') && $('#shift_morning').val() == 'filter') 
+        {
+        	setGetParameter('shift_morning', 'filter');
+        }
+        else
+        {
+        	setGetParameter('shift_morning', 'no-filter');
+        }
+    });
+    $('#shift_afternoon').change(function(){
+        if ($('#shift_afternoon').is(':checked') && $('#shift_afternoon').val() == 'filter') 
+        {
+        	setGetParameter('shift_afternoon', 'filter');
+        }
+        else
+        {
+        	setGetParameter('shift_afternoon', 'no-filter');
+        }
+    });
+    $('#shift_evening').change(function(){
+        if ($('#shift_evening').is(':checked') && $('#shift_evening').val() == 'filter') 
+        {
+        	setGetParameter('shift_evening', 'filter');
+        }
+        else
+        {
+        	setGetParameter('shift_evening', 'no-filter');
+        }
+    });
+    $('#shift_night').change(function(){
+        if ($('#shift_night').is(':checked') && $('#shift_night').val() == 'filter') 
+        {
+        	setGetParameter('shift_night', 'filter');
+        }
+        else
+        {
+        	setGetParameter('shift_night', 'no-filter');
+        }
+    });
+    
     /*
     var discounts = [];
     $(".discountsCheckbox").change(function() {
@@ -197,6 +322,7 @@
 	        setGetParameter(discounts.join("*"), 'filter');
 	    });
 	});*/
+    // Discount Query
 	$('#0-10').change(function(){
         if ($('#0-10').is(':checked') && $('#0-10').val() == 'filter') 
         {

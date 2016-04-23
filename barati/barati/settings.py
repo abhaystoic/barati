@@ -41,7 +41,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.zoho.com'
 EMAIL_HOST_USER = 'contactus@barati.in'
-EMIAL_HOST_PASSWORD = ''
+EMIAL_HOST_PASSWORD = 'Welc0me123!#'
 EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 

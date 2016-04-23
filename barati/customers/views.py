@@ -20,7 +20,7 @@ from customers.views_cluster.dashboard import Dashboard
 
 def get_categories():
    categories = ('venues', 'cards', 'beauticians', 'gifts', 'photo_videos', 'bakeries', 'ghodi_bagghis', 'bands', 'mehendis', 'fireworks', 'tents', 'music')
-   return categries
+   return categories
       
 #Importing all the clustered views
 dir_name = 'customers.views_cluster.'
@@ -207,3 +207,17 @@ def profile(request):
       form1 = AddressForm(instance=add)
       form2 =ReligionForm(instance=rel)
    return render(request, 'profile.html', {'form': form,'form1':form1,'form2':form2})
+
+@register.filter(name = 'get_musician')
+def get_mustician(ref_id):
+   try:
+      vendor_id = m.Music.objects.get(ref_id=ref_id).vendor_id
+      musician = m.Vendors.objects.get(id=vendor_id)
+      musician_name = musician.name
+      musician_type = m.Music.objects.get(ref_id=ref_id).category
+      locality = m.Address.objects.get(id=musician.address_id).locality
+      return (musician_name, musician_type,locality)
+   except Exception as general_exception:
+      print str(general_exception)
+      print "Line number : " + str(sys.exc_traceback.tb_lineno)
+      return 0
