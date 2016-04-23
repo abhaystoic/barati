@@ -141,25 +141,91 @@
 					{% if user_review %}
 						{% if user_review.user.username == request.user.username %}
 							<p><b>You Reviewed this item on {{user_review.timestamp}}</b></p>
-							<form action="/update_review/" name="update_review" id="update_review" method="post">
-								{% csrf_token %}
-								<span>
-									<input type="text" name="update_title_review" placeholder="Review title" value="{{user_review.title}}" />
-								</span>
-								<br>
-								<textarea name="update_detailed_review" placeholder="Your opinion about this product" >{{user_review.detailed_review}}</textarea>
-								<br>
-								<select name="update_recommendation" class="recommendation_select_box">
-									<option value="">Will you recommend this product?</option>
-									<option {% if user_review.recommended == 'yes' %}selected{% endif %}>Yes</option>
-									<option {% if user_review.recommended == 'no' %}selected{% endif %}>No</option>
-									<option {% if user_review.recommended == 'maybe' %}selected{% endif %}>Maybe</option>
-								</select>
-								<br><br>
-								<button type="submit" class="btn btn-default">
-										Update
-								</button>
-							</form>
+							<br>
+							<div style="background-color:#F0F0E9">
+								<div class="row" >
+									<div class="col-sm-2">
+										<b>Review Title</b>
+									</div>
+									<div class="col-sm-8">
+										{{user_review.title}}
+									</div>
+								</div><br>
+								<div class="row" >
+									<div class="col-sm-2">
+										<b>Your Review</b>
+									</div>
+									<div class="col-sm-8">
+										{{user_review.detailed_review}}
+									</div>
+								</div><br>
+								<div class="row" >
+									<div class="col-sm-2">
+										<b>Recommended</b>
+									</div>
+									<div class="col-sm-8">
+										{{user_review.recommended}}
+									</div>
+								</div>
+							</div>
+							<br>
+							<a href="#" class="btn btn-default" style= "background-color:#FE980F;color:white;margin-left:200px" data-toggle="modal" data-target="#review-modal">Edit Review</a>
+							
+							<div class="modal fade" id="review-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color:#40403E">
+        <button type="button" style ="margin-top:25px;margin-right:10px;background-color:#FE980F" class="close btn btn-warning" data-dismiss="modal" aria-label="Close"></button>
+        <h4 class="modal-title" style= "color:white" id="myModalLabel">Update Your Review</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/update_review/" name="update_review" id="update_review" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="update_reviewed_ref_id" value="{{venue_detail.ref_id}}" />
+            <span>
+              <div class="form-group">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-3 label-control">
+                  <label for="title">Review Title : </label>
+                </div>
+                <div class="col-sm-8">
+                  <input type="text" name="update_title_review" placeholder="Review title" value="{{user_review.title}}" />
+                </div>
+              </div>
+            </span>
+            <br>
+            <div class="form-group">
+              <div class="col-sm-1"></div>
+              <div class="col-sm-3 label-control">
+                <label for="title">Your Review: </label>
+              </div>
+              <div class="col-sm-8">
+                <textarea name="update_detailed_review" placeholder="Your opinion about this product" >{{user_review.detailed_review}}</textarea>
+              </div>
+            </div>  
+            <br>
+            <div class="form-group">
+              <div class="col-sm-1"></div>
+              <div class="col-sm-3 label-control">
+                <label for="title">Your Recommendation: </label>
+              </div>
+              <div class="col-sm-8">
+                <select name="update_recommendation" class="recommendation_select_box">
+                  <option value="">Will you recommend this product?</option>
+                  <option {% if user_review.recommended == 'yes' %}selected{% endif %}>Yes</option>
+                  <option {% if user_review.recommended == 'no' %}selected{% endif %}>No</option>
+                  <option {% if user_review.recommended == 'maybe' %}selected{% endif %}>Maybe</option>
+                </select>
+                <br></br><br>
+              </div>
+            </div>
+            <center><button type="submit" class="btn btn-default">Update</button></center>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 							<br><br>
 						{% endif %}	
 					{% else %}
@@ -268,6 +334,31 @@ $(document).ready(function() {
     });
 
     });
+$('#update_review').submit(function() { // catch the form's submit event
+        $.ajax({
+            url : "this.action", 
+            type : "POST",
+            dataType: "json",
+            data: $(this).serialize(), // get the form data
+            context : this,
+            success : function(json) {
+              alert(json);
+              console.log("hi");
+              var current_url = location.pathname;
+              if (json == "success_update_review")
+              {
+              	console.log("hi");
+              	window.location = location.pathname;// redirect back to the calling page
+              	console.log(location.pathname);
+              }
+              },
+            error : function(xhr,errmsg,err) {
+              alert(xhr.status + ": " + xhr.responseText);
+              }
+        });
+        return false;
+    });
+});
 </script>
 <script type="text/javascript" src="{% static 'js/jqzoom.js' %}"></script>
 <script type="text/javascript">
