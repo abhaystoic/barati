@@ -19,7 +19,7 @@ class Religion(models.Model):
       managed = True
       db_table = 'religion'
    def __unicode__(self):
-      return unicode(self.name)
+      return unicode(self.religion)
 
 class Address(models.Model):
    id = models.AutoField(primary_key=True)
