@@ -151,6 +151,7 @@
 							<p><h4>Your review</h4></p>
 							<p><h5>You Reviewed this item on {{user_review.timestamp}}</h5></p>
 							<br>
+							<!-- Review of current user for card  -->
 							<div style="background-color:#F0F0E9">
 								<div class="row" >
 									<div class="col-sm-2">
@@ -178,12 +179,25 @@
 								</div>
 							</div>
 							<br>
+							<!-- Edit Review -->
 							<a href="#" class="btn btn-default" style= "background-color:#FE980F;color:white;margin-left:200px" data-toggle="modal" data-target="#review-modal">Edit Review</a>
-							
+							<!-- Update review form -->
+							<div class="modal fade" id="review-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header" style="background-color:#40403E">
+							        <button type="button" style ="margin-top:25px;margin-right:10px;background-color:#FE980F" class="close btn btn-warning" data-dismiss="modal" aria-label="Close"></button>
+							        <h4 class="modal-title" style= "color:white" id="myModalLabel">Update Your Review</h4>
+							      </div>
+							      <div class="modal-body">
+							        <form action="/update_review/" name="update_review" id="submit_review" method="post">
+							          {% csrf_token %}
+							          <input type="hidden" name="update_reviewed_ref_id" value="{{card_detail.ref_id}}" />
 								{% include 'customers/edit_review.html' %}
 							<br><br>
 						{% endif %}	
 					{% else %}
+					<!-- Submit review first time -->
 						<p><b>Write Your Review</b></p>
 						<form action="/submit_review/" name="submit_review" id="submit_review" method="post">
 							{% csrf_token %}
@@ -285,7 +299,7 @@ $(document).ready(function() {
             success : function(json) {
               alert(json);
               var current_url = location.pathname;
-              if (json == "success_submit_review")
+              if (json == "success_submit_review" || "success_update_review")
               {
               	window.location = current_url; // redirect back to the calling page
               }
@@ -299,32 +313,7 @@ $(document).ready(function() {
 
     });
 	
-	$('#update_review').submit(function() { // catch the form's submit event
-        $.ajax({
-            url : "this.action", 
-            type : "POST",
-            dataType: "json",
-            data: $(this).serialize(), // get the form data
-            context : this,
-            success : function(json) {
-              alert(json);
-              console.log("hi");
-              var current_url = location.pathname;
-              if (json == "success_update_review")
-              {
-              	console.log("hi");
-              	window.location = location.pathname;// redirect back to the calling page
-              	console.log(location.pathname);
-              }
-              },
-            error : function(xhr,errmsg,err) {
-              alert(xhr.status + ": " + xhr.responseText);
-              }
-        });
-        return false;
-    });
-
-    });
+	
 $('#add_to_wishlist').submit(function() { // catch the form's submit event
           $.ajax({
               url : this.action, 

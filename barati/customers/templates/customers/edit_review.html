@@ -1,14 +1,4 @@
-<div class="modal fade" id="review-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header" style="background-color:#40403E">
-        <button type="button" style ="margin-top:25px;margin-right:10px;background-color:#FE980F" class="close btn btn-warning" data-dismiss="modal" aria-label="Close"></button>
-        <h4 class="modal-title" style= "color:white" id="myModalLabel">Update Your Review</h4>
-      </div>
-      <div class="modal-body">
-        <form action="/update_review/" name="update_review" id="update_review" method="post">
-          {% csrf_token %}
-          <input type="hidden" name="update_reviewed_ref_id" value="{{card_detail.ref_id}}" />
+
             <span>
               <div class="form-group">
                 <div class="col-sm-1"></div>

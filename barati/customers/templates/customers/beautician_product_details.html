@@ -122,7 +122,7 @@
 			{% if beautician_detail.home_visit_charge != 'NA' and beautician_detail.home_visit_charge %}
 				<li><a href="#homevisitpolicy" data-toggle="tab">Home Visit Policy</a></li>
 			{% endif %}
-			<li><a href="#reviews" data-toggle="tab">Reviews {% if all_reviews %}({{all_reviews.count}}){% endif %}</a></li>
+			<li><a href="#reviews" data-toggle="tab">Reviews {% if all_reviews %}({{all_reviews.count}}) {% endif%}</a></li>
 			<li><a href="#gallery" data-toggle="tab"> Gallery</a></li>
 		</ul>
 	</div>
@@ -164,28 +164,56 @@
 					{% if user_review %}
 						{% if user_review.user.username == request.user.username %}
 							<p><b>You Reviewed this item on {{user_review.timestamp}}</b></p>
-							<form action="/update_review/" name="update_review" id="update_review" method="post">
-								{% csrf_token %}
-								<span>
-									<input type="text" name="update_title_review" placeholder="Review title" value="{{user_review.title}}" />
-								</span>
-								<br>
-								<textarea name="update_detailed_review" placeholder="Your opinion about this product" >{{user_review.detailed_review}}</textarea>
-								<br>
-								<select name="update_recommendation" class="recommendation_select_box">
-									<option value="">Will you recommend this product?</option>
-									<option {% if user_review.recommended == 'yes' %}selected{% endif %}>Yes</option>
-									<option {% if user_review.recommended == 'no' %}selected{% endif %}>No</option>
-									<option {% if user_review.recommended == 'maybe' %}selected{% endif %}>Maybe</option>
-								</select>
-								<br><br>
-								<button type="submit" class="btn btn-default">
-										Update
-								</button>
-							</form>
+							<br>
+							<!-- Review of current user for beautician  -->
+							<div style="background-color:#F0F0E9">
+								<div class="row" >
+									<div class="col-sm-2">
+										<b>Review Title</b>
+									</div>
+									<div class="col-sm-8">
+										{{user_review.title}}
+									</div>
+								</div><br>
+								<div class="row" >
+									<div class="col-sm-2">
+										<b>Your Review</b>
+									</div>
+									<div class="col-sm-8">
+										{{user_review.detailed_review}}
+									</div>
+								</div><br>
+								<div class="row" >
+									<div class="col-sm-2">
+										<b>Recommended</b>
+									</div>
+									<div class="col-sm-8">
+										{{user_review.recommended}}
+									</div>
+								</div>
+							</div>
+							<br>
+							<!-- Edit Review -->
+							<a href="#" class="btn btn-default" style= "background-color:#FE980F;color:white;margin-left:200px" data-toggle="modal" data-target="#review-modal">Edit Review</a>
+							
+							<!-- Update review form -->
+							<div class="modal fade" id="review-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header" style="background-color:#40403E">
+							        <button type="button" style ="margin-top:25px;margin-right:10px;background-color:#FE980F" class="close btn btn-warning" data-dismiss="modal" aria-label="Close"></button>
+							        <h4 class="modal-title" style= "color:white" id="myModalLabel">Update Your Review</h4>
+							      </div>
+							      <div class="modal-body">
+							        <form action="/update_review/" name="update_review" id="submit_review" method="post">
+							          {% csrf_token %}
+							          <input type="hidden" name="update_reviewed_ref_id" value="{{beautician_detail.ref_id}}" />
+							            {% include 'customers/edit_review.html' %}
+
 							<br><br>
 						{% endif %}	
 					{% else %}
+					<!-- Submit review first time -->
 						<p><b>Write Your Review</b></p>
 						<form action="/submit_review/" name="submit_review" id="submit_review" method="post">
 							{% csrf_token %}
@@ -232,16 +260,17 @@
 				{% else %}
 					<div style="background-color:#F0F0E9">
 					<p><b>No customer reviews found.</b></p>
-				</div
+				</div>
 				{% endif %}
 			</div>
 		</div>
+		<div class="tab-pane fade" id="gallery" >
+			<p>Gallery</p>
+	</div>
 		
 	</div>
 
-	<div class="tab-pane fade" id="gallery" >
-			<p>Gallery</p>
-	</div>
+	
 </div><!--/category-tab-->
 
 
@@ -282,7 +311,7 @@ $(document).ready(function() {
             success : function(json) {
               alert(json);
               var current_url = location.pathname;
-              if (json == "success_submit_review")
+              if (json == "success_submit_review" || "success_update_review")
               {
               	window.location = current_url; // redirect back to the calling page
               }
