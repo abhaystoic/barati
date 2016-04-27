@@ -31,3 +31,5 @@ admin.site.register(Beauticians)
 admin.site.register(Product_Availability)
 admin.site.register(Music)
 admin.site.register(Tax_And_Refund_Policies)
+admin.site.register(Budget)
+

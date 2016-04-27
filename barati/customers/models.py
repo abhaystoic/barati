@@ -132,7 +132,7 @@ class Budget(models.Model):
       managed = True
       db_table = 'budget'
    def __unicode__(self):
-      return unicode(self.name)
+      return unicode(self.user)
       
 class Vendors(models.Model):
    id = models.AutoField(primary_key=True)
