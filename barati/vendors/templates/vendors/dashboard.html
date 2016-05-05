@@ -15,6 +15,8 @@
 	<link href="{% static 'css/main2.css' %}" rel="stylesheet">
 	<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
 	<link href="{% static 'css/fullcalendar.min.css' %}" rel="stylesheet">
+	<link href="{% static 'css/jquery.ptTimeSelect.css' %}" rel="stylesheet">
+	<link href="{% static 'css/jquery-ui.min.css' %}" rel="stylesheet">
 
 
 	<style>
@@ -67,58 +69,71 @@
 		</div>
 	</section>
 
-		<div >
-			<p><b>Block Your Product</b></p>
+		<div class= "col-md-6" >
+			<center><h2 style="color:grey"><b>Block Your Product</b></h2></center>
+			<br>
 			<form action="block_product/" name="block_product" id="block_product" method="post">
 				{% csrf_token %}
 				
-				<div class="col-sm-2">
+				<div class="col-sm-3">
 					<b>Product Id</b>
 				</div>
-				<div class="col-sm-10">
+				<div class="col-sm-9">
 					<input type="text" name="product_id" placeholder="Enter product_id" required="true"/>
+					<br><br>
 				</div>
-				<div class="col-sm-2">
+				
+				<div class="col-sm-3">
 					<b>Title</b>
 				</div>
-				<div class="col-sm-10">
+				<div class="col-md-9">
 					<input type="text" name="title" placeholder="Enter Title" />
+					<br><br>
 				</div>
-				<div class="col-sm-2">
+				
+				<div class="col-sm-3">
 					<b>Start Date</b>
 				</div>
-				<div class="col-sm-10">
-					<input type="date" name="start_date" placeholder="Enter start date YYYY-MM-DD format" />
+				<div class="col-sm-9">
+					<input type="text" class='datepicker' name="start_date" placeholder="Enter start date YYYY-MM-DD format" />
+					<br><br>
 				</div>
-				<div class="col-sm-2">
+				
+				<div class="col-sm-3">
 					<b>Start Time</b>
 				</div>
-				<div class="col-sm-10">
-					<input type="time" name="start_time" placeholder="Enter start time" >
+				<div class="col-sm-9">
+					<input class="timeinput" type="time" name="start_time" placeholder="Enter start time" >
+					<br><br>
 				</div>
-				<div class="col-sm-2">
+				<br>
+				<div class="col-sm-3">
 					<b>End Date</b>
 				</div>
-				<div class="col-sm-10">
-					<input type="date" name="end_date" placeholder="Enter start date YYYY-MM-DD format" />
+				<div class="col-sm-9">
+					<input type="text" class='datepicker'  name="end_date" placeholder="Enter start date YYYY-MM-DD format" />
+					<br><br>
 				</div>
-				<div class="col-sm-2">
+				
+				<div class="col-sm-3">
 					<b>End Time</b>
 				</div>
-				<div class="col-sm-10">
-					<input type="time" name="end_time" placeholder="Enter end time" />
+				<div class="col-sm-9">
+					<input class="timeinput" type="time" name="end_time" placeholder="Enter end time" />
+					<br><br><br>
 				</div>
-				<br><br>
 				
-
-				<button type="submit" class="btn btn-default">
+				
+				
+				<button type="submit" class="btn btn-default" style="margin-left:140px">
 					Submit
 				</button>
+			
 				<br><br>
 				
 			</form>
 		</div>
-		<div id='calendar'></div>
+		<div id='calendar' class ="col-md-6"></div>
 		{{finals}}
 
 	
@@ -133,6 +148,9 @@
     <script src="{% static 'js/moment.min.js' %}"></script>
     <script src="{% static 'js/fullcalendar.min.js' %}"></script>
     <script src="{% static 'js/fullcalendar.js' %}"></script>
+    <script src="{% static 'js/jquery.ptTimeSelect.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    
 
     <script type="text/javascript">
     	$(document).ready(function() {
@@ -179,7 +197,12 @@ $('#block_product').submit(function() { // catch the form's submit event
         return false;
     });
 
-    
+    $('.timeinput').ptTimeSelect();
+
+        $( ".datepicker" ).datepicker({
+  dateFormat: "yy-mm-dd"
+});
+  	
 		
 	});
 
