@@ -16,12 +16,12 @@ class Save_Budget_Preferences(View):
          return context
       
       def float_typecast(self, ele):
-         print "ele='", str(ele).strip(), "'"
-         if ele is not None or str(ele).strip() != '':
+         print "ele='", "".join(str(ele).split()) + "'", len(str(ele))
+         if ele is not None and "".join(str(ele).split()) != '':
             return float(ele)
          else:
-            return None
-         
+            return 0
+
       def post(self, request, **kwargs):
          user_id = m.Users.objects.get(username= request.user.username).id
          print "rec = '", request.POST.get('min_master'), "'"
@@ -49,7 +49,6 @@ class Save_Budget_Preferences(View):
             min_gift=min_gift, max_gift=max_gift, min_tent=min_tent, max_tent=max_tent, \
             user_id=user_id\
             )
-         budget.save()
          message = "success_budget_preferences_saved"
          return HttpResponse(json.dumps(message))
 

@@ -43,7 +43,10 @@ class Budget(Dashboard, View):
       def get(self, request, **kwargs):
          context_dict = self.get_context_data(request=request)
          user_id = m.Users.objects.get(username=request.user.username).id
-         budget_details = m.Budget.objects.get(user_id=user_id)
+         try:
+            budget_details = m.Budget.objects.get(user_id=user_id)
+         except m.Budget.DoesNotExist:
+            budget_details = None
          self.set_current_expenses(user_id)
          context_dict.update({'budget_details' : budget_details,\
          'current_cart_card_expense' : self.current_cart_card_expense,\
