@@ -68,7 +68,7 @@
 			</div>
 		</div>
 	</section>
-
+	<!--for for blocking product-->
 		<div class= "col-md-6" >
 			<center><h2 style="color:grey"><b>Block Your Product</b></h2></center>
 			<br>
@@ -125,7 +125,7 @@
 				
 				
 				
-				<button type="submit" class="btn btn-default" style="margin-left:140px">
+				<button type="submit" class="btn btn-default" style="margin-left:140px;background-color:#FE980F">
 					Submit
 				</button>
 			
@@ -160,14 +160,14 @@
     <script>
 
 	$(document).ready(function() {
-		
+		/* javascript for calendar*/
 		$('#calendar').fullCalendar({
 			header: {
 				left: 'prev,next today',
 				center: 'title',
 				right: 'month,basicWeek,basicDay'
 			},
-			defaultDate: '2016-05-1',
+			defaultDate: '2016-06-1',
 			editable: true,
 			eventLimit: true, // allow "more" link when too many events
 
@@ -175,6 +175,7 @@
 				{{book_products|safe}}
 			]
 		});
+/* javascript for block product*/
 $('#block_product').submit(function() { // catch the form's submit event
         $.ajax({
             url : this.action, 
@@ -196,12 +197,13 @@ $('#block_product').submit(function() { // catch the form's submit event
         });
         return false;
     });
-
+	
+	/* javascript for time input*/
     $('.timeinput').ptTimeSelect();
-
-        $( ".datepicker" ).datepicker({
-  dateFormat: "yy-mm-dd"
-});
+    /* javascript for date input*/
+    $( ".datepicker" ).datepicker({
+			dateFormat: "yy-mm-dd"
+	});
   	
 		
 	});
