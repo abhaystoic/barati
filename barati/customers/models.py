@@ -573,10 +573,14 @@ class Tax_And_Refund_Policies(models.Model):
 class Product_Availability(models.Model):
    id = models.AutoField(primary_key=True)
    ref_id = models.CharField(max_length=100, blank=True, null=True)
+   vendor = models.ForeignKey(Vendors, blank=True, null=True) 
    product_type = models.CharField(max_length=100, blank=True, null=True, unique=True)
-   date = models.DateField(blank=True, null=True)
-   time = models.TimeField(blank=True, null=True)
-
+   start_date = models.DateField(blank=True, null=True)
+   start_time = models.TimeField(blank=True, null=True)
+   end_date = models.DateField(blank=True, null=True)
+   end_time = models.TimeField(blank=True, null=True)
+   title = models.CharField(max_length=300, blank=True, null=True)
+   
    class Meta: 
       managed = True
       db_table = 'product_availability'
