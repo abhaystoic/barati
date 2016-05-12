@@ -18,5 +18,5 @@ urlpatterns = [
     url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^ratings/', include('star_ratings.urls', namespace='ratings', app_name='ratings')),
     url(r'^avatar/', include('avatar.urls')),
-    url(r'^calendar/1', include('happenings.urls', namespace='calendar')),
+    
 ]
