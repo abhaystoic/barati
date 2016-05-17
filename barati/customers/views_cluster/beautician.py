@@ -62,7 +62,7 @@ class Beautician(Dashboard, View):
                preference_date=None
             if preference_date:
                try:
-                  beaut_booked=m.Product_Availability.objects.filter(date=preference_date , ref_id__startswith='BTN').values('ref_id')
+                  beaut_booked=m.Product_Availability.objects.filter(start_date=preference_date , ref_id__startswith='BTN').values('ref_id')
                   beaut_booked_ref_ids= [d['ref_id'] for d in beaut_booked]
                   self.beauticians=self.beauticians.exclude(ref_id__in=beaut_booked_ref_ids)
                except m.Product_Availability.DoesNotExist:
