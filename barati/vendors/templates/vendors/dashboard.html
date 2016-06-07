@@ -14,6 +14,20 @@
     <link href="{% static 'css/animate.css' %}" rel="stylesheet">
 	<link href="{% static 'css/main2.css' %}" rel="stylesheet">
 	<link href="{% static 'css/responsive.css' %}" rel="stylesheet">
+	<link href="{% static 'css/fullcalendar.min.css' %}" rel="stylesheet">
+	<link href="{% static 'css/jquery.ptTimeSelect.css' %}" rel="stylesheet">
+	<link href="{% static 'css/jquery-ui.min.css' %}" rel="stylesheet">
+
+
+	<style>
+
+	#calendar {
+		max-width: 900px;
+		margin: 0 auto;
+	}
+
+	</style>				
+  	
     <!--[if lt IE 9]>
     <script src="{% static 'js/html5shiv.js' %}"></script>
     <script src="{% static 'js/respond.min.js' %}"></script>
@@ -23,6 +37,8 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{% static 'images/ico/apple-touch-icon-114-precomposed.png' %}">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'images/ico/apple-touch-icon-72-precomposed.png' %}">
     <link rel="apple-touch-icon-precomposed" href="{% static 'images/ico/apple-touch-icon-57-precomposed.png' %}">
+    
+
 </head><!--/head-->
 
 <body>
@@ -52,19 +68,147 @@
 			</div>
 		</div>
 	</section>
+	<!--form for blocking product-->
+		<div class= "col-md-6" >
+			<center><h2 style="color:grey"><b>Block Your Product</b></h2></center>
+			<br>
+			<form action="block_product/" name="block_product" id="block_product" method="post">
+				{% csrf_token %}
+				
+				<div class="col-sm-3">
+					<b>Product Id</b>
+				</div>
+				<div class="col-sm-9">
+					<input type="text" name="product_id" placeholder="Enter product_id" required="true"/>
+					<br><br>
+				</div>
+				
+				<div class="col-sm-3">
+					<b>Title</b>
+				</div>
+				<div class="col-md-9">
+					<input type="text" name="title" placeholder="Enter Title" />
+					<br><br>
+				</div>
+				
+				<div class="col-sm-3">
+					<b>Start Date</b>
+				</div>
+				<div class="col-sm-9">
+					<input type="text" class='datepicker' name="start_date" placeholder="Enter start date YYYY-MM-DD format" />
+					<br><br>
+				</div>
+				
+				<div class="col-sm-3">
+					<b>Start Time</b>
+				</div>
+				<div class="col-sm-9">
+					<input class="timeinput" type="time" name="start_time" placeholder="Enter start time" >
+					<br><br>
+				</div>
+				<br>
+				<div class="col-sm-3">
+					<b>End Date</b>
+				</div>
+				<div class="col-sm-9">
+					<input type="text" class='datepicker'  name="end_date" placeholder="Enter start date YYYY-MM-DD format" />
+					<br><br>
+				</div>
+				
+				<div class="col-sm-3">
+					<b>End Time</b>
+				</div>
+				<div class="col-sm-9">
+					<input class="timeinput" type="time" name="end_time" placeholder="Enter end time" />
+					<br><br><br>
+				</div>
+				
+				
+				
+				<button type="submit" class="btn btn-default" style="margin-left:140px;background-color:#FE980F">
+					Submit
+				</button>
+			
+				<br><br>
+				
+			</form>
+		</div>
+		<div id='calendar' class ="col-md-6"></div>
+		{{finals}}
+
 	
-	{% include 'vendors/footer.html'%}					
-  
+	{% include 'vendors/footer.html'%}	
+	
     <script src="{% static 'js/jquery.js' %}"></script>
 	<script src="{% static 'js/bootstrap.min.js' %}"></script>
 	<script src="{% static 'js/jquery.scrollUp.min.js' %}"></script>
 	<script src="{% static 'js/price-range.js' %}"></script>
     <script src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/moment.min.js' %}"></script>
+    <script src="{% static 'js/fullcalendar.min.js' %}"></script>
+    <script src="{% static 'js/fullcalendar.js' %}"></script>
+    <script src="{% static 'js/jquery.ptTimeSelect.js' %}"></script>
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    
+
     <script type="text/javascript">
     	$(document).ready(function() {
     		$('#dashboard_nav').removeClass().addClass('active');
     	});
     </script>
+    <script>
+
+	$(document).ready(function() {
+		/* javascript for calendar*/
+		$('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,basicWeek,basicDay'
+			},
+			defaultDate: '2016-06-1',
+			editable: true,
+			eventLimit: true, // allow "more" link when too many events
+
+			events:[
+				{{book_products|safe}}
+			]
+		});
+/* javascript for block product*/
+$('#block_product').submit(function() { // catch the form's submit event
+        $.ajax({
+            url : this.action, 
+            type : "POST",
+            dataType: "json",
+            data: $(this).serialize(), // get the form data
+            context : this,
+            success : function(json) {
+              alert(json);
+              var current_url = location.pathname;
+              if (json == "success_submit")
+              {
+              	window.location = current_url; // redirect back to the calling page
+              }
+              },
+            error : function(xhr,errmsg,err) {
+              alert(xhr.status + ": " + xhr.responseText);
+              }
+        });
+        return false;
+    });
+	
+	/* javascript for time input*/
+    $('.timeinput').ptTimeSelect();
+    /* javascript for date input*/
+    $( ".datepicker" ).datepicker({
+			dateFormat: "yy-mm-dd"
+	});
+  	
+		
+	});
+
+</script>
+    
 </body>
 </html>
