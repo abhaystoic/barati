@@ -42,6 +42,7 @@ class Save_Budget_Preferences(View):
          min_tent = self.float_typecast(request.POST.get('min_tent'))
          max_tent = self.float_typecast(request.POST.get('max_tent'))
          
+         print user_id
          budget = m.Budget.objects.update_or_create( \
             min_master=min_master, max_master=max_master, min_venue=min_venue, max_venue=max_venue,\
             min_card=min_card, max_card=max_card, min_beautician=min_beautician, max_beautician=max_beautician,\
