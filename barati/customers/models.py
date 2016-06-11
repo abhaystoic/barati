@@ -376,18 +376,22 @@ class Cards_Preferences(models.Model):
    card = models.ForeignKey(Cards)
    ref_id = models.CharField(max_length=100)
    avail_printing = models.NullBooleanField(blank=True)
-   user = models.ForeignKey(Users, blank=True, null=True)
+   user = models.ForeignKey(Users, blank=False, null=False)
    shloka = models.CharField(max_length=500, blank=True, null=True)
    bride_name = models.CharField(max_length=100, blank=True, null=True)
    groom_name = models.CharField(max_length=100, blank=True, null=True)
-   grandfather_name = models.CharField(max_length=100, blank=True, null=True)
-   grandmother_name = models.CharField(max_length=100, blank=True, null=True)
-   father_name = models.CharField(max_length=100, blank=True, null=True)
-   mother_name = models.CharField(max_length=100, blank=True, null=True)
+   groom_grandfather_name = models.CharField(max_length=100, blank=True, null=True)
+   bride_grandfather_name = models.CharField(max_length=100, blank=True, null=True)
+   groom_grandmother_name = models.CharField(max_length=100, blank=True, null=True)
+   bride_grandmother_name = models.CharField(max_length=100, blank=True, null=True)
+   groom_father_name = models.CharField(max_length=100, blank=True, null=True)
+   bride_father_name = models.CharField(max_length=100, blank=True, null=True)
+   groom_mother_name = models.CharField(max_length=100, blank=True, null=True)
+   bride_mother_name = models.CharField(max_length=100, blank=True, null=True)
    tilak_tika_time = models.DateTimeField(blank=True, null=True)
-   swagat_bhoj_time = models.TimeField(blank=True, null=True)
-   mandap_time = models.TimeField(blank=True, null=True)
-   vidai_time = models.TimeField(blank=True, null=True)
+   swagat_bhoj_time = models.DateTimeField(blank=True, null=True)
+   mandap_time = models.DateTimeField(blank=True, null=True)
+   vidai_time = models.DateTimeField(blank=True, null=True)
    tilak_tika_venue = models.CharField(max_length=500, blank=True, null=True)
    swagat_bhoj_venue = models.CharField(max_length=500, blank=True, null=True)
    mandap_venue = models.CharField(max_length=500, blank=True, null=True)
@@ -395,8 +399,8 @@ class Cards_Preferences(models.Model):
    relatives_names_swagatecchuk = models.CharField(max_length=1000, blank=True, null=True)
    kids_names_darshanabhilashi = models.CharField(max_length=1000, blank=True, null=True)
    kids_quote = models.CharField(max_length=500, blank=True, null=True)
-   
-   class Meta: 
+
+   class Meta:
       managed = True
       db_table = 'cards_preferences'
    def __unicode__(self):

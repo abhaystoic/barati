@@ -41,6 +41,7 @@ urlpatterns = patterns('',
    
     url(r'^add_to_cart/(?P<ref_id>[-\w]+)$', Add_To_Cart, name = 'add_to_cart'),
     url(r'^save_budget_preferences/$', login_required(Save_Budget_Preferences.as_view()), name = 'save_budget_preferences'),
+    url(r'^save_card_preferences/(?P<card_id>[-\w]+)', login_required(Save_Card_Preferences.as_view()), name = 'save_card_preferences'),
     url(r'^save_main_preferences/$', Save_Main_Preferences.as_view(), name = 'save_main_preferences'),
    #url(r'^search/$', include('haystack.urls')),
     url(r'^search/$', Search.as_view(), name = 'search'),

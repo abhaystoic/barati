@@ -1,317 +1,374 @@
 {% load staticfiles %}
+<body>
 <a href="#x" class="overlay2" id="card_content"></a>
-<form action=".">
-    <div class="popup2" style="background-color:;">
-        <center>
-            <p>   
-                The content below will be used to print on the card.
-                <label title="You can use the normal keyboard for hindi typing
-                              Type the word in English and press space after the word is complete
-                              The word will be transliterated to Hindi. For example vikas will be converted to विकास.">
-                <span style="cursor:pointer;font-size:10px;color:blue;">How to type in Hindi?</span></label>
-            </p>
-            <div class="popup_line">
-                <label>Type In</label>
-                <select style="width:700px;" id="select_lang" onchange="reset_form()">
-                    <option value = "english">
-                        English
+<div class="popup2" style="background-color:;">
+    <center>
+        <p>   
+            The content below will be used to print on the card.
+            <label title="You can use the normal keyboard for hindi typing
+                          Type the word in English and press space after the word is complete
+                          The word will be transliterated to Hindi. For example vikas will be converted to विकास.">
+            <span style="cursor:pointer;font-size:10px;color:blue;">How to type in Hindi?</span></label>
+        </p>
+        <div class="popup_line">
+            <label>Type In</label>
+            <select style="width:700px;" id="select_lang" onchange="reset_form()" name="select_lang">
+                <option value = "english">
+                    English
+                </option>
+                <option value = "hindi">
+                    Hindi
+                </option>
+            </select>
+        </div>
+        <p><center><span id ="message_pop4"><b>Shloka</b></span></center></p>
+        <div class="popup_line">
+            <label>Select popular shlokas</label>
+                <select style="width:700px;" name="popular_shloka">
+                    <option value="nothing">
                     </option>
-                    <option value = "hindi">
-                        Hindi
+                    <option value="इहेमाविन्द्र सं नुद चक्रवाकेव दम्पती । प्रजयौनौ स्वस्तकौ विस्वमायुर्	व्यऽशनुताम् ॥">
+                        इहेमाविन्द्र सं नुद चक्रवाकेव दम्पती ।
+                        प्रजयौनौ स्वस्तकौ विस्वमायुर्	व्यऽशनुताम् ॥
+                    </option>
+                    <option value="धर्मेच अर्थेच कामेच इमां नातिचरामि । धर्मेच अर्थेच कामेच इमं नातिचरामि ॥">
+                        धर्मेच अर्थेच कामेच इमां नातिचरामि ।
+                        धर्मेच अर्थेच कामेच इमं नातिचरामि ॥
+                    </option>
+                    <option value="गृभ्णामि ते सुप्रजास्त्वाय हस्तं मया पत्या जरदष्टिर्यथासः । भगो अर्यमा सविता पुरन्धिर्मह्यांत्वादुःगार्हपत्याय देवाः ॥">
+                        गृभ्णामि ते सुप्रजास्त्वाय हस्तं मया पत्या जरदष्टिर्यथासः ।
+                        भगो अर्यमा सविता पुरन्धिर्मह्यांत्वादुःगार्हपत्याय देवाः ॥
+                    </option>
+                    <option value="सखा सप्तपदा भव । सखायौ सप्तपदा बभूव । सख्यं ते गमेयम् । सख्यात् ते मायोषम् । सख्यान्मे मयोष्ठाः ।">
+                        सखा सप्तपदा भव ।
+                        सखायौ सप्तपदा बभूव ।
+                        सख्यं ते गमेयम् ।
+                        सख्यात् ते मायोषम् ।
+                        सख्यान्मे मयोष्ठाः ।
                     </option>
                 </select>
+        </div>
+        <div class="popup_line">
+            <label>Write your own shlokas and how will you like it to be placed.</label>
+            <script language="javascript">
+                CreateCustomHindiTextArea("custom_shloka", "कृपया आप अपना श्लोक यहाँ टाइप कीजिए");
+            </script>
+            <!--<textarea name="groom_name" placeholder="Write or paste your own Mantra"></textarea>-->
+        </div>
+        <center>
+        <label id ="message_pop4"><b>Fill content</b></label></center>
+        <div class="popup_line">
+            <div class="english_input">
+                <select style="width:100px;">
+                    <option>Mr</option>
+                    <option>Dr</option>
+                </select>
+                &nbsp;&nbsp;
+                <input type="text" name="english_groom_name" id="english_groom_name" placeholder="Groom's Name" />
+                &nbsp;&nbsp;<b>WEDS</b>&nbsp;&nbsp;
+                <select style="width:100px;">
+                    <option>Ms</option>
+                    <option>Dr</option>
+                </select>
+                &nbsp;&nbsp;
+                <input type="text" name="english_bride_name" id="english_bride_name" placeholder="Bride's Name" />
+                <p><center><span id ="message_pop4"><b>Groom's Side</b></span></center></p>
             </div>
-            <p><center><span id ="message_pop4"><b>Shloka</b></span></center></p>
-            <div class="popup_line">
-                <label>Select popular shlokas</label>
-                    <select style="width:700px;">
-                        <option>
-                            इहेमाविन्द्र सं नुद चक्रवाकेव दम्पती ।
-                            प्रजयौनौ स्वस्तकौ विस्वमायुर्	व्यऽशनुताम् ॥
-                        </option>
-                        <option>
-                            धर्मेच अर्थेच कामेच इमां नातिचरामि ।
-                            धर्मेच अर्थेच कामेच इमं नातिचरामि ॥
-                        </option>
-                        <option>
-                            गृभ्णामि ते सुप्रजास्त्वाय हस्तं मया पत्या जरदष्टिर्यथासः ।
-                            भगो अर्यमा सविता पुरन्धिर्मह्यांत्वादुःगार्हपत्याय देवाः ॥
-                        </option>
-                        <option>
-                            सखा सप्तपदा भव ।
-                            सखायौ सप्तपदा बभूव ।
-                            सख्यं ते गमेयम् ।
-                            सख्यात् ते मायोषम् ।
-                            सख्यान्मे मयोष्ठाः ।
-                        </option>
-                    </select>
-            </div>
-            <div class="popup_line">
-                <label>Write your own shlokas and how will you like it to be placed.</label>
+            <div class="hindi_input">
+                <select style="width:100px;">
+                    <option>कुमार</option>
+                </select>
+                &nbsp;&nbsp;
                 <script language="javascript">
-                    CreateCustomHindiTextArea("custom_shloka", "कृपया आप अपना श्लोक यहाँ टाइप कीजिए");
+                    CreateCustomHindiTextBox("hindi_groom_name","वर का नाम",20,false);
                 </script>
-                <!--<textarea name="groom_name" placeholder="Write or paste your own Mantra"></textarea>-->
+                &nbsp;&nbsp;<b>WEDS</b>&nbsp;&nbsp;
+                <select style="width:100px;">
+                    <option>कुमरी</option>
+                </select>
+                &nbsp;&nbsp;
+                <script language="javascript">
+                    CreateCustomHindiTextBox("hindi_bride_name","वधु का नाम",20,false);
+                </script>
+                <p><center><span id ="message_pop4"><b>वर पक्ष</b></span></center></p>
             </div>
-            <center>
-            <label id ="message_pop4"><b>Fill content</b></label></center>
-            <div class="popup_line">
-                <div class="english_input">
-                    <select style="width:100px;">
-                        <option>Mr</option>
-                        <option>Dr</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <input type="text" name="english_groom_name" id="english_groom_name" placeholder="Groom's Name" />
-                    &nbsp;&nbsp;<b>WEDS</b>&nbsp;&nbsp;
-                    <select style="width:100px;">
-                        <option>Ms</option>
-                        <option>Dr</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <input type="text" name="english_bride_name" id="english_bride_name" placeholder="Bride's Name" />
-                    <p><center><span id ="message_pop4"><b>Groom's Side</b></span></center></p>
-                </div>
-                <div class="hindi_input">
-                    <select style="width:100px;">
-                        <option>कुमार</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <script language="javascript">
-                        CreateCustomHindiTextBox("hindi_groom_name","वर का नाम",20,false);
-                    </script>
-                    &nbsp;&nbsp;<b>WEDS</b>&nbsp;&nbsp;
-                    <select style="width:100px;">
-                        <option>कुमरी</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <script language="javascript">
-                        CreateCustomHindiTextBox("hindi_bride_name","वधु का नाम",20,false);
-                    </script>
-                    <p><center><span id ="message_pop4"><b>वर पक्ष</b></span></center></p>
-                </div>
+        </div>
+
+        <div class="popup_line">
+            <div class="english_input">
+                <label> Grandfather : &nbsp;&nbsp;</label>
+                <select style="width:100px;">
+                    <option>Shri</option>
+                    <option>Mr</option>
+                    <option>Late</option>
+                </select>
+                &nbsp;&nbsp;
+                <input type="text" name="english_grandfather_groom" id="english_grandfather_groom"/>
+                <label> Grandmother : &nbsp;&nbsp;</label>
+                <select style="width:100px;">
+                    <option>Shrimati</option>
+                    <option>Mrs</option>
+                    <option>Late</option>
+                </select>
+                &nbsp;&nbsp;
+                <input type="text" name="english_grandmother_groom" id="english_grandmother_groom"/>
             </div>
-            
-            <div class="popup_line">
-                <div class="english_input">
-                    <label> Grandfather : &nbsp;&nbsp;</label>
-                    <select style="width:100px;">
-                        <option>Shri</option>
-                        <option>Mr</option>
-                        <option>Late</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <input type="text" name="english_grandfather_groom" id="english_grandfather_groom"/>
-                    <label> Grandmother : &nbsp;&nbsp;</label>
-                    <select style="width:100px;">
-                        <option>Shrimati</option>
-                        <option>Mrs</option>
-                        <option>Late</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <input type="text" name="english_grandmother_groom" id="english_grandmother_groom"/>
-                </div>
-                <div class="hindi_input">
-                    <label> Grandfather : &nbsp;&nbsp;</label>
-                    <select style="width:100px;">
-                        <option>स्वर्गवासी</option>
-                        <option>स्वर्गीय</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <script language="javascript">
-                        CreateCustomHindiTextBox("hindi_grandfather_groom","",20,false);
-                    </script>
-                    <label> Grandmother : &nbsp;&nbsp;</label>
-                    <select style="width:100px;">
-                        <option>स्वर्गवासी</option>
-                        <option>स्वर्गीय</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <script language="javascript">
-                        CreateCustomHindiTextBox("hindi_grandmother_groom","",20,false);
-                    </script>
-                </div>
+            <div class="hindi_input">
+                <label> Grandfather : &nbsp;&nbsp;</label>
+                <select style="width:100px;">
+                    <option>स्वर्गवासी</option>
+                    <option>स्वर्गीय</option>
+                </select>
+                &nbsp;&nbsp;
+                <script language="javascript">
+                    CreateCustomHindiTextBox("hindi_grandfather_groom","",20,false);
+                </script>
+                <label> Grandmother : &nbsp;&nbsp;</label>
+                <select style="width:100px;">
+                    <option>स्वर्गवासी</option>
+                    <option>स्वर्गीय</option>
+                </select>
+                &nbsp;&nbsp;
+                <script language="javascript">
+                    CreateCustomHindiTextBox("hindi_grandmother_groom","",20,false);
+                </script>
             </div>
-            
-            <div class="popup_line">
-                <div class="english_input">
-                    <label> Father : &nbsp;&nbsp;</label>
-                    <select style="width:100px;">
-                        <option>Shri</option>
-                        <option>Mr</option>
-                        <option>Late</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <input type="text" name="english_father_groom" id="english_father_groom"/>
-                    <label> Mother : &nbsp;&nbsp;</label>
-                    <select style="width:100px;">
-                        <option>Shrimati</option>
-                        <option>Mrs</option>
-                        <option>Late</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <input type="text" name="english_mother_groom" id="english_mother_groom"/>
-                    <p><center><span id ="message_pop4"><b>Bride's Side</b></span></center></p>
-                </div>
-                <div class="hindi_input">
-                    <label> Father : &nbsp;&nbsp;</label>
-                    <select style="width:100px;">
-                        <option>स्वर्गवासी</option>
-                        <option>स्वर्गीय</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <script language="javascript">
-                        CreateCustomHindiTextBox("hindi_father_groom","",20,false);
-                    </script>
-                    <label> Mother : &nbsp;&nbsp;</label>
-                    <select style="width:100px;">
-                        <option>स्वर्गवासी</option>
-                        <option>स्वर्गीय</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <script language="javascript">
-                        CreateCustomHindiTextBox("hindi_mother_groom","",20,false);
-                    </script>
-                    <p><center><span id ="message_pop4"><b>वधु पक्ष</b></span></center></p>
-                </div>
+        </div>
+
+        <div class="popup_line">
+            <div class="english_input">
+                <label> Father : &nbsp;&nbsp;</label>
+                <select style="width:100px;">
+                    <option>Shri</option>
+                    <option>Mr</option>
+                    <option>Late</option>
+                </select>
+                &nbsp;&nbsp;
+                <input type="text" name="english_father_groom" id="english_father_groom"/>
+                <label> Mother : &nbsp;&nbsp;</label>
+                <select style="width:100px;">
+                    <option>Shrimati</option>
+                    <option>Mrs</option>
+                    <option>Late</option>
+                </select>
+                &nbsp;&nbsp;
+                <input type="text" name="english_mother_groom" id="english_mother_groom"/>
+                <p><center><span id ="message_pop4"><b>Bride's Side</b></span></center></p>
             </div>
-            
-            <div class="popup_line">
-                <div class="english_input">
-                    <label> Grandfather : &nbsp;&nbsp;</label>
-                    <select style="width:100px;">
-                        <option>Shri</option>
-                        <option>Mr</option>
-                        <option>Late</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <input type="text" name="english_grandfather_bride" id="english_grandfather_bride"/>
-                    <label> Grandmother : &nbsp;&nbsp;</label>
-                    <select style="width:100px;">
-                        <option>Shrimati</option>
-                        <option>Mrs</option>
-                        <option>Late</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <input type="text" name="english_grandmother_bride" id="english_grandmother_bride"/>
-                </div>
-                <div class="hindi_input">
-                    <label> Grandfather : &nbsp;&nbsp;</label>
-                    <select style="width:100px;">
-                        <option>स्वर्गवासी</option>
-                        <option>स्वर्गीय</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <script language="javascript">
-                        CreateCustomHindiTextBox("hindi_grandfather_bride","",20,false);
-                    </script>
-                    <label> Grandmother : &nbsp;&nbsp;</label>
-                    <select style="width:100px;">
-                        <option>स्वर्गवासी</option>
-                        <option>स्वर्गीय</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <script language="javascript">
-                        CreateCustomHindiTextBox("hindi_grandmother_bride","",20,false);
-                    </script>
-                </div>
+            <div class="hindi_input">
+                <label> Father : &nbsp;&nbsp;</label>
+                <select style="width:100px;">
+                    <option>स्वर्गवासी</option>
+                    <option>स्वर्गीय</option>
+                </select>
+                &nbsp;&nbsp;
+                <script language="javascript">
+                    CreateCustomHindiTextBox("hindi_father_groom","",20,false);
+                </script>
+                <label> Mother : &nbsp;&nbsp;</label>
+                <select style="width:100px;">
+                    <option>स्वर्गवासी</option>
+                    <option>स्वर्गीय</option>
+                </select>
+                &nbsp;&nbsp;
+                <script language="javascript">
+                    CreateCustomHindiTextBox("hindi_mother_groom","",20,false);
+                </script>
+                <p><center><span id ="message_pop4"><b>वधु पक्ष</b></span></center></p>
             </div>
-            
-            <div class="popup_line">
-                <div class="english_input">
-                    <label> Father : &nbsp;&nbsp;</label>
-                    <select style="width:100px;">
-                        <option>Shri</option>
-                        <option>Mr</option>
-                        <option>Late</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <input type="text" name="english_father_bride" id="english_father_bride"/>
-                    <label> Mother : &nbsp;&nbsp;</label>
-                    <select style="width:100px;">
-                        <option>Shrimati</option>
-                        <option>Mrs</option>
-                        <option>Late</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <input type="text" name="english_mother_bride" id="english_mother_bride"/>
-                </div>
-                <div class="hindi_input">
-                    <label> Father : &nbsp;&nbsp;</label>
-                    <select style="width:100px;">
-                        <option>स्वर्गवासी</option>
-                        <option>स्वर्गीय</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <script language="javascript">
-                        CreateCustomHindiTextBox("hindi_father_bride","",20,false);
-                    </script>
-                    <label> Mother : &nbsp;&nbsp;</label>
-                    <select style="width:100px;">
-                        <option>स्वर्गवासी</option>
-                        <option>स्वर्गीय</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <script language="javascript">
-                        CreateCustomHindiTextBox("hindi_mother_bride","",20,false);
-                    </script>
-                </div>
+        </div>
+
+        <div class="popup_line">
+            <div class="english_input">
+                <label> Grandfather : &nbsp;&nbsp;</label>
+                <select style="width:100px;">
+                    <option>Shri</option>
+                    <option>Mr</option>
+                    <option>Late</option>
+                </select>
+                &nbsp;&nbsp;
+                <input type="text" name="english_grandfather_bride" id="english_grandfather_bride"/>
+                <label> Grandmother : &nbsp;&nbsp;</label>
+                <select style="width:100px;">
+                    <option>Shrimati</option>
+                    <option>Mrs</option>
+                    <option>Late</option>
+                </select>
+                &nbsp;&nbsp;
+                <input type="text" name="english_grandmother_bride" id="english_grandmother_bride"/>
             </div>
-            
-<p><center><span id ="message_pop4"><b>Time and Dates</b></span></center></p>
-<div class="popup_line">
-    <label>Tilak/Tika : &nbsp;</label><input type="text" name="function_date" />
-    <label>Swagat Samaroh & Bhoj: &nbsp;</label><input type="text" name="function_date" />
-    <label>Mandap: &nbsp;</label><input type="text" name="function_date" />
-    <label>Vidai : &nbsp;</label><input type="text" name="function_date" />
+            <div class="hindi_input">
+                <label> Grandfather : &nbsp;&nbsp;</label>
+                <select style="width:100px;">
+                    <option>स्वर्गवासी</option>
+                    <option>स्वर्गीय</option>
+                </select>
+                &nbsp;&nbsp;
+                <script language="javascript">
+                    CreateCustomHindiTextBox("hindi_grandfather_bride","",20,false);
+                </script>
+                <label> Grandmother : &nbsp;&nbsp;</label>
+                <select style="width:100px;">
+                    <option>स्वर्गवासी</option>
+                    <option>स्वर्गीय</option>
+                </select>
+                &nbsp;&nbsp;
+                <script language="javascript">
+                    CreateCustomHindiTextBox("hindi_grandmother_bride","",20,false);
+                </script>
+            </div>
+        </div>
+
+        <div class="popup_line">
+            <div class="english_input">
+                <label> Father : &nbsp;&nbsp;</label>
+                <select style="width:100px;">
+                    <option>Shri</option>
+                    <option>Mr</option>
+                    <option>Late</option>
+                </select>
+                &nbsp;&nbsp;
+                <input type="text" name="english_father_bride" id="english_father_bride"/>
+                <label> Mother : &nbsp;&nbsp;</label>
+                <select style="width:100px;">
+                    <option>Shrimati</option>
+                    <option>Mrs</option>
+                    <option>Late</option>
+                </select>
+                &nbsp;&nbsp;
+                <input type="text" name="english_mother_bride" id="english_mother_bride"/>
+            </div>
+            <div class="hindi_input">
+                <label> Father : &nbsp;&nbsp;</label>
+                <select style="width:100px;">
+                    <option>स्वर्गवासी</option>
+                    <option>स्वर्गीय</option>
+                </select>
+                &nbsp;&nbsp;
+                <script language="javascript">
+                    CreateCustomHindiTextBox("hindi_father_bride","",20,false);
+                </script>
+                <label> Mother : &nbsp;&nbsp;</label>
+                <select style="width:100px;">
+                    <option>स्वर्गवासी</option>
+                    <option>स्वर्गीय</option>
+                </select>
+                &nbsp;&nbsp;
+                <script language="javascript">
+                    CreateCustomHindiTextBox("hindi_mother_bride","",20,false);
+                </script>
+            </div>
+        </div>
+
+        <p><center><span id ="message_pop4"><b>Time and Dates</b>  (dd/mm/yyyy hh:mm in 24hrs format)</span></center></p>
+        <div class="popup_line">
+<!--            <div class="english_input">-->
+            <label>Tilak/Tika : &nbsp;</label>
+            <input type="text" name="tilak_date" />
+            <label>Swagat Samaroh & Bhoj: &nbsp;</label>
+            <input type="text" name="swagat_date" />
+            <label>Mandap: &nbsp;</label>
+            <input type="text" name="mandap_date" />
+            <label>Vidai : &nbsp;</label>
+            <input type="text" name="vidai_date" />
+<!--            
+                </div>
+            <div class="hindi_input">
+                <label>Tilak/Tika : &nbsp;</label>
+                <script language="javascript">
+                    CreateCustomHindiTextBox("hindi_tilak_date","",20,false);
+                </script>
+                <label>Swagat Samaroh & Bhoj: &nbsp;</label>
+                <script language="javascript">
+                    CreateCustomHindiTextBox("hindi_swagat_date","",20,false);
+                </script>
+                <label>Mandap: &nbsp;</label>
+                <script language="javascript">
+                    CreateCustomHindiTextBox("hindi_mandap_date","",20,false);
+                </script>
+                <label>Vidai : &nbsp;</label>
+                <script language="javascript">
+                    CreateCustomHindiTextBox("hindi_vidai_date","",20,false);
+                </script>
+            </div>
+-->
+        </div>
+        <div class="popup_line">
+            <div class="english_input">
+                <table style="width:100%">
+                    <col width="33%"/><col width="33%"/><col width="34%"/>
+                    <tr>
+                        <td align="center"><label>Tilak/Tika Venue</label></td>
+                        <td align="center"><label>Swagat Samaroh & Bhoj Venue</label></td>
+                        <td align="center"><label>Mandap Venue</label></td>
+                        <!--<td align="center"><label>Vidai Venue</label></td>-->
+                    </tr>
+                    <tr>
+                        <td align="center"><textarea style="" cols="2" name="english_tilak_venue" placeholder="Full address"></textarea></td>
+                        <td align="center"><textarea style="" cols="2" name="english_swagat_venue" placeholder="Full address"></textarea></td>
+                        <td align="center"><textarea style="" cols="2" name="english_mandap_venue" placeholder="Full address"></textarea></td>
+                    <!--<td align="center"><textarea style="" cols="2" name="function_venue" placeholder="Full address"></textarea></td>-->
+                    </tr>
+                    <tr>
+                        <td align="center"><b>दर्शनाभिलाशी</b></td>
+                        <td align="center"><b>स्वागतोच्हुक</b></td>
+                        <td align="center">
+                            <select style="width:235px;" name="english_quote">
+                            <option><b>Select a popular quote for kids.</b></option>
+                            <option>Do Come to the Wedding</option>
+                            <option></option>    
+                            <option></option>    
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center"><textarea style="" cols="2" name="english_relative_names" placeholder="Name of the relatives(separate by comma)"></textarea></td>
+                        <td align="center"><textarea style="" cols="2" name="english_relative_names_2" placeholder="Name of the relatives(separate by comma)"></textarea></td>
+                        <td align="center"><textarea style="" cols="2" name="english_kids_name" placeholder="Name of the kids(separate by comma)"></textarea></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="hindi_input">
+                <table style="width:100%">
+                    <tr>
+                        <td align="center"><label>Tilak/Tika Venue</label></td>
+                        <td align="center"><label>Swagat Samaroh & Bhoj Venue</label></td>
+                        <td align="center"><label>Mandap Venue</label></td>
+                        <!--<td align="center"><label>Vidai Venue</label></td>-->
+                    </tr>
+                    <tr>
+                        <td align="center"><script language="javascript">CreateCustomHindiTextArea("hindi_tilak_venue","",20,false);</script></td>
+                        <td align="center"><script language="javascript">CreateCustomHindiTextArea("hindi_swagat_venue","",20,false);</script></td>
+                        <td align="center"><script language="javascript">CreateCustomHindiTextArea("hindi_mandap_venue","",20,false);</script></td>
+                    </tr>
+                    <tr>
+                        <td align="center"><b>दर्शनाभिलाशी</b></td>
+                        <td align="center"><b>स्वागतोच्हुक</b></td>
+                        <td align="center">
+                            <select style="width:235px;" name="hindi_quote">
+                            <option><b>Select a popular quote for kids.</b></option>
+                            <option>हमारी दीदी कि शादी मे जरूर-जरूर आना</option>
+                            <option></option>    
+                            <option></option>    
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center"><script language="javascript">CreateCustomHindiTextArea("hindi_relative_names","",20,false);</script></td>
+                        <td align="center"><script language="javascript">CreateCustomHindiTextArea("hindi_relative_names_2","",20,false);</script></td>
+                        <td align="center"><script language="javascript">CreateCustomHindiTextArea("hindi_kids_name","",20,false);</script></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-default" id="card_content_submit">
+            Submit
+        </button>
+    </center>
 </div>
-<div class="popup_line">
-    <table style="width:100%">
-    <col width="33%"/><col width="33%"/><col width="34%"/>
-    <tr>
-    <td align="center"><label>Tilak/Tika Venue</label></td>
-    <td align="center"><label>Swagat Samaroh & Bhoj Venue</label></td>
-    <td align="center"><label>Mandap Venue</label></td>
-    <!--<td align="center"><label>Vidai Venue</label></td>-->
-    </tr>
-    <tr>
-    <td align="center"><textarea style="" cols="2" name="function_venue" placeholder="Full address"></textarea></td>
-    <td align="center"><textarea style="" cols="2" name="function_venue" placeholder="Full address"></textarea></td>
-    <td align="center"><textarea style="" cols="2" name="function_venue" placeholder="Full address"></textarea></td>
-    <!--<td align="center"><textarea style="" cols="2" name="function_venue" placeholder="Full address"></textarea></td>-->
-    </tr>
-    <tr>
-        <td align="center"><b>दर्शनाभिलाशी</b></td>
-        <td align="center"><b>स्वागतोच्हुक</b></td>
-        <td align="center">
-            <select style="width:235px;">
-            <option><b>Select a popular quote for kids.</b></option>
-            <option>हमारी दीदी कि शादी मे जरूर-जरूर आना</option>
-            <option></option>    
-            <option></option>    
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td align="center"><textarea style="" cols="2" name="function_venue" placeholder="Name of the relatives(separate by comma)"></textarea></td>
-        <td align="center"><textarea style="" cols="2" name="function_venue" placeholder="Name of the relatives(separate by comma)"></textarea></td>
-        <td align="center"><textarea style="" cols="2" name="function_venue" placeholder="Name of the kids(separate by comma)"></textarea></td>
-    </tr>
-    </table>
-</div>
-<button type="submit" class="btn btn-default">
-    Submit
-</button>
-</center>
-</div>
-</form>
 <a class="close" href="#close"></a>
 <br><br>
-
 <script>
-    $( document ).ready(function() {
-        $('.hindi_input').hide();
-    });
     function reset_form()
     {
         if($("#select_lang").val() == "english"){
@@ -324,3 +381,15 @@
         }
     }
 </script>
+<script>
+    $('.hindi_input').hide();
+    function applyDatepicker(elem) {
+        $(elem).datepicker({dateFormat: "dd.mm.yy"});
+        $(elem).datepicker('show');
+    }
+    applyDatepicker('#tilak_date');
+    applyDatepicker('#mandap_date');
+    applyDatepicker('#vidai_date');
+    applyDatepicker('#swagat_date');
+</script>
+</body>

@@ -5,6 +5,8 @@
 
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>        
 {% for card_detail in card_details %}
 <head>
 <meta property="og:url"           content="http://127.0.0.1:8000/card_details/{{card_detail.id}}" />
@@ -101,13 +103,12 @@
 	<!--<button class="fancy-btn open" type="button">Can I haz Modal?</button>-->
 	{% endif %}
 </span>
-<p><b>Printing Price: </b>{{card_detail.printing_price}} Rs Per Card &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="avail_printing_checkbox" id="avail_printing_checkbox" value="avail_printing"><span style="color:red;">&nbsp;Avail Printing</span></input></p>
+<p><b>Printing Price: </b>{{card_detail.printing_price}} Rs Per Card &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="avail_printing_checkbox" id="avail_printing_checkbox" value="avail_printing"><span style="color:red;">&nbsp;Avail Printing</span></p>
 <input type="hidden" value="{{card_detail.printing_price}}" name="card_printing_price_per_card"/>
 <p><b>Availability:</b> In Stock</p>
 <p><b>Condition:</b> New</p>
 <p><b>Shopkeeper:</b> XYZ</p>
 <p><a href="#card_content">Add content before ordering</a></p>
-	{% include 'customers/card_content_popup.html' %}
 
 <!-- FB Share-->
 <div id="fb-root"></div>
@@ -123,8 +124,36 @@
 <div class="fb-share-button" data-href="http://127.0.0.1:8000/card_details/{{card_detail.id}}" data-layout="button_count"></div>
 <!-- FB Share-->
 </div><!--/product-information-->
-</form> <!--Add to cart form END-->
 
+</form> <!--Add to cart form END-->
+<form id="card_content_preferences_form" action="/save_card_preferences/{{card_detail.id}}" method="post">{% csrf_token %}
+    {% include 'customers/card_content_popup.html' %}
+</form>
+<script>
+    $(document).ready(function() {
+        $('#card_content_preferences_form').submit(function() {// catch the form's submit event
+              alert('Hello');
+              $.ajax({
+                  url : this.action,
+                  type : "POST",
+                  dataType: "json",
+                  data: $(this).serialize(), // get the form data
+                  context : this,
+                  success : function(json) {
+                    alert(json);
+                    if (json == "success_card_preferences_saved")
+                    {
+                      //window.location = location.pathname; // redirect back to the calling page
+                    }
+                    },
+                  error : function(xhr,errmsg,err) {
+                    alert(xhr.status + ": " + xhr.responseText);
+                    }
+              });
+              return false;
+          });
+    });
+</script>
 <br><br><br>
 <div class="category-tab shop-details-tab"><!--category-tab-->
 	<div class="col-sm-12">
